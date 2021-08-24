@@ -1,5 +1,5 @@
 # TecnoBooth :globe_with_meridians: :iphone: 
-Tecno... es una aplicación destinada al intercambio de información por parte de los usuarios, en donde se pueden crear temas/grupos de intereses según los propios usuarios que te permita editarlo a gusto, en donde cada uno de los integrantes pueda compartir información sobre tecnología (ya sean posts, imágenes, pensamientos, información, link a alguna pagina, etc) y comentar sobre estos.
+TecnoBooth es una aplicación destinada al intercambio de información por parte de los usuarios, en donde se pueden crear temas/grupos de intereses según los propios usuarios que te permita editarlo a gusto, en donde cada uno de los integrantes pueda compartir información sobre tecnología (ya sean posts, imágenes, pensamientos, información, link a alguna pagina, etc) y comentar sobre estos.
 
 ## Para comenzar :rocket:
 * [Manual de usuario (si es que nos pide)]()
