@@ -14,7 +14,7 @@ Cualquier dispositivo con acceso a internet
 ## Desarrolladores :pencil2:
 * **Luis Felipe Coto Arias** - :octocat: [luiscotoo](https://github.com/luiscotoo)
 * **Edgard Alexander Barrera Flamenco** - :octocat: [Alexander1015](https://github.com/Alexander1015)
-* **Irvin Armando Recinos Alvarado** - :octocat: [falta usuario](https://github.com/iarecinos)
+* **Irvin Armando Recinos Alvarado** - :octocat: [iarecinos](https://github.com/iarecinos)
 * **Bryan Armando Salinas Sanchez** - :octocat: [BassMan14](https://github.com/BassMan14)
 * **Josue Alexander Chavez Garcia** - :octocat: [Jalex-Cg](https://github.com/Jalex-Cg)
 
