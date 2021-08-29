@@ -18,8 +18,11 @@ Cualquier dispositivo con acceso a internet
 * **Bryan Armando Salinas Sanchez** - :octocat: [BassMan14](https://github.com/BassMan14)
 * **Josue Alexander Chavez Garcia** - :octocat: [Jalex-Cg](https://github.com/Jalex-Cg)
 
-## Construido con :wrench::hammer:
+## Herramientas utilizadas :wrench::hammer:
 * [Visual Studio Code](https://code.visualstudio.com/) - Editor de código gratuito desarrollado por Microsoft.
+* [Balsamiq Wireframes](https://balsamiq.com/wireframes/) - Herramienta que permite realizar Mock Ups.
+* [Node.js](https://nodejs.org/es/) - Entorno de ejecución para JavaScript construido con el motor de JavaScript V8 de Chrome.
+* [React Native](https://reactnative.dev/) - Lenguaje utilizado para el desarrollo de aplicaciones nativas.
 
 ## Licencia :lock::page_facing_up:
 Falta agregar licencia
