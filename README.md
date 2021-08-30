@@ -4,7 +4,6 @@ TecnoBooth es una aplicación destinada al intercambio de información por parte
 ## Para comenzar :rocket:
 * [Manual de usuario (si es que nos pide)]()
 * [Documento]()
-* [Aplicación (enlace)]()
 
 ## Requisitos :rotating_light:
 ```
@@ -29,3 +28,4 @@ Falta agregar licencia
 
 ## Enlace de interés :zap:
 * Trello: [Tablero](https://trello.com/b/2JIUKo6I/tecnobooth) :white_check_mark:
+* Mock Ups: [Google Drive](https://drive.google.com/drive/folders/1r8lTxjP30m52njKW0UxethJu0AvyLlIs?usp=sharing)
