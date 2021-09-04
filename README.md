@@ -24,7 +24,23 @@ Cualquier dispositivo con acceso a internet
 * [React Native](https://reactnative.dev/) - Lenguaje utilizado para el desarrollo de aplicaciones nativas.
 
 ## Licencia :lock::page_facing_up:
-Este proyecto está bajo la Licencia CREATIVE COMMONS Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) mira el archivo [LICENSE](https://creativecommons.org/licenses/by-nc-sa/4.0/) para detalles
+Este proyecto está bajo la Licencia CREATIVE COMMONS Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
+
+**Usted es libre de:**
+* **Compartir** — copiar y redistribuir el material en cualquier medio o formato :+1:
+* **Adaptar** — remezclar, transformar y construir a partir del material :dizzy:
+
+> La licenciante no puede revocar estas libertades en tanto usted siga los términos de la licencia
+
+**Bajo los siguientes términos:**
+
+* **Atribución** — Usted debe dar crédito de manera adecuada, brindar un enlace a la licencia, e indicar si se han realizado cambios. Puede hacerlo en cualquier forma razonable, pero no de forma tal que sugiera que usted o su uso tienen el apoyo de la licenciante. :bulb:
+* **NoComercial** — Usted no puede hacer uso del material con propósitos comerciales.  :closed_lock_with_key:
+* **Compartir Igual** — Si remezcla, transforma o crea a partir del material, debe distribuir su contribución bajo la lamisma licencia del original. :recycle:
+
+> No hay restricciones adicionales — No puede aplicar términos legales ni medidas tecnológicas que restrinjan legalmente a otras a hacer cualquier uso permitido por la licencia.
+
+Mira el archivo [LICENSE](https://creativecommons.org/licenses/by-nc-sa/4.0/) para detalles
 
 ## Enlace de interés :zap:
 * Trello: [Tablero](https://trello.com/b/2JIUKo6I/tecnobooth) :white_check_mark:
