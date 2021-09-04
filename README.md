@@ -40,7 +40,7 @@ Este proyecto está bajo la Licencia CREATIVE COMMONS Attribution-NonCommercial-
 
 > No hay restricciones adicionales — No puede aplicar términos legales ni medidas tecnológicas que restrinjan legalmente a otras a hacer cualquier uso permitido por la licencia.
 
-Mira el archivo [LICENSE](https://creativecommons.org/licenses/by-nc-sa/4.0/) para detalles
+Mira el archivo [LICENSE](https://creativecommons.org/licenses/by-nc-sa/4.0/) para detalles :eyes:
 
 ## Enlace de interés :zap:
 * Trello: [Tablero](https://trello.com/b/2JIUKo6I/tecnobooth) :white_check_mark:
