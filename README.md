@@ -2,8 +2,9 @@
 TecnoBooth es una aplicación destinada al intercambio de información por parte de los usuarios, en donde se pueden crear temas/grupos/canales de intereses según los propios usuarios que te permita editarlo a gusto, en donde cada uno de los integrantes pueda compartir información sobre tecnología (ya sean posts, imágenes, pensamientos, información, link a alguna pagina, etc) y comentar sobre estos. Además de tener un manejo de los movimientos y usuarios que cada grupo posee, mostrando diferentes opciones para administrar tu grupo, teniendo como base que las personas que usaran este proyecto tengan que disponer de una cuenta personal en la aplicación para poder utilizar todas las funciones.
 
 ## Para comenzar :rocket:
-* [Manual de usuario (si es que nos pide)]()
-* [Documento]()
+* [Documento - Primera Fase](https://drive.google.com/file/d/1frJ80hPfq77Buu2ZV5UQ50U6tHbIW7mC/view?usp=sharing)
+* [Manual de usuario (si es necesario)]()
+
 
 ## Requisitos :rotating_light:
 ```
@@ -22,6 +23,7 @@ Cualquier dispositivo con acceso a internet
 * [Balsamiq Wireframes](https://balsamiq.com/wireframes/) - Herramienta que permite realizar Mock Ups.
 * [Node.js](https://nodejs.org/es/) - Entorno de ejecución para JavaScript construido con el motor de JavaScript V8 de Chrome.
 * [React Native](https://reactnative.dev/) - Lenguaje utilizado para el desarrollo de aplicaciones nativas.
+* [Firebase](https://firebase.google.com/?hl=es) - Herramienta que permitira manipular la base de datos desarrollado por Google.
 
 ## Licencia :lock::page_facing_up:
 Este proyecto está bajo la Licencia CREATIVE COMMONS Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)
@@ -40,8 +42,8 @@ Este proyecto está bajo la Licencia CREATIVE COMMONS Attribution-NonCommercial-
 
 > No hay restricciones adicionales — No puede aplicar términos legales ni medidas tecnológicas que restrinjan legalmente a otras a hacer cualquier uso permitido por la licencia.
 
-Mira el archivo [LICENSE](https://creativecommons.org/licenses/by-nc-sa/4.0/) para detalles :eyes:
+Mira el archivo [LICENSE](https://creativecommons.org/licenses/by-nc-sa/4.0/) para más detalles :eyes:
 
-## Enlace de interés :zap:
+## Enlaces de interés :zap:
 * Trello: [Tablero](https://trello.com/b/2JIUKo6I/tecnobooth) :white_check_mark:
 * Mock Ups: [Google Drive](https://drive.google.com/drive/folders/1r8lTxjP30m52njKW0UxethJu0AvyLlIs?usp=sharing)
