@@ -1,4 +1,22 @@
 {
-  "name": "TecnoBooth",
-  "displayName": "TecnoBooth"
+  "expo": {
+    "name": "TecnoBooth",
+    "slug": "TecnoBooth",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+    },
+    "web": {
+      "favicon": "./resources/img/favicon.png"
+    }
+  }
 }
