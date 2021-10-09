@@ -4,6 +4,12 @@
     "slug": "TecnoBooth",
     "version": "1.0.0",
     "orientation": "portrait",
+    "icon": "./resources/img/favicon.png",
+    "splash": {
+      "image": "./resources/img/favicon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#041F2E"
+    },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -13,7 +19,15 @@
     "ios": {
       "supportsTablet": true
     },
+    "androidStatusBar": {
+      "barStyle": "light-content",
+      "backgroundColor": "#041F2E"
+    },
     "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./resources/img/favicon.png",
+        "backgroundColor": "#041F2E"
+      }
     },
     "web": {
       "favicon": "./resources/img/favicon.png"
