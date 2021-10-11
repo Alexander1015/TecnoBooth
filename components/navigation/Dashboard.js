@@ -27,7 +27,7 @@ const DashboardNav = () => {
                 headerTitle: () => (
                     <>
                         <View style={ Styles.navbarcontain }>
-                            <View style={ Styles.navcontaintxt }>
+                            <View>
                                 <Text style={ Styles.titheader }>TecnoBooth</Text>
                             </View>
                             <View style={ Styles.navcontainimg }>

@@ -20,8 +20,6 @@ const Styles = StyleSheet.create({
     navbarcontain: {
         width: Dimensions.get("window").width - 120,
     },
-    navcontaintxt: {
-    },
     navcontainimg: {
         position: "absolute",
         left: "100%",
