@@ -12,11 +12,10 @@ const App = () => {
     firebase.db.collection('Usuarios').onSnapshot(querySnapshot => {
       const users = [];
       querySnapshot.docs.forEach(doc => {
-        const { nombre, apellido, usuario } = doc.data();
+        const { correo, usuario } = doc.data();
         users.push({
           id: doc.id, //Obtenemos el Id que genera en automatico Firebase
-          nombre,
-          apellido,
+          correo,
           usuario,
         });
         setLoading(false);
@@ -41,7 +40,7 @@ const App = () => {
             <ListItem key={user.id} bottomDivider>
               <ListItem.Chevron />
               <ListItem.Content>
-                <ListItem.Title>{ user.nombre } { user.apellido }</ListItem.Title>
+                <ListItem.Title>{ user.correo }</ListItem.Title>
                 <ListItem.Subtitle>{ user.usuario }</ListItem.Subtitle>
               </ListItem.Content>
             </ListItem>

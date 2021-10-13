@@ -30,7 +30,7 @@ const AuthScreen = (route) => {
 
     const olvidarpass = () => {
         reset();
-        alert("Que olvidadizo!");
+        navigation.navigate("forget");
     }
 
     const registrarse = () => {

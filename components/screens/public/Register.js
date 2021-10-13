@@ -68,7 +68,7 @@ const RegisterScreen = (route) => {
         else if(email.trim() === "" /*&& email.length > 5*/) {
             alerta("Error", "Debe rellenar el campo de correo correctamente");
         }
-        else if(question != null) {
+        else if(question === null || question.trim() === "") {
             alerta("Error", "Debe seleccionar correctamente una pregunta de seguridad");
         }
         else if(answer.trim() === "" /*&& answer.length > 0*/) {
@@ -95,7 +95,7 @@ const RegisterScreen = (route) => {
                             password: password,
                         });
                         reset();
-                        alerta("Bienvenido", "Ha ingresado sus datos correctamente");
+                        alerta("Bienvenido", "Ha ingresado sus datos correctamente, Bienvenido a TecnoBooth");
                         navigation.navigate("dashboard", { email: email })
                     }
                 )
@@ -131,7 +131,16 @@ const RegisterScreen = (route) => {
         setEmail("");
         setPassword("");
         setRepeat("");
+        setAnswer("");
+        setQuestion(null);
     }
+
+    //Preguntas de seguridad
+    const PG1 = "Nombre de mi primer mascota?";
+    const PG2 = "Nombre de soltera de mi madre?";
+    const PG3 = "Nombre de mi hermano?";
+    const PG4 = "Nombre del colegio en donde estudie?";
+    const PG5 = "Nombre de primer trabajo?";
 
     return(
         <View style={ Styles.container }>
@@ -190,11 +199,11 @@ const RegisterScreen = (route) => {
                                     value: null,
                                 }}
                                 items={[
-                                    { label: "Nombre de mi primer mascota?", value: 1 },
-                                    { label: "Nombre de soltera de mi madre?", value: 2 },
-                                    { label: "Nombre de mi hermano?", value: 3 },
-                                    { label: "Nombre del colegio en donde estudie?", value: 5 },
-                                    { label: "Nombre de primer trabajo?", value: 4 },
+                                    { label: PG1, value: PG1 },
+                                    { label: PG2, value: PG2 },
+                                    { label: PG3, value: PG3 },
+                                    { label: PG4, value: PG4 },
+                                    { label: PG5, value: PG5 },
                                 ]}
                             />
                         </View>
