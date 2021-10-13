@@ -6,7 +6,7 @@ import firebase from "../../../database/firebase";
 import Styles from "../../../resources/styles/Public";
 import Colors from "../../../resources/utils/Colors"
 
-LogBox.ignoreLogs(["Setting a timer"]);
+//LogBox.ignoreLogs(["Setting a timer"]);
 
 const RegisterScreen = (route) => {
     const { navigation } = route;
