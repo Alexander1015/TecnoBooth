@@ -7,20 +7,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
 
-<<<<<<< HEAD
-=======
-
->>>>>>> master
 const schema = yup.object({
     nombre: yup.string().required("El nombre es obligatorio"),
     descripcion: yup.string().required("La descripcion es obligatoria")
 })
-<<<<<<< HEAD
  const CreateGroupScreen = (route, {userEmail}) => {
-=======
-
-const CreateGroupScreen = (route) => {
->>>>>>> master
     const { navigation } = route;
     const { control, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
@@ -43,18 +34,6 @@ const CreateGroupScreen = (route) => {
             aspect: [4, 3],
             quality: 1,
         });
-<<<<<<< HEAD
-=======
-
-        console.log(result);
-
-        if (!result.cancelled) {
-            setImage(result.uri);
-        }
-    };
-
-
->>>>>>> master
 
         console.log(result);
 

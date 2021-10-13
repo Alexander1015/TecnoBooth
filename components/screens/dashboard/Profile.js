@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {  View, Text, ScrollView, TouchableOpacity, Image, TextInput } from "react-native";
+import {  View, Text, ScrollView, TouchableOpacity, Image, TextInput, Platform } from "react-native";
 import Styles from "../../../resources/styles/Dashboard";
 import {styleprofile} from "../../../resources/styles/styleProfile";
 import * as ImagePicker from 'expo-image-picker';
+
 
 const ProfileScreen = ( props ) => {
     const { userEmail } = props;
