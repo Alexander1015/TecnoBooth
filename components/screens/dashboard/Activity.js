@@ -2,8 +2,8 @@ import React from "react";
 import {  View, Text, ScrollView } from "react-native";
 import Styles from "../../../resources/styles/Dashboard";
 
-const ActivityScreen = (route) => {
-    const { navigation } = route;
+const ActivityScreen = ( props ) => {
+    const { userEmail } = props;
 
     return(
         <View style={ Styles.container }>

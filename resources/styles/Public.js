@@ -8,8 +8,8 @@ const Styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: Colors.PRIMARY_COLOR,
-        paddingHorizontal: 40,
         paddingBottom: 10,
+        paddingHorizontal: 10,
         paddingTop: Constants.statusBarHeight,
     },
     scroll: {
@@ -34,9 +34,9 @@ const Styles = StyleSheet.create({
         marginBottom: 30
     },
     form: {
-        
         paddingBottom: 10,
         marginBottom: 20,
+        width: "90%",
     },
     lbl: {
         fontSize: 15,
@@ -54,6 +54,7 @@ const Styles = StyleSheet.create({
     hr: {
         borderColor: Colors.SECUNDARY_COLOR,
         borderBottomWidth: 1,
+        width: "90%",
     },
     grpbtn: {
         marginBottom: 20,
@@ -86,7 +87,7 @@ const Styles = StyleSheet.create({
         color: Colors.SECUNDARY_COLOR,
         fontSize: 20,
         fontWeight: "bold",
-        marginVertical: 20,
+        marginBottom: 20,
     },
     header: {
         backgroundColor: Colors.SECUNDARY_COLOR,
@@ -118,6 +119,12 @@ const Styles = StyleSheet.create({
     },
     txtleftnav: {
         fontSize: 20,
+    },
+    viewbtndecor: {
+        width: "90%",
+    },
+    cmb: {
+        marginBottom: 10,
     }
 })
 

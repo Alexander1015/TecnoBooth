@@ -2,8 +2,8 @@ import React from "react";
 import {  View, Text, ScrollView } from "react-native";
 import Styles from "../../../resources/styles/Dashboard";
 
-const MyGroupsScreen = (route) => {
-    const { navigation } = route;
+const MyGroupsScreen = ( props ) => {
+    const { userEmail } = props;
 
     return(
         <View style={ Styles.container }>

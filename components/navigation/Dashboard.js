@@ -15,7 +15,53 @@ import Styles from "../../resources/styles/Navigation";
 
 const Drawer = createDrawerNavigator();
 
-const DashboardNav = () => {
+const DashboardNav = ({ route, navigation }) => {
+    const { email } = route.params;
+
+    //Metodos que pasan el email del usuario para que se utilice en las diferentes pantallas
+    const Index = () => {
+        return(
+            <IndexScreen userEmail={email} />
+        );
+    }
+
+    const MySuscriptions = () => {
+        return(
+            <MySuscriptionsScreen userEmail={email} />
+        );
+    }
+    
+    const MyGroups = () => {
+        return(
+            <MyGroupsScreen userEmail={email} />
+        );
+    }
+    
+    const Activity = () => {
+        return(
+            <ActivityScreen userEmail={email} />
+        );
+    }
+
+    const Profile = () => {
+        return(
+            <ProfileScreen userEmail={email} />
+        );
+    }
+
+    const CreateGroup = () => {
+        return(
+            <CreateGroupScreen userEmail={email} />
+        );
+    }
+
+    const Setting = () => {
+        return(
+            <SettingScreen userEmail={email} />
+        );
+    }
+
+    //Navigation
     return(
         <Drawer.Navigator
             initialRouteName="index"
@@ -45,7 +91,7 @@ const DashboardNav = () => {
         >
             <Drawer.Screen 
                 name="index"
-                component={IndexScreen}
+                component={Index}
                 options={{ 
                     title: "Inicio",
                     drawerIcon: ({ focused }) => (
@@ -63,7 +109,7 @@ const DashboardNav = () => {
             />
             <Drawer.Screen 
                 name="mysuscriptions"
-                component={MySuscriptionsScreen}
+                component={MySuscriptions}
                 options={{ 
                     title: "Mis Suscripciones",
                     drawerIcon: ({ focused }) => (
@@ -81,7 +127,7 @@ const DashboardNav = () => {
             />
             <Drawer.Screen 
                 name="mygroups"
-                component={MyGroupsScreen}
+                component={MyGroups}
                 options={{ 
                     title: "Mis Grupos",
                     drawerIcon: ({ focused }) => (
@@ -99,7 +145,7 @@ const DashboardNav = () => {
             />
             <Drawer.Screen 
                 name="activity"
-                component={ActivityScreen}
+                component={Activity}
                 options={{ 
                     title: "Activity",
                     drawerIcon: ({ focused }) => (
@@ -117,7 +163,7 @@ const DashboardNav = () => {
             />
             <Drawer.Screen 
                 name="creategroup"
-                component={CreateGroupScreen}
+                component={CreateGroup}
                 options={{ 
                     title: "Crea tu propio Grupo",
                     drawerIcon: ({ focused }) => (
@@ -135,7 +181,7 @@ const DashboardNav = () => {
             />
             <Drawer.Screen 
                 name="profile"
-                component={ProfileScreen}
+                component={Profile}
                 options={{ 
                     title: "Perfil",
                     drawerIcon: ({ focused }) => (
@@ -153,7 +199,7 @@ const DashboardNav = () => {
             />
             <Drawer.Screen 
                 name="setting"
-                component={SettingScreen}
+                component={Setting}
                 options={{ 
                     title: "Ajustes",
                     drawerIcon: ({ focused }) => (

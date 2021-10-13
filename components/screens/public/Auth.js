@@ -1,30 +1,63 @@
-import React from "react";
-import { View, Text, ScrollView, Image, TextInput, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { View, Text, ScrollView, Image, TextInput, TouchableOpacity, Alert } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
+import firebase from "../../../database/firebase";
 import Styles from "../../../resources/styles/Public";
 
 const AuthScreen = (route) => {
     const { navigation } = route;
 
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
     const login = () => {
-        alert("Bienvenido")
-        navigation.navigate("dashboard")
+        firebase.auth.signInWithEmailAndPassword(email, password)
+            .then(
+                () => {
+                    reset();
+                    navigation.navigate("dashboard", { email: email });
+                }
+            )
+            .catch((error) => {
+                if(error.code === "auth/invalid-email") {
+                    alerta("Error", "El correo ingresado es invalido");
+                }
+                else {
+                    alert("Error", error.message);
+                }
+            })
     }
 
     const olvidarpass = () => {
+        reset();
         alert("Que olvidadizo!");
     }
 
     const registrarse = () => {
-        navigation.navigate("register")
+        reset();
+        navigation.navigate("register");
+    }
+
+    //Alert que contiene titulo y mensaje
+    const alerta = (title, msg) => {
+        Alert.alert(
+            title,
+            msg,
+            [ { text: "Ok" } ]
+        );
+    }
+
+    const reset = () => {
+        setEmail("");
+        setPassword("");
     }
 
     return(
-        <View style={ Styles.container }>
-            <ScrollView
-                vertical
-                style={ Styles.scroll }
-            >
+        <ScrollView
+            vertical
+            style={ Styles.scroll }
+        >
+            <View style={ Styles.container }>
                 <View style={[ Styles.containlogo, Styles.hr ]}>
                     <Image
                         style={ Styles.logo }
@@ -34,10 +67,12 @@ const AuthScreen = (route) => {
                 </View>
                 <View style={[ Styles.form, Styles.hr ]}>
                     <View>
-                        <Text style={ Styles.lbl }>Correo o Usuario</Text>
+                        <Text style={ Styles.lbl }>Correo</Text>
                         <TextInput
                             style={ Styles.txt }
-                            placeholder="Ingrese el correo o usuario..."
+                            placeholder="Ingrese el correo..."
+                            onChangeText={(txt) => setEmail(txt.trim())}
+                            value={ email }
                         />
                     </View>
                     <View>
@@ -45,6 +80,9 @@ const AuthScreen = (route) => {
                         <TextInput
                             style={ Styles.txt }
                             placeholder="Ingrese la contraseña..."
+                            onChangeText={(txt) => setPassword(txt.trim())}
+                            value={ password }
+                            secureTextEntry={ true }
                         />
                     </View>
                 </View>
@@ -69,7 +107,7 @@ const AuthScreen = (route) => {
                         </Text>
                     </TouchableOpacity>
                 </View>
-                <View>
+                <View style={ Styles.viewbtndecor }>
                     <TouchableOpacity
                         onPress={ () => registrarse() }
                         style={ Styles.btn }
@@ -79,8 +117,8 @@ const AuthScreen = (route) => {
                         </View>
                     </TouchableOpacity>
                 </View>
-            </ScrollView>
-        </View>
+            </View>
+        </ScrollView>
     );
 }
 
