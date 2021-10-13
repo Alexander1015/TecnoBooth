@@ -12,10 +12,6 @@ const schema = yup.object({
     descripcion: yup.string().required("La descripcion es obligatoria")
 })
 
-<<<<<<< HEAD
-const CreateGroupScreen = ( props ) => {
-    const { userEmail } = props;
-=======
 const CreateGroupScreen = (route) => {
     const { navigation } = route;
     const { control, handleSubmit, formState: { errors } } = useForm({
@@ -46,7 +42,6 @@ const CreateGroupScreen = (route) => {
             setImage(result.uri);
         }
     };
->>>>>>> bryan_salinas
 
     const submit =(data)=> {console.log(data)}
 
