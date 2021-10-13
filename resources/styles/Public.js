@@ -122,6 +122,7 @@ const Styles = StyleSheet.create({
     },
     viewbtndecor: {
         width: "90%",
+        paddingVertical: 15,
     },
     viewbtncomp: {
         width: "100%",
