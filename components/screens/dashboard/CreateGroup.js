@@ -6,8 +6,10 @@ import Styles from "../../../resources/styles/Dashboard";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
+
 import UseAutenticacion from '../../../hooks/UseAutenticacion';
 import useGrupos from '../../../hooks/useGrupos';
+
 
 
 
@@ -72,11 +74,15 @@ const [imagen, setImagen] = useState('');
             
         }
     };
+
     const submit =({nombre, descripcion, otraInfo})=> {
         if(usuario && !cargando){
             CrearGrupo(usuario.uid, imagen, nombre, descripcion, otraInfo);
         }
     }
+
+ 
+
 
     return (
         <View style={stylesnewgroup.container}>
@@ -153,6 +159,7 @@ const [imagen, setImagen] = useState('');
                         defaultValue=""
                     />
                     </View>
+
                     {/*Medida de seguridad en caso de errores */}
 
 
@@ -172,6 +179,7 @@ const [imagen, setImagen] = useState('');
                                 <Image source={{uri: imagen}} style={{width: 200, height: 200}}/>
                             ):null}
                             </View>*/}
+
                 </View>
                 <TouchableOpacity style={stylesnewgroup.botonGuardar} onPress={handleSubmit(submit)}>
                         <Text style={stylesnewgroup.textoImagen}>Guardar grupo</Text>

@@ -4,7 +4,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
 import IndexScreen from "../screens/dashboard/Index";
 import MySuscriptionsScreen from "../screens/dashboard/MySubscriptions"
-import MyGroupsScreen from "../screens/dashboard/MyGroups"
+import MyGroupsScreen from "../../components/screens/dashboard/Grupos/MyGroups"
 import ActivityScreen from "../screens/dashboard/Activity"
 import ProfileScreen from "../screens/dashboard/Profile"
 import CreateGroupScreen from "../screens/dashboard/CreateGroup"
