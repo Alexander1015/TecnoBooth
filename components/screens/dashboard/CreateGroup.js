@@ -7,6 +7,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
 
+import UseAutenticacion from '../../../hooks/UseAutenticacion';
+import useGrupos from '../../../hooks/useGrupos';
+
+
+
+
+
 const schema = yup.object({
     nombre: yup.string().required("El nombre es obligatorio"),
     descripcion: yup.string().required("La descripcion es obligatoria")
@@ -16,6 +23,25 @@ const schema = yup.object({
     const { control, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     });
+    const usuario = UseAutenticacion();
+    const {CrearGrupo, subirImagen, cargando, grupos, obtenerGrupos} = useGrupos();
+    
+    
+    console.log(grupos);
+    useEffect(()=>{
+        obtenerGrupos()
+    },[])
+
+
+
+
+
+const [imagen, setImagen] = useState('');
+
+    if(usuario){
+        console.log(usuario.uid);
+    }
+
     const [image, setImage] = useState(null);
     useEffect(() => {
         (async () => {
@@ -36,12 +62,27 @@ const schema = yup.object({
         });
 
         console.log(result);
+        
 
         if (!result.cancelled) {
             setImage(result.uri);
+            
+            const url = await subirImagen(result.uri)
+            console.log(url);
+            setImagen(url);
+
+            
         }
     };
-    const submit =(data)=> {console.log(data)}
+
+    const submit =({nombre, descripcion, otraInfo})=> {
+        if(usuario && !cargando){
+            CrearGrupo(usuario.uid, imagen, nombre, descripcion, otraInfo);
+        }
+    }
+
+ 
+
 
     return (
         <View style={stylesnewgroup.container}>
@@ -118,7 +159,27 @@ const schema = yup.object({
                         defaultValue=""
                     />
                     </View>
-                    
+
+                    {/*Medida de seguridad en caso de errores */}
+
+
+                    {/*<View style={stylesnewgroup.viewInput}>
+                        <Text style={stylesnewgroup.textInput}>
+                            Url
+                        </Text>
+                        <TextInput
+                                
+                                multiline
+                                style={[stylesnewgroup.input, {height: 100}]}
+                                
+                                onChangeText={(value)=>setImagen(value)}
+                                value={imagen}
+                            />
+                            {imagen?(
+                                <Image source={{uri: imagen}} style={{width: 200, height: 200}}/>
+                            ):null}
+                            </View>*/}
+
                 </View>
                 <TouchableOpacity style={stylesnewgroup.botonGuardar} onPress={handleSubmit(submit)}>
                         <Text style={stylesnewgroup.textoImagen}>Guardar grupo</Text>

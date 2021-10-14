@@ -3,13 +3,11 @@ import { View, Text, ScrollView, Image, TextInput, TouchableOpacity, Alert } fro
 import { FontAwesome5 } from "@expo/vector-icons";
 import firebase from "../../../database/firebase";
 import Styles from "../../../resources/styles/Public";
-import PasswordScreen from "./Password";
 
 const ForgetScreen = (route) => {
     const { navigation } = route;
     
     const [email, setEmail] = useState("");
-    const [comprobado, setComprobado] = useState(false);
 
     const onChangeEmail = (dato) => {
         var nwdato = "";
@@ -21,12 +19,25 @@ const ForgetScreen = (route) => {
         setEmail(nwdato);
     }
 
-    const leeremail = () => {
+    const leeremail = async () => {
         if(email.trim() === "") {
             alerta("Error", "Debe rellenar el campo de correo");
         }
         else {
-            setComprobado(true);
+            await firebase.auth.sendPasswordResetEmail(email)
+                .then(() => {
+                    alerta("Proceso exitoso", "Se ha enviado un correo a su cuenta. Por favor sigue los pasos indicados")
+                    reset();
+                    navigation.navigate("auth");
+                })
+                .catch(( error ) => {
+                    if(error.code === "auth/invalid-email") {
+                        alerta("Error", "El correo ingresado es invalido");
+                    }
+                    else {
+                        alert("Error", error.message);
+                    }
+                })
         }
     }
 
@@ -92,7 +103,7 @@ const ForgetScreen = (route) => {
                                     style={ Styles.btn }
                                 >
                                     <View style={ Styles.btndecorado }>
-                                        <Text style={ Styles.txtbtn }>Comprobar Dirección de Correo</Text>
+                                        <Text style={ Styles.txtbtn }>Pedir cambio de Contraseña</Text>
                                     </View>
                                 </TouchableOpacity>
                                 <TouchableOpacity
@@ -108,7 +119,6 @@ const ForgetScreen = (route) => {
                                 </TouchableOpacity>
                             </View>
                         </View>
-                        <PasswordScreen email={ email } comprobado={ comprobado }/>
                     </View>
                 </ScrollView>
             </View>
