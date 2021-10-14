@@ -6,7 +6,7 @@ import firebase from "../../../database/firebase";
 import Styles from "../../../resources/styles/Public";
 import Colors from "../../../resources/utils/Colors"
 
-LogBox.ignoreLogs(["Setting a timer"]);
+//LogBox.ignoreLogs(["Setting a timer"]);
 
 const RegisterScreen = (route) => {
     const { navigation } = route;
@@ -205,6 +205,7 @@ const RegisterScreen = (route) => {
                                     { label: PG4, value: PG4 },
                                     { label: PG5, value: PG5 },
                                 ]}
+                                value={ question }
                             />
                         </View>
                         <View>
@@ -233,6 +234,7 @@ const RegisterScreen = (route) => {
                                 placeholder="Verifique la contraseña anterior..."
                                 onChangeText={(txt) => setRepeat(txt)}
                                 secureTextEntry={ true }
+                                value={ repeat }
                             />
                         </View>
                     </View>
