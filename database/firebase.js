@@ -1,6 +1,7 @@
 import firebase from "firebase";
 import 'firebase/firestore';
 import 'firebase/auth';
+import 'firebase/storage';
 
 //Se guardaran las variables en una Varible de entorno
 //Localizadas en el archivo '.env.local'
@@ -24,9 +25,11 @@ catch (error) {
 
 const db = firebase.firestore();
 const auth = firebase.auth();
+const storage = firebase.storage();
 
 export default {
     firebase,
     db,
     auth,
+    storage,
 }
