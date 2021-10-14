@@ -205,6 +205,7 @@ const RegisterScreen = (route) => {
                                     { label: PG4, value: PG4 },
                                     { label: PG5, value: PG5 },
                                 ]}
+                                value={ question }
                             />
                         </View>
                         <View>
@@ -233,6 +234,7 @@ const RegisterScreen = (route) => {
                                 placeholder="Verifique la contraseña anterior..."
                                 onChangeText={(txt) => setRepeat(txt)}
                                 secureTextEntry={ true }
+                                value={ repeat }
                             />
                         </View>
                     </View>

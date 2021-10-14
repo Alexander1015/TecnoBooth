@@ -10,6 +10,7 @@ const ForgetScreen = (route) => {
     
     const [email, setEmail] = useState("");
     const [comprobado, setComprobado] = useState(false);
+    const [question, setQuestion] = useState("");
 
     const onChangeEmail = (dato) => {
         var nwdato = "";
@@ -21,12 +22,27 @@ const ForgetScreen = (route) => {
         setEmail(nwdato);
     }
 
-    const leeremail = () => {
+    const leeremail = async () => {
         if(email.trim() === "") {
             alerta("Error", "Debe rellenar el campo de correo");
         }
         else {
-            setComprobado(true);
+            var verif = 0;
+            await firebase.db.collection("Usuarios").where("correo", "==", email)
+                .get()
+                .then(( querySnapshot ) => {
+                    querySnapshot.forEach((doc) => {
+                        //doc.id //Obtener el id de la coleccion
+                        verif++;
+                        const { pregunta, respuesta } = doc.data();
+                        setQuestion(pregunta);
+                        setComprobado(true);
+                    });
+                })
+                .catch(( error ) => {
+                    alerta("Error", "Ah ocurrido un error al ejecutar el proceso, vuelva a intentarlo");
+                });
+            if (verif === 0) alerta("Error", "El correo ingresado no existe");
         }
     }
 
@@ -45,6 +61,9 @@ const ForgetScreen = (route) => {
 
     const reset = () => {
         setEmail("");
+        setQuestion("");
+        setAnswer("");
+        setComprobado(false);
     }
 
     return(
@@ -108,7 +127,7 @@ const ForgetScreen = (route) => {
                                 </TouchableOpacity>
                             </View>
                         </View>
-                        <PasswordScreen email={ email } comprobado={ comprobado }/>
+                        <PasswordScreen email={ email } comprobado={ comprobado } question={ question } />
                     </View>
                 </ScrollView>
             </View>
