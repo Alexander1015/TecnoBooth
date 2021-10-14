@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, ScrollView, Image, TextInput, TouchableOpacity, Alert, LogBox, StyleSheet } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
-import RNPickerSelect from 'react-native-picker-select';
 import firebase from "../../../database/firebase";
 import Styles from "../../../resources/styles/Public";
 import Colors from "../../../resources/utils/Colors"
@@ -15,8 +14,6 @@ const RegisterScreen = (route) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [repeat, setRepeat] = useState("");
-    const [answer, setAnswer] = useState("");
-    const [question, setQuestion] = useState(null);
 
     const onChangeUser = (dato) => {
         var nwdato = "";
@@ -51,33 +48,17 @@ const RegisterScreen = (route) => {
         setPassword(nwdato)
     }
 
-    const onChangeAnswer = (dato) => {
-        var nwdato = "";
-        for (var i = 0; i < dato.length; i++) {
-            if(i < 50) {   //Solo permitimos hasta 50 caracteres
-                nwdato += dato[i];
-            }
-        }
-        setAnswer(nwdato)
-    }
-
     const registrarse = () => {
-        if(user.trim() === "" /*&& user.length > 2*/) {
+        if(user.trim() === "" && user.length > 2) {
             alerta("Error", "Debe rellenar el campo de usuario correctamente");
         }
-        else if(email.trim() === "" /*&& email.length > 5*/) {
+        else if(email.trim() === "" && email.length > 5) {
             alerta("Error", "Debe rellenar el campo de correo correctamente");
         }
-        else if(question === null || question.trim() === "") {
-            alerta("Error", "Debe seleccionar correctamente una pregunta de seguridad");
-        }
-        else if(answer.trim() === "" /*&& answer.length > 0*/) {
-            alerta("Error", "Debe rellenar el campo de respuesta de seguridad correctamente");
-        }
-        else if(password.trim() === "" /*&& password.length > 5*/) {
+        else if(password.trim() === ""  && email.length > 8) {
             alerta("Error", "Debe rellenar el campo de contraseña correctamente");
         }
-        else if(repeat.trim() === "" /*&& repeat.length > 5*/) {
+        else if(repeat.trim() === "") {
             alerta("Error", "Debe repetir la contraseña correctamente");
         }
         else if(password != repeat) {
@@ -90,9 +71,10 @@ const RegisterScreen = (route) => {
                         await firebase.db.collection("Usuarios").add({
                             usuario: user,
                             correo: email,
-                            pregunta: question,
-                            respuesta: answer,
                             password: password,
+                            cantidad: 0,
+                            img: "",
+                            visible: true,
                         });
                         reset();
                         alerta("Bienvenido", "Ha ingresado sus datos correctamente, Bienvenido a TecnoBooth");
@@ -131,16 +113,7 @@ const RegisterScreen = (route) => {
         setEmail("");
         setPassword("");
         setRepeat("");
-        setAnswer("");
-        setQuestion(null);
     }
-
-    //Preguntas de seguridad
-    const PG1 = "Nombre de mi primer mascota?";
-    const PG2 = "Nombre de soltera de mi madre?";
-    const PG3 = "Nombre de mi hermano?";
-    const PG4 = "Nombre del colegio en donde estudie?";
-    const PG5 = "Nombre de primer trabajo?";
 
     return(
         <View style={ Styles.container }>
@@ -187,34 +160,6 @@ const RegisterScreen = (route) => {
                                 onChangeText={(txt) => onChangeEmail(txt.trim())}
                                 value={ email }
                                 keyboardType="email-address"
-                            />
-                        </View>
-                        <View style={ Styles.cmb }>
-                            <Text style={ Styles.lbl }>Seleccione la Pregunta de Seguridad</Text>
-                            <RNPickerSelect
-                                style={ picketSelectStyles }
-                                onValueChange={ (value) => setQuestion(value) }
-                                placeholder={{
-                                    label: "Selecciona una de las preguntas...",
-                                    value: null,
-                                }}
-                                items={[
-                                    { label: PG1, value: PG1 },
-                                    { label: PG2, value: PG2 },
-                                    { label: PG3, value: PG3 },
-                                    { label: PG4, value: PG4 },
-                                    { label: PG5, value: PG5 },
-                                ]}
-                                value={ question }
-                            />
-                        </View>
-                        <View>
-                            <Text style={ Styles.lbl }>Ingrese la Respuesta de Seguridad</Text>
-                            <TextInput
-                                style={ Styles.txt }
-                                placeholder="Ingrese la respuesta..."
-                                onChangeText={(txt) => onChangeAnswer(txt)}
-                                value={ answer }
                             />
                         </View>
                         <View>
