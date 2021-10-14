@@ -1,15 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, ScrollView, Image, TextInput, TouchableOpacity, Alert, LogBox, StyleSheet } from "react-native";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import firebase from "../../../database/firebase";
 import Styles from "../../../resources/styles/Public";
-import Colors from "../../../resources/utils/Colors"
 
 const PasswordScreen = (props) => {
-    const { email, comprobado } = props;
+    const { email, comprobado, question } = props;
     if(comprobado) {
         const [answer, setAnswer] = useState("");
-        const [question, setQuestion] = useState(null);
 
         const onChangeAnswer = (dato) => {
             var nwdato = "";
@@ -21,37 +18,29 @@ const PasswordScreen = (props) => {
             setAnswer(nwdato)
         }
 
-        const obtenerpassword = () => {
+        const obtenerpassword = async () => {
             if(answer.trim() === "" /*&& answer.length > 0*/) {
                 alerta("Error", "Debe rellenar el campo de respuesta de seguridad correctamente");
             }
             else {
-                firebase.auth.createUserWithEmailAndPassword(email, password)
-                    .then(
-                        async (userCredential) => {
-                            await firebase.db.collection("Usuarios").add({
-                                usuario: user,
-                                correo: email,
-                                pregunta: question,
-                                respuesta: answer,
-                                password: password,
-                            });
-                            reset();
-                            alerta("Bienvenido", "Ha ingresado sus datos correctamente, Bienvenido a TecnoBooth");
-                            navigation.navigate("dashboard", { email: email })
-                        }
-                    )
-                    .catch((error) => {
-                        if(error.code === "auth/invalid-email") {
-                            alerta("Error", "El correo ingresado es invalido");
-                        }
-                        else if(error.code === "auth/email-already-in-use") {
-                            alerta("Error", "El correo ingresado ya esta en uso");
-                        }
-                        else {
-                            alert("Error", error.message);
-                        }
+                var verif = 0;
+                await firebase.db.collection("Usuarios").where("correo", "==", email).where("pregunta", "==", question)
+                    .get()
+                    .then(( querySnapshot ) => {
+                        querySnapshot.forEach((doc) => {
+                            //doc.id //Obtener el id de la coleccion
+                            verif++;
+                            const { respuesta, password } = doc.data();
+                            if(respuesta.trim() === answer.trim()) {
+                                alerta("Contraña", "Respuesta correcta, su contraseña es: " + password);
+                            }
+                            else alerta("Error", "La respuesta de seguridad es incorrecta")
+                        });
                     })
+                    .catch(( error ) => {
+                        alerta("Error", "Ah ocurrido un error al ejecutar el proceso, vuelva a intentarlo");
+                    });
+                if (verif === 0) alerta("Error", "Ah ocurrido un error al ejecutar el proceso, vuelva a intentarlo");
             }
         }
 
@@ -67,29 +56,21 @@ const PasswordScreen = (props) => {
             setAnswer("");
         }
 
-        //Preguntas de seguridad
-        const PG1 = "Nombre de mi primer mascota?";
-        const PG2 = "Nombre de soltera de mi madre?";
-        const PG3 = "Nombre de mi hermano?";
-        const PG4 = "Nombre del colegio en donde estudie?";
-        const PG5 = "Nombre de primer trabajo?";
-
         return(
             <View style={ Styles.form }>
-                <Text style={ Styles.tituloview }>Pregunta ""</Text>
+                <Text style={ Styles.tituloview }>{ question }</Text>
                 <View>
                     <Text style={ Styles.lbl }>Ingrese su Respuesta de Seguridad</Text>
                     <TextInput
                         style={ Styles.txt }
                         placeholder="Ingrese su respuesta de seguridad..."
                         onChangeText={(txt) => onChangeAnswer(txt)}
-                        value={ email }
-                        keyboardType="email-address"
+                        value={ answer }
                     />
                 </View>
                 <View style={ Styles.viewbtncomp }>
                     <TouchableOpacity
-                        onPress={ () => leeremail() }
+                        onPress={ () => obtenerpassword() }
                         style={ Styles.btn }
                     >
                         <View style={ Styles.btndecorado }>
