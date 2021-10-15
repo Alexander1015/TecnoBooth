@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
       marginBottom: 20,
     },
     card_image: {
+      alignSelf:'center',
       width: 300,
       height: 200,
       borderRadius: 10,
@@ -31,12 +32,13 @@ export const styles = StyleSheet.create({
       marginTop:10,
       borderColor: "#cccccc",
       borderWidth: 1,
-      padding: 5
+      padding: 5,
+      borderRadius:10,
       
     },
     textArea: {
-      height: 150,
+      height: 100,
       justifyContent: "flex-start",
-      color: Colors.SECUNDARY_COLOR
+      color: Colors.SECUNDARY_COLOR,
     }
   });
