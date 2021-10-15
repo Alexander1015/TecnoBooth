@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import * as ImagePicker from 'expo-image-picker';
 import { stylesnewgroup } from "../../../resources/styles/StyleNewGroup";
-import { View, Text, ScrollView, Platform, TouchableOpacity, Image, TextInput } from "react-native";
+import { View, Text, ScrollView, Platform, TouchableOpacity, Image, TextInput, Alert } from "react-native";
 import Styles from "../../../resources/styles/Dashboard";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
@@ -11,7 +11,11 @@ import UseAutenticacion from '../../../hooks/UseAutenticacion';
 import useGrupos from '../../../hooks/useGrupos';
 
 
-
+const AlertaConfirmacion = () => {
+    Alert.alert('Creacion de grupo', 'Se ha creado el grupo correctamente',[
+        {text: 'Ok', onPress: () => console.log('alerta cerrada')},
+    ])
+}
 
 
 const schema = yup.object({
@@ -78,7 +82,9 @@ const [imagen, setImagen] = useState('');
     const submit =({nombre, descripcion, otraInfo})=> {
         if(usuario && !cargando){
             CrearGrupo(usuario.uid, imagen, nombre, descripcion, otraInfo);
+            
         }
+        AlertaConfirmacion();
     }
 
  
