@@ -70,4 +70,12 @@ export const styleprofile = StyleSheet.create({
         borderRadius: 20,
         
     },
+    textoError: {
+        color: 'red',
+        fontSize: 16,
+        borderLeftWidth: 4,
+        borderLeftColor: 'red',
+        paddingLeft: 5,
+        marginTop: -8,
+    }
 })
