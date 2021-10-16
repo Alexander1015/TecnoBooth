@@ -71,7 +71,6 @@ const RegisterScreen = (route) => {
                         await firebase.db.collection("Usuarios").add({
                             usuario: user,
                             correo: email,
-                            password: password,
                             cantidad: 0,
                             img: "",
                             visible: true,
