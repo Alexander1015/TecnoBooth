@@ -74,6 +74,7 @@ const RegisterScreen = (route) => {
                             cantidad: 0,
                             img: "",
                             visible: true,
+                            password: password,
                         });
                         reset();
                         alerta("Bienvenido", "Ha ingresado sus datos correctamente, Bienvenido a TecnoBooth");
