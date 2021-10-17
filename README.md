@@ -5,7 +5,7 @@ TecnoBooth es una aplicación destinada al intercambio de información por parte
 * [Video explicativo - TecnoBooth :movie_camera:](https://drive.google.com/file/d/1p1cB4TogLFLXMKvIqFw5yjdgWoNQbLt6/view?usp=sharing)
 * [Manual de Usuario :boy:](https://drive.google.com/file/d/1zEMzlvI25DTjdsNUGBSd-JK_HRk8q1Lv/view?usp=sharing)
 * [Manual Técnico :construction_worker:](https://drive.google.com/file/d/1PcWgbomN86GfS0e_keHub4uZDW27ItkS/view?usp=sharing)
-* [Documento - Primera Fase :movie_camera:](https://drive.google.com/file/d/1frJ80hPfq77Buu2ZV5UQ50U6tHbIW7mC/view?usp=sharing)
+* [Documento - Primera Fase :notebook:](https://drive.google.com/file/d/1frJ80hPfq77Buu2ZV5UQ50U6tHbIW7mC/view?usp=sharing)
 
 
 ## Requisitos :rotating_light:
