@@ -106,10 +106,16 @@ const CreateGroupScreen = (route, { userEmail }) => {
                         </TouchableOpacity>
                     </View>
                     {
-                        image && (
+                        image ? (
                             <Image
                                 source={{ uri: image }}
-                                style={{ width: 200, height: 200 }}
+                                style={{ width: 300, height: 200, resizeMode: "contain" }}
+                            /> 
+                        )
+                        : (
+                            <Image
+                                source={require("../../../resources/img/group-default.png")}
+                                style={{ width: 300, height: 200, resizeMode: "contain" }}
                             />
                         )
                     }

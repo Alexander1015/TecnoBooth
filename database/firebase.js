@@ -3,8 +3,6 @@ import "firebase/firestore";
 import "firebase/auth";
 import "firebase/storage";
 
-//Se guardaran las variables en una Varible de entorno
-//Localizadas en el archivo '.env.local'
 const firebaseConfig = {
     apiKey: "AIzaSyAlJA4f5GwhFWYy8t80buMyJjy1lxgpWtk",
     authDomain: "tecnobooth-a37c0.firebaseapp.com",

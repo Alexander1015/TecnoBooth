@@ -127,13 +127,13 @@ const ProfileScreen = (props) => {
                                 image ? (
                                     <Image
                                         source={{ uri: image }}
-                                        style={{ width: 150, height: 150 }}
+                                        style={{ width: 150, height: 150, resizeMode: "contain" }}
                                     />
                                 )
                                 : (
                                     <Image
                                         source={require("../../../resources/img/user-default.png")}
-                                        style={{ width: 150, height: 150 }}
+                                        style={{ width: 150, height: 150, resizeMode: "contain" }}
                                     />
                                 )
                             }
