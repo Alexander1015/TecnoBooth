@@ -1,4 +1,7 @@
-import { StyleSheet, Dimensions } from "react-native";
+import {
+  StyleSheet,
+  Dimensions
+} from "react-native";
 import Constants from "expo-constants";
 import Colors from "../utils/Colors"
 
@@ -42,20 +45,18 @@ export const styles = StyleSheet.create({
     color: Colors.SECUNDARY_COLOR,
   },
   contenedorpicker: {
-    height:40,
+    height: 40,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
     backgroundColor: Colors.SECUNDARY_COLOR,
     borderRadius: 15,
-    marginTop:30,
-    alignSelf:"center"
+    marginTop: 30,
+    alignSelf: "center"
   },
   estilopicker: {
-    paddingRight:'85%',
-    height:'100%',
-    color:Colors.PRIMARY_COLOR,
+    paddingRight: '85%',
+    height: '100%',
+    color: Colors.PRIMARY_COLOR,
   },
-
-
 });

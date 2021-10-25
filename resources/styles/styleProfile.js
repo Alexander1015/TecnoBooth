@@ -1,4 +1,7 @@
-import { StyleSheet, Dimensions } from "react-native";
+import {
+    StyleSheet,
+    Dimensions
+} from "react-native";
 import Constants from "expo-constants";
 import Colors from "../utils/Colors"
 
@@ -8,7 +11,7 @@ export const styleprofile = StyleSheet.create({
         color: "white",
         justifyContent: "center",
         alignItems: "center",
-        marginHorizontal:65,
+        marginHorizontal: 65,
         fontWeight: "bold"
     },
     container: {
@@ -29,7 +32,7 @@ export const styleprofile = StyleSheet.create({
         flex: 1,
     },
     viewInput: {
-        marginTop:5
+        marginTop: 5
     },
     textInput: {
         color: 'white',
@@ -46,13 +49,13 @@ export const styleprofile = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 5,
     },
-    contenedorImagen:{
+    contenedorImagen: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
         marginVertical: 25,
     },
-    botonImagen:{
+    botonImagen: {
         marginHorizontal: 25,
         backgroundColor: Colors.SECUNDARY_COLOR,
         paddingHorizontal: 5,
@@ -63,12 +66,12 @@ export const styleprofile = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginVertical: 20,
-        backgroundColor: Colors.SECUNDARY_COLOR, 
+        backgroundColor: Colors.SECUNDARY_COLOR,
         alignSelf: 'center',
         paddingVertical: 10,
         paddingHorizontal: 5,
         borderRadius: 20,
-        
+
     },
     textoError: {
         color: 'red',
