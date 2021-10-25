@@ -1,12 +1,8 @@
 import React from "react";
-import Info from "../screens/Info";
-import Home from "../screens/Home";
-import Integ from "../screens/Integ";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
-import InfoStack from "./InfoStack";
-import HomeStack from "./HomeStack";
-import IntegStack from "./IntegStack";
+import InfoStack from "./stackInfo";
+import HomeStack from "./stackHome";
+import IntegStack from "./stackInteg";
 
 const Tab = createBottomTabNavigator();
 export default function Navigation() {
