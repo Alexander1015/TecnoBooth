@@ -1,7 +1,7 @@
 import firebase from "firebase";
-import 'firebase/firestore';
-import 'firebase/auth';
-import 'firebase/storage';
+import "firebase/firestore";
+import "firebase/auth";
+import "firebase/storage";
 
 //Se guardaran las variables en una Varible de entorno
 //Localizadas en el archivo '.env.local'
@@ -11,7 +11,7 @@ const firebaseConfig = {
     projectId: "tecnobooth-a37c0",
     storageBucket: "tecnobooth-a37c0.appspot.com",
     messagingSenderId: "1069000362437",
-    appId: "1:1069000362437:web:f65f9f08b3906ee740e3ac"
+    appId: "1:1069000362437:web:f65f9f08b3906ee740e3ac",
 };
 
 try {
@@ -31,4 +31,4 @@ export default {
     db,
     auth,
     storage,
-}
+};

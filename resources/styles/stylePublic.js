@@ -1,9 +1,6 @@
-import {
-    StyleSheet,
-    Dimensions
-} from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import Constants from "expo-constants";
-import Colors from "../utils/Colors"
+import Colors from "../utils/Colors";
 
 const Styles = StyleSheet.create({
     container: {
@@ -34,7 +31,7 @@ const Styles = StyleSheet.create({
         textAlign: "center",
         fontSize: 30,
         color: Colors.SECUNDARY_COLOR,
-        marginBottom: 30
+        marginBottom: 30,
     },
     form: {
         paddingBottom: 10,
@@ -132,7 +129,7 @@ const Styles = StyleSheet.create({
     },
     cmb: {
         marginBottom: 10,
-    }
-})
+    },
+});
 
 export default Styles;

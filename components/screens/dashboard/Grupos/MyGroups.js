@@ -1,16 +1,16 @@
 import React from "react";
-import {  View, Text, ScrollView } from "react-native";
-import Styles from "../../../../resources/styles/Dashboard";
-import Navigation from "../Grupos/Navigation/Navigation";
-import { NavigationContainer } from '@react-navigation/native';
+import { View, Text, ScrollView } from "react-native";
+import Styles from "../../../../resources/styles/styleDashboard";
+import Navigation from "./Navigation/Navigation";
+import { NavigationContainer } from "@react-navigation/native";
 const MyGroupsScreen = (route) => {
     const { navigation } = route;
 
-    return(
+    return (
         <NavigationContainer independent={true}>
-        <Navigation></Navigation>
+            <Navigation></Navigation>
         </NavigationContainer>
-        );
-}
+    );
+};
 
 export default MyGroupsScreen;

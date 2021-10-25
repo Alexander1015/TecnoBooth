@@ -5,13 +5,14 @@ import Colors from "../../../resources/utils/Colors";
 
 const LogoutScreen = (route) => {
     const { navigation } = route;
-    
+
     useEffect(() => {
-        firebase.auth.signOut()
+        firebase.auth
+            .signOut()
             .then(() => navigation.navigate("public"))
-            .catch(() => navigation.navigate("dashboard"))
-    }, [navigation])
+            .catch(() => navigation.navigate("dashboard"));
+    }, [navigation]);
     return <View style={{ flex: 1, backgroundColor: Colors.PRIMARY_COLOR }} />;
-}
+};
 
 export default LogoutScreen;

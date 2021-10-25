@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import firebase from "../../database/firebase";
-import PublicNav from "./Public";
-import DashboardNav from "./Dashboard";
+import PublicNav from "./drawerPublic";
+import DashboardNav from "./drawerDashboard";
 
 const Stack = createStackNavigator();
 

@@ -1,8 +1,6 @@
-import {
-    StyleSheet
-} from "react-native";
+import { StyleSheet } from "react-native";
 import Constants from "expo-constants";
-import Colors from "../utils/Colors"
+import Colors from "../utils/Colors";
 
 const Styles = StyleSheet.create({
     container: {
@@ -21,6 +19,6 @@ const Styles = StyleSheet.create({
         textAlign: "center",
     },
     //Fin de los textos y botones de Ejemplo
-})
+});
 
 export default Styles;
