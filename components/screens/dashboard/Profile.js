@@ -11,14 +11,11 @@ import {
 } from "react-native";
 import { styleprofile } from "../../../resources/styles/styleProfile";
 import * as ImagePicker from "expo-image-picker";
-import firebase from "../../../database/firebase";
-import useAutenticacion from "../../../hooks/UseAutenticacion";
 import UseUsuarios from "../../../hooks/UseUsuarios";
-import { createIconSetFromFontello } from "@expo/vector-icons";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
-import { string } from "yup/lib/locale";
+import firebase from "../../../database/firebase";
 
 const esquema = yup.object({
     nombre: yup.string().required("El nombre de usuario es obligatorio"),
@@ -26,11 +23,6 @@ const esquema = yup.object({
         .string()
         .email("El correo no es valido")
         .required("El correo es obligatorio"),
-    password: yup
-        .string()
-        .min(6, "El numero de caracteres minimos es 6")
-        .max(50, "El numero de caracteres maximos es 50")
-        .required("Contraseña obligatoria"),
 });
 
 const AlertaConfirmacion = () => {
@@ -40,8 +32,7 @@ const AlertaConfirmacion = () => {
 };
 
 const ProfileScreen = (props) => {
-    const { obtenerUsuario, usuario, cargando, ActualizarUsuario } =
-        UseUsuarios();
+    const { obtenerUsuario, usuario, cargando, ActualizarUsuario } = UseUsuarios();
     useEffect(() => {
         obtenerUsuario();
     }, []);
@@ -54,7 +45,7 @@ const ProfileScreen = (props) => {
     } = useForm({
         resolver: yupResolver(esquema),
     });
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState();
     useEffect(() => {
         (async () => {
             if (Platform.OS !== "web") {
@@ -74,21 +65,45 @@ const ProfileScreen = (props) => {
             quality: 1,
         });
 
-        console.log(result);
+        //console.log(result);
 
         if (!result.cancelled) {
             setImage(result.uri);
         }
     };
 
-    const submit = ({ nombre, email, password }) => {
-        ActualizarUsuario(nombre, email, password, usuario.id);
+    const submit = ({ nombre, email }) => {
+        ActualizarUsuario(nombre, email, usuario.id);
         reset({
             nombre: "",
             email: "",
-            password: "",
         });
         AlertaConfirmacion();
+    };
+
+    const leeremail = async () => {
+        if (usuario.correo.trim() === "") {
+            console.log("No se ha recibido el email del usuario");
+        } else {
+            await firebase.auth
+                .sendPasswordResetEmail(usuario.correo)
+                .then(() => {
+                    alerta(
+                        "Proceso exitoso",
+                        "Se ha enviado un correo a su cuenta. Por favor sigue los pasos indicados"
+                    );
+                    navigation.navigate("index");
+                })
+                .catch((error) => {
+                    if (error.code === "auth/invalid-email") {
+                        alerta("Error", "El correo obtenido es invalido");
+                    }
+                });
+        }
+    };
+
+    const alerta = (title, msg) => {
+        Alert.alert(title, msg, [{ text: "Ok" }]);
     };
 
     return (
@@ -97,97 +112,99 @@ const ProfileScreen = (props) => {
                 {!cargando && (
                     <>
                         <Text style={styleprofile.titulo}>Perfil del Usuario</Text>
-
                         <View style={styleprofile.contenedorImagen}>
-                            <TouchableOpacity
-                                style={styleprofile.botonImagen}
-                                onPress={pickImage}
-                            >
-                                <Text style={styleprofile.textoImagen}>
-                                    Agregar imagen de perfil
-                                </Text>
-                            </TouchableOpacity>
-                            {image && (
-                                <Image
-                                    source={{ uri: image }}
-                                    style={{ width: 150, height: 150 }}
+                            <View style={styleprofile.viewbtndecor}>
+                                <TouchableOpacity
+                                    style={styleprofile.btn}
+                                    onPress={pickImage}
+                                >
+                                    <View style={styleprofile.btndecorado}>
+                                        <Text style={styleprofile.txtbtn}>Cambiar Imagen</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                            {
+                                image ? (
+                                    <Image
+                                        source={{ uri: image }}
+                                        style={{ width: 150, height: 150 }}
+                                    />
+                                )
+                                : (
+                                    <Image
+                                        source={require("../../../resources/img/user-default.png")}
+                                        style={{ width: 150, height: 150 }}
+                                    />
+                                )
+                            }
+                        </View>
+                        <View style={styleprofile.containerForm}>
+                            <View style={styleprofile.viewInput}>
+                                <Text style={styleprofile.textInput}>Nombre de usuario:</Text>
+
+                                <Controller
+                                    control={control}
+                                    render={({ field: { onChange, onBlur, value } }) => (
+                                        <TextInput
+                                            style={styleprofile.input}
+                                            value={value}
+                                            onChangeText={onChange}
+                                            onBlur={onBlur}
+                                        />
+                                    )}
+                                    name="nombre"
+                                    defaultValue={usuario.usuario}
                                 />
-                            )}
-                        </View>
-
-                        <View style={styleprofile.viewInput}>
-                            <Text style={styleprofile.textInput}>Nombre de usuario:</Text>
-
-                            <Controller
-                                control={control}
-                                render={({ field: { onChange, onBlur, value } }) => (
-                                    <TextInput
-                                        style={styleprofile.input}
-                                        value={value}
-                                        onChangeText={onChange}
-                                        onBlur={onBlur}
-                                    />
+                                {errors.nombre && (
+                                    <Text style={styleprofile.textoError}>
+                                        {errors.nombre.message}
+                                    </Text>
                                 )}
-                                name="nombre"
-                                defaultValue={usuario.usuario}
-                            />
-                            {errors.nombre && (
-                                <Text style={styleprofile.textoError}>
-                                    {errors.nombre.message}
-                                </Text>
-                            )}
-                        </View>
-
-                        <View style={styleprofile.viewInput}>
-                            <Text style={styleprofile.textInput}>Correo electronico:</Text>
-                            <Controller
-                                control={control}
-                                render={({ field: { onChange, onBlur, value } }) => (
-                                    <TextInput
-                                        style={styleprofile.input}
-                                        value={value}
-                                        onChangeText={onChange}
-                                        onBlur={onBlur}
-                                    />
+                            </View>
+                            <View style={styleprofile.viewInput}>
+                                <Text style={styleprofile.textInput}>Correo electronico:</Text>
+                                <Controller
+                                    control={control}
+                                    render={({ field: { onChange, onBlur, value } }) => (
+                                        <TextInput
+                                            style={styleprofile.input}
+                                            value={value}
+                                            onChangeText={onChange}
+                                            onBlur={onBlur}
+                                        />
+                                    )}
+                                    name="email"
+                                    defaultValue={usuario.correo}
+                                />
+                                {errors.email && (
+                                    <Text style={styleprofile.textoError}>
+                                        {errors.email.message}
+                                    </Text>
                                 )}
-                                name="email"
-                                defaultValue={usuario.correo}
-                            />
-                            {errors.email && (
-                                <Text style={styleprofile.textoError}>
-                                    {errors.email.message}
-                                </Text>
-                            )}
+                            </View>
+                            <View>
+                                <View style={styleprofile.viewbtndecortot}>
+                                    <TouchableOpacity
+                                        style={styleprofile.btn}
+                                        onPress={handleSubmit(submit)}
+                                    >
+                                        <View style={styleprofile.btndecorado}>
+                                            <Text style={styleprofile.txtbtn}>Guardar Cambios</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={() => leeremail()}
+                                        style={styleprofile.btn}
+                                    >
+                                        <View style={styleprofile.btndecorado}>
+                                            <Text style={styleprofile.txtbtn}>
+                                                Pedir cambio de Contraseña
+                                            </Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
                         </View>
-
-                        <View style={styleprofile.viewInput}>
-                            <Text style={styleprofile.textInput}>Contraseña:</Text>
-                            <Controller
-                                control={control}
-                                render={({ field: { onChange, onBlur, value } }) => (
-                                    <TextInput
-                                        style={styleprofile.input}
-                                        value={value}
-                                        onChangeText={onChange}
-                                        onBlur={onBlur}
-                                    />
-                                )}
-                                name="password"
-                                defaultValue={usuario.password}
-                            />
-                            {errors.password && (
-                                <Text style={styleprofile.textoError}>
-                                    {errors.password.message}
-                                </Text>
-                            )}
-                        </View>
-
-                        <TouchableOpacity
-                            style={styleprofile.botonGuardar}
-                            onPress={handleSubmit(submit)}
-                        >
-                            <Text style={styleprofile.textoImagen}>Guardar cambios</Text>
-                        </TouchableOpacity>
                     </>
                 )}
             </ScrollView>

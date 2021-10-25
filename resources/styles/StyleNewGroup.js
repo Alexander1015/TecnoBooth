@@ -6,30 +6,17 @@ const { width } = Dimensions.get("window");
 
 export const stylesnewgroup = StyleSheet.create({
     contenedorImagen: {
-        flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        marginVertical: 25,
-    },
-    botonImagen: {
-        marginHorizontal: 25,
-        backgroundColor: Colors.SECUNDARY_COLOR,
-        paddingHorizontal: 5,
-        paddingVertical: 7,
-        borderRadius: 20,
-    },
-    textoImagen: {
-        color: "black",
-        fontSize: 18,
+        marginBottom: 10,
     },
     input: {
-        backgroundColor: "white",
-        borderRadius: 10,
-        fontSize: 18,
-        marginTop: 5,
-        marginBottom: 15,
-        paddingHorizontal: 10,
-        paddingVertical: 5,
+        backgroundColor: Colors.SECUNDARY_COLOR,
+        color: Colors.PRIMARY_COLOR,
+        padding: 5,
+        borderRadius: 2,
+        marginBottom: 20,
+        fontSize: 15,
     },
     container: {
         flex: 1,
@@ -44,24 +31,12 @@ export const stylesnewgroup = StyleSheet.create({
         flex: 1,
     },
     textInput: {
-        color: "white",
-        alignSelf: "flex-start",
-        fontSize: 18,
-        fontWeight: "bold",
+        fontSize: 15,
+        color: Colors.SECUNDARY_COLOR,
+        marginBottom: 10,
     },
     viewInput: {
         width: width > 1000 ? "50%" : "90%",
-    },
-    botonGuardar: {
-        width: width > 1000 ? "50%" : "90%",
-        justifyContent: "center",
-        alignItems: "center",
-        marginVertical: 20,
-        backgroundColor: Colors.SECUNDARY_COLOR,
-        alignSelf: "center",
-        paddingVertical: 10,
-        paddingHorizontal: 5,
-        borderRadius: 20,
     },
     textoError: {
         color: "red",
@@ -70,5 +45,37 @@ export const stylesnewgroup = StyleSheet.create({
         borderLeftColor: "red",
         paddingLeft: 5,
         marginTop: -8,
+    },
+    viewbtndecor: {
+        width: "90%",
+        paddingVertical: 15,
+    },
+    btn: {
+        backgroundColor: Colors.SECUNDARY_COLOR,
+        width: "100%",
+        padding: 5,
+        borderRadius: 5,
+        marginBottom: 20,
+    },
+    btndecorado: {
+        margin: 1,
+        borderColor: Colors.PRIMARY_COLOR,
+        borderWidth: 1,
+        padding: 5,
+    },
+    txtbtn: {
+        color: Colors.PRIMARY_COLOR,
+        fontSize: 15,
+        textAlign: "center",
+        fontWeight: "bold",
+    },
+    titulo: {
+        fontSize: 30,
+        color: "white",
+        justifyContent: "center",
+        alignItems: "center",
+        textAlign: "center",
+        marginHorizontal: 10,
+        fontWeight: "bold",
     },
 });

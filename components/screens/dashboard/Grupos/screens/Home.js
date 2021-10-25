@@ -1,13 +1,13 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
-import { Card } from "react-native-paper";
+import { View, Text, ScrollView } from "react-native";
+import Styles from "../../../../../resources/styles/styleDashboard";
 export default function Home(props) {
   const { navigation } = props;
   return (
-    <ScrollView>
-      <View>
-        <Text>Aquí es Home</Text>
-      </View>
-    </ScrollView>
+    <View style={Styles.container}>
+      <ScrollView vertical>
+        <Text style={Styles.texto}>Aquí es Home</Text>
+      </ScrollView>
+    </View>
   );
 }

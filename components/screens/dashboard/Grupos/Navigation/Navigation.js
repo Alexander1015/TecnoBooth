@@ -1,5 +1,6 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { FontAwesome5 } from "@expo/vector-icons";
 import InfoStack from "./stackInfo";
 import HomeStack from "./stackHome";
 import IntegStack from "./stackInteg";

@@ -11,7 +11,6 @@ import {
     TextInput,
     Alert,
 } from "react-native";
-import Styles from "../../../resources/styles/styleDashboard";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
@@ -42,7 +41,7 @@ const CreateGroupScreen = (route, { userEmail }) => {
     const { CrearGrupo, subirImagen, cargando, grupos, obtenerGrupos } =
         useGrupos();
 
-    console.log(grupos);
+    //console.log(grupos);
     useEffect(() => {
         obtenerGrupos();
     }, []);
@@ -50,7 +49,7 @@ const CreateGroupScreen = (route, { userEmail }) => {
     const [imagen, setImagen] = useState("");
 
     if (usuario) {
-        console.log(usuario.uid);
+        //console.log(usuario.uid);
     }
 
     const [image, setImage] = useState(null);
@@ -73,13 +72,13 @@ const CreateGroupScreen = (route, { userEmail }) => {
             quality: 1,
         });
 
-        console.log(result);
+        //console.log(result);
 
         if (!result.cancelled) {
             setImage(result.uri);
 
             const url = await subirImagen(result.uri);
-            console.log(url);
+           // console.log(url);
             setImagen(url);
         }
     };
@@ -94,19 +93,26 @@ const CreateGroupScreen = (route, { userEmail }) => {
     return (
         <View style={stylesnewgroup.container}>
             <ScrollView style={{ flex: 1 }} vertical>
+                <Text style={stylesnewgroup.titulo}>Crear un nuevo Grupo como Administrador</Text>
                 <View style={stylesnewgroup.contenedorImagen}>
-                    <TouchableOpacity
-                        style={stylesnewgroup.botonImagen}
-                        onPress={pickImage}
-                    >
-                        <Text style={stylesnewgroup.textoImagen}>Agregar imagen</Text>
-                    </TouchableOpacity>
-                    {image && (
-                        <Image
-                            source={{ uri: image }}
-                            style={{ width: 200, height: 200 }}
-                        />
-                    )}
+                    <View style={stylesnewgroup.viewbtndecor}>
+                        <TouchableOpacity
+                            style={stylesnewgroup.btn}
+                            onPress={pickImage}
+                        >
+                            <View style={stylesnewgroup.btndecorado}>
+                                <Text style={stylesnewgroup.txtbtn}>Agregar Imagen</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                    {
+                        image && (
+                            <Image
+                                source={{ uri: image }}
+                                style={{ width: 200, height: 200 }}
+                            />
+                        )
+                    }
                 </View>
                 <View style={stylesnewgroup.containerForm}>
                     <View style={stylesnewgroup.viewInput}>
@@ -171,32 +177,38 @@ const CreateGroupScreen = (route, { userEmail }) => {
                             defaultValue=""
                         />
                     </View>
-
-                    {/*Medida de seguridad en caso de errores */}
-
-                    {/*<View style={stylesnewgroup.viewInput}>
-                        <Text style={stylesnewgroup.textInput}>
-                            Url
-                        </Text>
-                        <TextInput
-                                
-                                multiline
-                                style={[stylesnewgroup.input, {height: 100}]}
-                                
-                                onChangeText={(value)=>setImagen(value)}
-                                value={imagen}
-                            />
-                            {imagen?(
-                                <Image source={{uri: imagen}} style={{width: 200, height: 200}}/>
-                            ):null}
-                            </View>*/}
+                    {
+                        /*Medida de seguridad en caso de errores */
+                        /*
+                            <View style={stylesnewgroup.viewInput}>
+                            <Text style={stylesnewgroup.textInput}>
+                                Url
+                            </Text>
+                            <TextInput
+                                    
+                                    multiline
+                                    style={[stylesnewgroup.input, {height: 100}]}
+                                    
+                                    onChangeText={(value)=>setImagen(value)}
+                                    value={imagen}
+                                />
+                                {imagen?(
+                                    <Image source={{uri: imagen}} style={{width: 200, height: 200}}/>
+                                ):null}
+                                </View>
+                        */
+                    }
+                    <View style={stylesnewgroup.viewbtndecor}>
+                        <TouchableOpacity
+                            style={stylesnewgroup.btn}
+                            onPress={handleSubmit(submit)}
+                        >
+                            <View style={stylesnewgroup.btndecorado}>
+                                <Text style={stylesnewgroup.txtbtn}>Guardar Grupo</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-                <TouchableOpacity
-                    style={stylesnewgroup.botonGuardar}
-                    onPress={handleSubmit(submit)}
-                >
-                    <Text style={stylesnewgroup.textoImagen}>Guardar grupo</Text>
-                </TouchableOpacity>
             </ScrollView>
         </View>
     );
