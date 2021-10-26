@@ -1,6 +1,6 @@
 import { StyleSheet, Dimensions } from "react-native";
 import Constants from "expo-constants";
-import Colors from "../utils/Colors"
+import Colors from "../utils/Colors";
 
 export const styleprofile = StyleSheet.create({
     titulo: {
@@ -8,8 +8,9 @@ export const styleprofile = StyleSheet.create({
         color: "white",
         justifyContent: "center",
         alignItems: "center",
-        marginHorizontal:65,
-        fontWeight: "bold"
+        textAlign: "center",
+        marginHorizontal: 10,
+        fontWeight: "bold",
     },
     container: {
         flex: 1,
@@ -21,61 +22,66 @@ export const styleprofile = StyleSheet.create({
     texto: {
         color: "white",
         fontSize: 18,
-        marginTop: 10
+        marginTop: 10,
     },
     containerForm: {
-        justifyContent: 'center',
-        alignItems: 'center',
+        paddingHorizontal: 20,
         flex: 1,
     },
     viewInput: {
-        marginTop:5
+        marginTop: 5,
     },
     textInput: {
-        color: 'white',
-        alignSelf: 'flex-start',
-        fontSize: 18,
-        fontWeight: 'bold',
+        fontSize: 15,
+        color: Colors.SECUNDARY_COLOR,
+        marginBottom: 10,
     },
     input: {
-        backgroundColor: 'white',
-        borderRadius: 10,
-        fontSize: 18,
-        marginTop: 5,
-        marginBottom: 15,
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-    },
-    contenedorImagen:{
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginVertical: 25,
-    },
-    botonImagen:{
-        marginHorizontal: 25,
         backgroundColor: Colors.SECUNDARY_COLOR,
-        paddingHorizontal: 5,
-        paddingVertical: 7,
-        borderRadius: 20,
+        color: Colors.PRIMARY_COLOR,
+        padding: 5,
+        borderRadius: 2,
+        marginBottom: 20,
+        fontSize: 15,
     },
-    botonGuardar: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginVertical: 20,
-        backgroundColor: Colors.SECUNDARY_COLOR, 
-        alignSelf: 'center',
-        paddingVertical: 10,
-        paddingHorizontal: 5,
-        borderRadius: 20,
-        
+    contenedorImagen: {
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: 10,
     },
     textoError: {
-        color: 'red',
+        color: "red",
         fontSize: 16,
         borderLeftWidth: 4,
-        borderLeftColor: 'red',
+        borderLeftColor: "red",
         paddingLeft: 5,
         marginTop: -8,
-    }
-})
+    },
+    viewbtndecor: {
+        width: "90%",
+        paddingVertical: 15,
+    },
+    viewbtndecortot: {
+        width: "100%",
+        paddingVertical: 15,
+    },
+    btn: {
+        backgroundColor: Colors.SECUNDARY_COLOR,
+        width: "100%",
+        padding: 5,
+        borderRadius: 5,
+        marginBottom: 20,
+    },
+    btndecorado: {
+        margin: 1,
+        borderColor: Colors.PRIMARY_COLOR,
+        borderWidth: 1,
+        padding: 5,
+    },
+    txtbtn: {
+        color: Colors.PRIMARY_COLOR,
+        fontSize: 15,
+        textAlign: "center",
+        fontWeight: "bold",
+    },
+});

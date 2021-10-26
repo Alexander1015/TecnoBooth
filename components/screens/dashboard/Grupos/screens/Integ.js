@@ -1,13 +1,12 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
-import { Card } from 'react-native-paper';
+import React from "react";
+import { View, Text, ScrollView } from "react-native";
+import Styles from "../../../../../resources/styles/styleDashboard";
 export default function Info() {
-    return (
-    <ScrollView>
-      <View>
-        <Text>Aquí es Integrantes</Text>
-      </View>
-    </ScrollView>
+  return (
+    <View style={Styles.container}>
+      <ScrollView vertical>
+        <Text style={Styles.texto}>Aquí es Integrantes</Text>
+      </ScrollView>
+    </View>
   );
 }
-
