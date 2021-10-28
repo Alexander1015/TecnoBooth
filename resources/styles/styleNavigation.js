@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions } from "react-native";
-import Colors from "../utils/Colors"
+import Colors from "../utils/Colors";
 
 const Styles = StyleSheet.create({
     backheader: {
@@ -10,7 +10,7 @@ const Styles = StyleSheet.create({
         color: Colors.PRIMARY_COLOR,
         fontWeight: "bold",
         fontSize: 20,
-        textAlign: "center"
+        textAlign: "center",
     },
     navbar: {
         backgroundColor: Colors.PRIMARY_COLOR,
@@ -27,7 +27,7 @@ const Styles = StyleSheet.create({
     navimg: {
         width: 30,
         height: 30,
-    }
-})
+    },
+});
 
 export default Styles;
