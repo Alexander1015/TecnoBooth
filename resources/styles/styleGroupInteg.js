@@ -55,17 +55,33 @@ export const styles = StyleSheet.create({
     height: "100%",
     color: Colors.PRIMARY_COLOR,
   },
-  cantidadintegrantes: {
-    color: Colors.PRIMARY_COLOR,
-    alignSelf: "center",
-    fontSize: 18,
-  },
   contenedorcantidadintegrantes: {
     borderRadius: 10,
     backgroundColor: Colors.SECUNDARY_COLOR,
     width: 230,
     alignSelf: "center",
-    marginTop: 15,
+    marginTop: 30,
     padding: 5,
   },
+  cantidadintegrantes: {
+    color: Colors.PRIMARY_COLOR,
+    alignSelf: "center",
+    fontSize: 18,
+  },
+  contenedorintegrantes:{
+    flexDirection: 'row', 
+    alignSelf:'center', 
+    marginTop:30, 
+    marginBottom:16
+  },
+  imagenintegrante:{
+    width:100, 
+    height:100, 
+    borderRadius:20
+  },
+  nombreintegrante:{
+    color:Colors.SECUNDARY_COLOR,  
+    marginLeft:30, 
+    marginTop: 40
+  }
 });
