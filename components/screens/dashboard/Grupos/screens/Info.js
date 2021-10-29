@@ -33,6 +33,9 @@ export default function Info() {
 
   const [seleccion, setSeleccion] = useState([]);
   const [nombreGrupo, setNombreGrupo] = useState("");
+  const [idGrupo, setIdGrupo] = useState("");
+  const [integrante, setIntegrante] = useState([]);
+  const [cantidadsus, setcantidadsus] = useState();
 
   useEffect(() => {
     firebase.db
@@ -51,8 +54,30 @@ export default function Info() {
           });
         });
         setSeleccion(seleccion);
+        seleccion.map(seleccion=>{
+          setIdGrupo(seleccion.id)
+        })
       });
   }, [nombreGrupo]);
+
+  useEffect(() => {
+    firebase.db
+      .collection("Integrantes")
+      .where("id_grupo", "==", idGrupo)
+      .onSnapshot((querySnapshot) => {
+        const integrante = [];
+        querySnapshot.docs.forEach((doc) => {
+          const { id_usuario } = doc.data();
+          integrante.push({
+            id: doc.id,
+            id_usuario,
+          });
+        });
+        setIntegrante(integrante);
+        setcantidadsus(integrante.length);
+      });
+  }, [idGrupo]);
+
 
   return (
     <View style={styles.container}>
@@ -88,6 +113,9 @@ export default function Info() {
                       {seleccion.nombre}
                       <FontAwesome5 name="angle-double-right" size={18} />
                     </Text>
+                  </View>
+                  <View style={styles.contenedorcantidadintegrantes}>
+                    <Text style={styles.cantidadintegrantes}>Cantidad de integrantes: {cantidadsus} </Text>
                   </View>
                   <View style={styles.textAreaContainer}>
                     <TextInput
