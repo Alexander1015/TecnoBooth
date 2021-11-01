@@ -84,4 +84,49 @@ export const styleprofile = StyleSheet.create({
         textAlign: "center",
         fontWeight: "bold",
     },
+    bordeTexto: {
+        borderWidth: 3,
+        borderStyle: 'dotted',
+        borderColor: 'white',
+        color: "white",
+        fontSize: 18,
+        marginTop: 10,
+        padding: 10
+    },
+    subTitulo: {
+        fontSize: 20,
+        color: "white",
+        justifyContent: "center",
+        alignItems: "center",
+        textAlign: "center",
+        marginHorizontal: 10,
+        fontWeight: "bold",
+    },
+    vercionApp: {
+        opacity:0.5, 
+        color:'white',
+        fontSize:20, 
+        textAlignVertical:'center',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    contenedorpicker: {
+        height: 40,
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "row",
+        backgroundColor: Colors.SECUNDARY_COLOR,
+        borderRadius: 15,
+        marginTop: 5,
+        alignSelf: "center",
+    },
+    pickerDiseno: {
+        paddingRight: "85%",
+        height: "100%",
+        color: Colors.PRIMARY_COLOR,
+    },
+    imagenDiseno: {
+        height:250,
+        width:250,
+    }
 });

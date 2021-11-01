@@ -16,7 +16,6 @@ Cualquier dispositivo con acceso a internet
 ## Desarrolladores :pencil2:
 * **Luis Felipe Coto Arias** - :octocat: [luiscotoo](https://github.com/luiscotoo)
 * **Edgard Alexander Barrera Flamenco** - :octocat: [Alexander1015](https://github.com/Alexander1015)
-* **Irvin Armando Recinos Alvarado** - :octocat: [iarecinos](https://github.com/iarecinos)
 * **Bryan Armando Salinas Sanchez** - :octocat: [BassMan14](https://github.com/BassMan14)
 * **Josue Alexander Chavez Garcia** - :octocat: [Jalex-Cg](https://github.com/Jalex-Cg)
 
@@ -48,4 +47,4 @@ Mira el archivo [LICENSE](https://creativecommons.org/licenses/by-nc-sa/4.0/) pa
 
 ## Enlaces de interés :zap:
 * Trello: [Tablero](https://trello.com/b/2JIUKo6I/tecnobooth) :white_check_mark:
-* Mock Ups: [Google Drive](https://drive.google.com/drive/folders/1r8lTxjP30m52njKW0UxethJu0AvyLlIs?usp=sharing)
+* Mock Ups: [Google Drive](https://drive.google.com/drive/folders/1r8lTxjP30m52njKW0UxethJu0AvyLlIs?usp=sharing) 🎨
