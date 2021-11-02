@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import * as ImagePicker from "expo-image-picker";
-import { stylesnewgroup } from "../../../resources/styles/StyleNewGroup";
+import { stylesnewgroup } from "../../../resources/styles/styleNewGroup";
 import {
     View,
     Text,
