@@ -102,7 +102,7 @@ const Styles = StyleSheet.create({
     },
     noexis: {
         color: Colors.SECUNDARY_COLOR,
-        fontSize: 24,
+        fontSize: 22,
         textAlign: "center",
         marginVertical: 20,
     }

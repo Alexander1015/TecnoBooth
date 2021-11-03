@@ -4,7 +4,7 @@ import Styles from "../resources/styles/styleIndexSuscrip";
 import firebase from "../database/firebase";
 
 export default function CardGrupo(props) {
-    const { key, grupo } = props;
+    const { key, grupo, minimo, obtenerTotal } = props;
 
     const [cantidad, setCantidad] = useState(0);
 
@@ -25,36 +25,44 @@ export default function CardGrupo(props) {
             });
     }, [grupo])
 
-    return(
-        <TouchableOpacity 
-            key={ key }
-            style={ Styles.card_grp }
-        >
-            <View>
-                <Image
-                    style={ Styles.card_image }
-                    source={{ uri: grupo.img }}
-                />
-            </View>
-            <View
-                style={ Styles.card_info }
+    if (cantidad > minimo) {
+        return(
+            <TouchableOpacity 
+                key={ key }
+                style={ Styles.card_grp }
             >
                 <View>
-                    <Text style={ Styles.card_nombre }>
-                        { grupo.nombre }
-                    </Text>
+                    <Image
+                        style={ Styles.card_image }
+                        source={{ uri: grupo.img }}
+                    />
                 </View>
-                <View>
-                    <Text style={ Styles.card_descrip }>
-                        { grupo.descripcion }
-                    </Text>
+                <View
+                    style={ Styles.card_info }
+                >
+                    <View>
+                        <Text style={ Styles.card_nombre }>
+                            { grupo.nombre }
+                        </Text>
+                    </View>
+                    <View>
+                        <Text style={ Styles.card_descrip }>
+                            { grupo.descripcion }
+                        </Text>
+                    </View>
+                    <View>
+                        <Text style={ Styles.card_cantidad }>
+                            Cantidad Suscrita { cantidad ? cantidad : "#" }
+                        </Text>
+                    </View>
                 </View>
-                <View>
-                    <Text style={ Styles.card_cantidad }>
-                        Cantidad Suscrita { cantidad ? cantidad : "#" }
-                    </Text>
-                </View>
-            </View>
-        </TouchableOpacity>
-    );
+            </TouchableOpacity>
+        );
+    }
+    else {
+        obtenerTotal();
+        return (
+            <View key={key}></View>
+        );
+    }
 }
