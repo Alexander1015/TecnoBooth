@@ -12,8 +12,20 @@ import { Picker } from "@react-native-picker/picker";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { set } from "react-native-reanimated";
 export default function Info() {
+  //Esta variable vas a modificar edgar (he puesto un grupo para que se llene para mientras)
+  const [idgrupohome, setIdgrupohome] = useState("MUutMUnTx8tWEGLvqrIc");
+  //******************************************************************** */
   const [grupos, setGrupos] = useState([]);
+  const [seleccion, setSeleccion] = useState([]);
+  const [idGrupo, setIdGrupo] = useState("");
+  const [cambio, setCambio] = useState("");
+  const [integrante, setIntegrante] = useState([]);
+  const [cantidadsus, setcantidadsus] = useState();
+  const [usuarios, setUsuarios] = useState([]);
+  const [listado, setListado] = useState([]);
+  const [cargar, setCargar]=useState(true);
 
+  //Obtengo todos los grupos
   useEffect(() => {
     firebase.db.collection("Grupo").onSnapshot((querySnapshot) => {
       const grupos = [];
@@ -31,6 +43,7 @@ export default function Info() {
     });
   }, []);
 
+  //Obtengo todos los usuarios
   useEffect(() => {
     firebase.db.collection("Usuarios").onSnapshot((querySnapshot) => {
       const usuarios = [];
@@ -47,45 +60,27 @@ export default function Info() {
     });
   }, []);
 
-  const [seleccion, setSeleccion] = useState([]);
-  const [nombreGrupo, setNombreGrupo] = useState("");
-  const [idGrupo, setIdGrupo] = useState("");
-  const [cambio, setCambio] = useState("");
-  const [integrante, setIntegrante] = useState([]);
-  const [cantidadsus, setcantidadsus] = useState();
-  const [usuarios, setUsuarios] = useState([]);
-  const [listado, setListado] = useState([]);
-  const [cargar, setCargar]=useState(true);
-  
-
+  //Obtengo la info del grupo que necesito
   useEffect(() => {
-    firebase.db
-      .collection("Grupo")
-      .where("nombre", "==", nombreGrupo)
-      .onSnapshot((querySnapshot) => {
-        const seleccion = [];
-        querySnapshot.docs.forEach((doc) => {
-          const { nombre, informacion, descripcion, img } = doc.data();
-          seleccion.push({
-            id: doc.id,
-            nombre,
-            informacion,
-            descripcion,
-            img,
-          });
+    const seleccion = [];
+    grupos.map((grupos) => {
+      if(grupos.id==idgrupohome){
+        seleccion.push({
+          id: grupos.id,
+          nombre: grupos.nombre,
+          informacion: grupos.informacion,
+          descripcion: grupos.descripcion,
+          img: grupos.img,
         });
-        setSeleccion(seleccion);
-        seleccion.map(seleccion=>{
-          setIdGrupo(seleccion.id)
-        })
-        if(nombreGrupo===''){
-          setCargar(false)
-        }else{
-          setCargar(true)
-        }
-      });
-  }, [nombreGrupo]);
+      }
+    });
+    setSeleccion(seleccion);
+    seleccion.map((seleccion) => {
+      setIdGrupo(seleccion.id);
+    });
+  }, [usuarios]);
 
+  //Obtengo la id de los integrantes del grupo
   useEffect(() => {
     firebase.db
       .collection("Integrantes")
@@ -101,48 +96,29 @@ export default function Info() {
         });
         setIntegrante(integrante);
         setcantidadsus(integrante.length);
-        setCambio(Math.floor(Math.random() * 100) + 1 )
       });
-  }, [idGrupo]);
+  }, [seleccion]);
 
+  //Obtengo la info de los integrantes con el id anterior
   useEffect(()=>{
-    if (cargar) {
       const listado = [];
-      usuarios.map((usuarios) => {
-        integrante.map((integrante) => {
+      integrante.map((integrante) => {
+        usuarios.map((usuarios) => {
           if (usuarios.id === integrante.id_usuario) {
             listado.push({
               nombre: usuarios.usuario.toUpperCase(),
               img: usuarios.img,
             });
             setListado(listado);
-            listado.map((listado) => {
-              console.log(listado.img);
-            });
           }
         });
       });
-    }
-  }, [cambio])
+  }, [cantidadsus])
 
 
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.contenedorpicker}>
-          <Picker
-            style={styles.estilopicker}
-            onValueChange={(text) => setNombreGrupo(text)}
-            selectedValue={nombreGrupo}
-          >
-            <Picker.Item label="--Seleccione un grupo--" value="" />
-            {grupos.map((grupos) => {
-              return (
-                <Picker.Item label={grupos.nombre} value={grupos.nombre} />
-              );
-            })}
-          </Picker>
-        </View>
         {
           seleccion.map((seleccion, pos) => {
             return (
@@ -174,7 +150,7 @@ export default function Info() {
           listado.map((listado, pos) => {
             return (
               <>
-              {cargar ? (
+              {
                   <View style={styles.contenedorintegrantes}>
                   <Image
                       style={styles.imagenintegrante}
@@ -182,7 +158,7 @@ export default function Info() {
                     />
                     <Text style={styles.nombreintegrante}>{listado.nombre}</Text>
                   </View>
-                 ):null
+                 
                 }
               </>
             );
