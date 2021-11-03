@@ -138,7 +138,7 @@ const IndexScreen = (props) => {
                             )
                         }
                         {
-                            grupos.length === tot ? (
+                            grupos.length > 0 && grupos.length === tot ? (
                                 <Text style={ Styles.noexis }>No existen grupos que mostrar.</Text>
                             ) : (
                                 <View></View>
