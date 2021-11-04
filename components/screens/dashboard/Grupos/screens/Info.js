@@ -13,10 +13,11 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { set } from "react-native-reanimated";
 import { useGestureHandlerRef } from "@react-navigation/stack";
 
-export default function Info() {
-  //Esta variable vas a modificar edgar (he puesto un grupo para que se llene para mientras)
-  const [idgrupohome, setIdgrupohome] = useState("MUutMUnTx8tWEGLvqrIc");
-  //******************************************************************** */
+const Info = (props) => {
+  const { idgrupo } = props;
+  
+  const [idgrupohome, setIdgrupohome] = useState(idgrupo);
+  
   const [grupos, setGrupos] = useState([]);
   const [usuario, setUsuario] = useState([]);
   const [gruposcompletos, setGruposcompletos] = useState([]);
@@ -209,3 +210,5 @@ export default function Info() {
     </View>
   );
 }
+
+export default Info;

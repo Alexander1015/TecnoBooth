@@ -2,7 +2,7 @@ import React from "react";
 import { Text, Image, View } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
-import IndexScreen from "../screens/dashboard/Index";
+import IndexScreen from "../screens/dashboard/Grupos/Index";
 import MySuscriptionsScreen from "../screens/dashboard/MySubscriptions";
 import MyGroupsScreen from "../screens/dashboard/Grupos/MyGroups";
 import ActivityScreen from "../screens/dashboard/Activity";

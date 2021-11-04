@@ -11,10 +11,10 @@ import firebase from "../../../../../database/firebase";
 import { Picker } from "@react-native-picker/picker";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { set } from "react-native-reanimated";
-export default function Info() {
-  //Esta variable vas a modificar edgar (he puesto un grupo para que se llene para mientras)
-  const [idgrupohome, setIdgrupohome] = useState("MUutMUnTx8tWEGLvqrIc");
-  //******************************************************************** */
+export default function Info(props) {
+  const { idgrupo } = props;
+  
+  const [idgrupohome, setIdgrupohome] = useState(idgrupo);
   const [grupos, setGrupos] = useState([]);
   const [seleccion, setSeleccion] = useState([]);
   const [idGrupo, setIdGrupo] = useState("");
