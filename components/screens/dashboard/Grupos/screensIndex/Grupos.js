@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView } from "react-native";
-import Styles from "../../../resources/styles/styleIndexSuscrip";
-import firebase from "../../../database/firebase";
+import Styles from "../../../../../resources/styles/styleIndexSuscrip";
+import firebase from "../../../../../database/firebase";
 import { TextInput } from "react-native-gesture-handler";
 import { Picker } from "@react-native-picker/picker";
-import CardGrupo from "../../../hooks/CardGrupo";
+import CardGrupo from "../../../../../hooks/CardGrupo";
 
-const IndexScreen = (props) => {
+const IndexScreen = (route) => {
+    const { navigation } = route;
+    const { email } = firebase.auth.currentUser;
+   
     const initialState = {
         id: '',
         correo: '',
         cantidad: '',
     }
 
-    const { userEmail } = props;
     const [user, setUser] = useState(initialState);
     const [tot, setTot] = useState(0);
 
@@ -22,7 +24,7 @@ const IndexScreen = (props) => {
     async function obtenerUser () {
         firebase.db
             .collection("Usuarios")
-            .where("correo", "==", userEmail)
+            .where("correo", "==", email)
             .onSnapshot((queryUser) => {
                 queryUser.docs.forEach((docUsr) => {
                     const { correo, cantidad } = docUsr.data();
@@ -33,6 +35,12 @@ const IndexScreen = (props) => {
                     });
                 });
             });
+    }
+
+    const redireccionar = (idgrupo) => {
+        if (idgrupo.trim() !== "") {
+            navigation.navigate("grupos", { idgrupo: idgrupo });
+        }
     }
 
     function obtenerGrupos () {
@@ -55,8 +63,8 @@ const IndexScreen = (props) => {
     }
 
     useEffect(() => {
-        obtenerUser();    
-        obtenerGrupos();
+        obtenerUser();   
+        obtenerGrupos(); 
     }, []);
 
     useEffect(() => {
@@ -75,24 +83,66 @@ const IndexScreen = (props) => {
         setSearch(txt);
         setClasi(cmb);
         const grupo = [];
-        firebase.db
-            .collection("Grupo")
-            .orderBy("nombre")
-            .startAt(txt)
-            .endAt(txt + '\uf8ff')
-            //.where("clasificacion", "==", cmb)
-            .onSnapshot((queryGrupos) => {
-                queryGrupos.docs.forEach((docGrp) => {
-                    const { nombre, descripcion, img } = docGrp.data();
-                    grupo.push({
-                        id: docGrp.id,
-                        nombre,
-                        descripcion,
-                        img,
+        if (txt.trim() === "" && cmb.trim() === "") {
+            obtenerGrupos();
+        }
+        else if (txt.trim() !== "" && cmb.trim() === "") {
+            firebase.db
+                .collection("Grupo")
+                .orderBy("nombre")
+                .startAt(txt)
+                .endAt(txt + '\uf8ff')
+                .onSnapshot((queryGrupos) => {
+                    queryGrupos.docs.forEach((docGrp) => {
+                        const { nombre, descripcion, img } = docGrp.data();
+                        grupo.push({
+                            id: docGrp.id,
+                            nombre,
+                            descripcion,
+                            img,
+                        });
                     });
+                    setGrupos(grupo);
                 });
-                setGrupos(grupo);
-            });
+        }
+        else if (txt.trim() === "" && cmb.trim() !== "") {
+            firebase.db
+                .collection("Grupo")
+                .where("clasificacion", "==", cmb)
+                .orderBy("nombre")
+                .onSnapshot((queryGrupos) => {
+                    queryGrupos.docs.forEach((docGrp) => {
+                        const { nombre, descripcion, img } = docGrp.data();
+                        grupo.push({
+                            id: docGrp.id,
+                            nombre,
+                            descripcion,
+                            img,
+                        });
+                    });
+                    setGrupos(grupo);
+                });
+        }
+        else {
+            firebase.db
+                .collection("Grupo")
+                .where("clasificacion", "==", cmb)
+                .orderBy("nombre")
+                .startAt(txt)
+                .endAt(txt + '\uf8ff')
+                .onSnapshot((queryGrupos) => {
+                    queryGrupos.docs.forEach((docGrp) => {
+                        const { nombre, descripcion, img } = docGrp.data();
+                        grupo.push({
+                            id: docGrp.id,
+                            nombre,
+                            descripcion,
+                            img,
+                        });
+                    });
+                    setGrupos(grupo);
+                });
+        }
     }
     
     if (user.cantidad !== null) {
@@ -130,7 +180,7 @@ const IndexScreen = (props) => {
                             grupos.length > 0 ? (
                                 grupos.map((grupo, key) => {
                                     return (
-                                        <CardGrupo key={key} grupo={grupo} minimo={user.cantidad} obtenerTotal={obtenerTotal}></CardGrupo>
+                                        <CardGrupo key={key} grupo={grupo} minimo={user.cantidad} obtenerTotal={obtenerTotal} redireccionar={redireccionar} ></CardGrupo>
                                     );
                                 })
                             ) : (

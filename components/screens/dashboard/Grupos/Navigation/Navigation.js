@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FontAwesome5 } from "@expo/vector-icons";
 import InfoStack from "./stackInfo";
@@ -6,7 +6,25 @@ import HomeStack from "./stackHome";
 import IntegStack from "./stackInteg";
 
 const Tab = createBottomTabNavigator();
-export default function Navigation() {
+
+const Navigation = ({ route, navigation }) => {
+  //Dato de prueba
+  const [idgrupo, setIdGrupo] = useState("MUutMUnTx8tWEGLvqrIc");
+  
+  //const { idgrupo } = route.params;
+
+  const HomeScreen = () => {
+    return <HomeStack idgrupo={idgrupo} />;
+  };
+
+  const InfoScreen = () => {
+    return <InfoStack idgrupo={idgrupo} />;
+  };
+
+  const IntegScreen = () => {
+    return <IntegStack idgrupo={idgrupo} />;
+  };
+
   return (
     <Tab.Navigator
       initialRouteName="Información"
@@ -32,9 +50,11 @@ export default function Navigation() {
         headerShown: false,
       })}
     >
-      <Tab.Screen name="Home" component={HomeStack} />
-      <Tab.Screen name="Información" component={InfoStack} />
-      <Tab.Screen name="Integrantes" component={IntegStack} />
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Información" component={InfoScreen} />
+      <Tab.Screen name="Integrantes" component={IntegScreen} />
     </Tab.Navigator>
   );
-}
+};
+
+export default Navigation;

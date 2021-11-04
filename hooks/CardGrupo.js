@@ -4,7 +4,7 @@ import Styles from "../resources/styles/styleIndexSuscrip";
 import firebase from "../database/firebase";
 
 export default function CardGrupo(props) {
-    const { key, grupo, minimo, obtenerTotal } = props;
+    const { key, grupo, minimo, obtenerTotal, redireccionar } = props;
 
     const [cantidad, setCantidad] = useState(0);
 
@@ -30,6 +30,7 @@ export default function CardGrupo(props) {
             <TouchableOpacity 
                 key={ key }
                 style={ Styles.card_grp }
+                onPress={() => redireccionar(grupo.id)}
             >
                 <View>
                     <Image
