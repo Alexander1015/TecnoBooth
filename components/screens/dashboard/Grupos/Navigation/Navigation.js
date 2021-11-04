@@ -24,6 +24,7 @@ const Navigation = ({ route, navigation }) => {
   const IntegScreen = () => {
     return <IntegStack idgrupo={idgrupo} />;
   };
+  
 
   return (
     <Tab.Navigator

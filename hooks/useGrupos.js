@@ -22,7 +22,7 @@ const useGrupos = (idGrupo) => {
     }
   },[integrantes,idUsuario])
 
-    const CrearGrupo = async (uid, url, nombre, descripcion, informacion) => {
+    const CrearGrupo = async (uid, url, nombre, descripcion, informacion,categoria) => {
         try {
             await firebase.db.collection("Grupo").add({
                 nombre,
@@ -30,13 +30,14 @@ const useGrupos = (idGrupo) => {
                 descripcion,
                 img: url,
                 id_usuario: uid,
+                clasificacion:categoria
             });
         } catch (error) {
             console.log(error);
         }
     };
 
-    }
+    
 
     const crearPost=async(descripcion,url)=>{
         try {
@@ -205,5 +206,6 @@ const useGrupos = (idGrupo) => {
         agregarComentario,
         crearPost
     }
+}
 
 export default useGrupos;

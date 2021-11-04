@@ -8,7 +8,8 @@ import { NewPost } from '../../../../NewPost';
 export default function Home(props) {
   const { navigation,route } = props;
   const { width } = Dimensions.get("window");
-  // const {id}=route.params;
+  
+  console.log(route);
   const { 
     grupo, 
     posts, 

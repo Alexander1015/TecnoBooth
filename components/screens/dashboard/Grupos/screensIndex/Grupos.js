@@ -39,7 +39,7 @@ const IndexScreen = (route) => {
 
     const redireccionar = (idgrupo) => {
         if (idgrupo.trim() !== "") {
-            navigation.navigate("grupos", { idgrupo: idgrupo });
+            navigation.navigate("Home", { idgrupo: idgrupo });
         }
     }
 
