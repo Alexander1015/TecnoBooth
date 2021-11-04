@@ -2,8 +2,10 @@
 TecnoBooth es una aplicación destinada al intercambio de información por parte de los usuarios, en donde se pueden crear temas/grupos/canales de intereses según los propios usuarios que te permita editarlo a gusto, en donde cada uno de los integrantes pueda compartir información sobre tecnología (ya sean posts, imágenes, pensamientos, información, link a alguna pagina, etc) y comentar sobre estos. Además de tener un manejo de los movimientos y usuarios que cada grupo posee, mostrando diferentes opciones para administrar tu grupo, teniendo como base que las personas que usaran este proyecto tengan que disponer de una cuenta personal en la aplicación para poder utilizar todas las funciones.
 
 ## Para comenzar :rocket:
-* [Documento - Primera Fase](https://drive.google.com/file/d/1frJ80hPfq77Buu2ZV5UQ50U6tHbIW7mC/view?usp=sharing)
-* [Manual de usuario (si es necesario)]()
+* [Video explicativo - TecnoBooth :movie_camera:](https://drive.google.com/file/d/1p1cB4TogLFLXMKvIqFw5yjdgWoNQbLt6/view?usp=sharing)
+* [Manual de Usuario :boy:](https://drive.google.com/file/d/1zEMzlvI25DTjdsNUGBSd-JK_HRk8q1Lv/view?usp=sharing)
+* [Manual Técnico :construction_worker:](https://drive.google.com/file/d/1PcWgbomN86GfS0e_keHub4uZDW27ItkS/view?usp=sharing)
+* [Documento - Primera Fase :notebook:](https://drive.google.com/file/d/1frJ80hPfq77Buu2ZV5UQ50U6tHbIW7mC/view?usp=sharing)
 
 
 ## Requisitos :rotating_light:
@@ -14,7 +16,6 @@ Cualquier dispositivo con acceso a internet
 ## Desarrolladores :pencil2:
 * **Luis Felipe Coto Arias** - :octocat: [luiscotoo](https://github.com/luiscotoo)
 * **Edgard Alexander Barrera Flamenco** - :octocat: [Alexander1015](https://github.com/Alexander1015)
-* **Irvin Armando Recinos Alvarado** - :octocat: [iarecinos](https://github.com/iarecinos)
 * **Bryan Armando Salinas Sanchez** - :octocat: [BassMan14](https://github.com/BassMan14)
 * **Josue Alexander Chavez Garcia** - :octocat: [Jalex-Cg](https://github.com/Jalex-Cg)
 
@@ -46,4 +47,4 @@ Mira el archivo [LICENSE](https://creativecommons.org/licenses/by-nc-sa/4.0/) pa
 
 ## Enlaces de interés :zap:
 * Trello: [Tablero](https://trello.com/b/2JIUKo6I/tecnobooth) :white_check_mark:
-* Mock Ups: [Google Drive](https://drive.google.com/drive/folders/1r8lTxjP30m52njKW0UxethJu0AvyLlIs?usp=sharing)
+* Mock Ups: [Google Drive](https://drive.google.com/drive/folders/1r8lTxjP30m52njKW0UxethJu0AvyLlIs?usp=sharing) 🎨

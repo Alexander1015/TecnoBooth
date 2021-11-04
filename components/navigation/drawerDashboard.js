@@ -2,16 +2,16 @@ import React from "react";
 import { Text, Image, View } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
-import IndexScreen from "../screens/dashboard/Index";
-import MySuscriptionsScreen from "../screens/dashboard/MySubscriptions"
-import MyGroupsScreen from "../../components/screens/dashboard/Grupos/MyGroups"
-import ActivityScreen from "../screens/dashboard/Activity"
-import ProfileScreen from "../screens/dashboard/Profile"
-import CreateGroupScreen from "../screens/dashboard/CreateGroup"
+import IndexScreen from "../screens/dashboard/Grupos/Index";
+import MySuscriptionsScreen from "../screens/dashboard/MySubscriptions";
+import MyGroupsScreen from "../screens/dashboard/Grupos/MyGroups";
+import ActivityScreen from "../screens/dashboard/Activity";
+import ProfileScreen from "../screens/dashboard/Profile";
+import CreateGroupScreen from "../screens/dashboard/CreateGroup";
 import SettingScreen from "../screens/dashboard/Setting";
 import LogoutScreen from "../screens/dashboard/Logout";
 import Colors from "../../resources/utils/Colors";
-import Styles from "../../resources/styles/Navigation";
+import Styles from "../../resources/styles/styleNavigation";
 
 const Drawer = createDrawerNavigator();
 
@@ -20,49 +20,35 @@ const DashboardNav = ({ route, navigation }) => {
 
     //Metodos que pasan el email del usuario para que se utilice en las diferentes pantallas
     const Index = () => {
-        return(
-            <IndexScreen userEmail={email} />
-        );
-    }
+        return <IndexScreen userEmail={email} />;
+    };
 
     const MySuscriptions = () => {
-        return(
-            <MySuscriptionsScreen userEmail={email} />
-        );
-    }
-    
+        return <MySuscriptionsScreen userEmail={email} />;
+    };
+
     const MyGroups = () => {
-        return(
-            <MyGroupsScreen userEmail={email} />
-        );
-    }
-    
+        return <MyGroupsScreen userEmail={email} />;
+    };
+
     const Activity = () => {
-        return(
-            <ActivityScreen userEmail={email} />
-        );
-    }
+        return <ActivityScreen userEmail={email} />;
+    };
 
     const Profile = () => {
-        return(
-            <ProfileScreen userEmail={email} />
-        );
-    }
+        return <ProfileScreen userEmail={email} />;
+    };
 
     const CreateGroup = () => {
-        return(
-            <CreateGroupScreen userEmail={email} />
-        );
-    }
+        return <CreateGroupScreen userEmail={email} />;
+    };
 
     const Setting = () => {
-        return(
-            <SettingScreen userEmail={email} />
-        );
-    }
+        return <SettingScreen userEmail={email} />;
+    };
 
     //Navigation
-    return(
+    return (
         <Drawer.Navigator
             initialRouteName="index"
             screenOptions={{
@@ -72,14 +58,14 @@ const DashboardNav = ({ route, navigation }) => {
                 headerStyle: Styles.backheader,
                 headerTitle: () => (
                     <>
-                        <View style={ Styles.navbarcontain }>
+                        <View style={Styles.navbarcontain}>
                             <View>
-                                <Text style={ Styles.titheader }>TecnoBooth</Text>
+                                <Text style={Styles.titheader}>TecnoBooth</Text>
                             </View>
-                            <View style={ Styles.navcontainimg }>
+                            <View style={Styles.navcontainimg}>
                                 <Image
-                                    style={ Styles.navimg }
-                                    source={ require("../../resources/img/favicon.png") }
+                                    style={Styles.navimg}
+                                    source={require("../../resources/img/favicon.png")}
                                 />
                             </View>
                         </View>
@@ -89,16 +75,16 @@ const DashboardNav = ({ route, navigation }) => {
                 swipeEnabled: false,
             }}
         >
-            <Drawer.Screen 
+            <Drawer.Screen
                 name="index"
                 component={Index}
-                options={{ 
+                options={{
                     title: "Inicio",
                     drawerIcon: ({ focused }) => (
                         <MaterialCommunityIcons
                             name="home"
-                            size={ focused ? 30: 20 }
-                            color={ focused ? Colors.PRIMARY_COLOR : Colors.SECUNDARY_COLOR }
+                            size={focused ? 30 : 20}
+                            color={focused ? Colors.PRIMARY_COLOR : Colors.SECUNDARY_COLOR}
                         />
                     ),
                     drawerActiveTintColor: Colors.PRIMARY_COLOR,
@@ -107,16 +93,16 @@ const DashboardNav = ({ route, navigation }) => {
                     drawerInactiveBackgroundColor: Colors.PRIMARY_COLOR,
                 }}
             />
-            <Drawer.Screen 
+            <Drawer.Screen
                 name="mysuscriptions"
                 component={MySuscriptions}
-                options={{ 
+                options={{
                     title: "Mis Suscripciones",
                     drawerIcon: ({ focused }) => (
                         <FontAwesome5
                             name="address-book"
-                            size={ focused ? 30: 20 }
-                            color={ focused ? Colors.PRIMARY_COLOR : Colors.SECUNDARY_COLOR }
+                            size={focused ? 30 : 20}
+                            color={focused ? Colors.PRIMARY_COLOR : Colors.SECUNDARY_COLOR}
                         />
                     ),
                     drawerActiveTintColor: Colors.PRIMARY_COLOR,
@@ -125,16 +111,16 @@ const DashboardNav = ({ route, navigation }) => {
                     drawerInactiveBackgroundColor: Colors.PRIMARY_COLOR,
                 }}
             />
-            <Drawer.Screen 
+            <Drawer.Screen
                 name="mygroups"
                 component={MyGroups}
-                options={{ 
+                options={{
                     title: "Mis Grupos",
                     drawerIcon: ({ focused }) => (
                         <MaterialCommunityIcons
                             name="account-group"
-                            size={ focused ? 30: 20 }
-                            color={ focused ? Colors.PRIMARY_COLOR : Colors.SECUNDARY_COLOR }
+                            size={focused ? 30 : 20}
+                            color={focused ? Colors.PRIMARY_COLOR : Colors.SECUNDARY_COLOR}
                         />
                     ),
                     drawerActiveTintColor: Colors.PRIMARY_COLOR,
@@ -143,16 +129,16 @@ const DashboardNav = ({ route, navigation }) => {
                     drawerInactiveBackgroundColor: Colors.PRIMARY_COLOR,
                 }}
             />
-            <Drawer.Screen 
+            <Drawer.Screen
                 name="activity"
                 component={Activity}
-                options={{ 
+                options={{
                     title: "Activity",
                     drawerIcon: ({ focused }) => (
                         <MaterialCommunityIcons
                             name="bell"
-                            size={ focused ? 30: 20 }
-                            color={ focused ? Colors.PRIMARY_COLOR : Colors.SECUNDARY_COLOR }
+                            size={focused ? 30 : 20}
+                            color={focused ? Colors.PRIMARY_COLOR : Colors.SECUNDARY_COLOR}
                         />
                     ),
                     drawerActiveTintColor: Colors.PRIMARY_COLOR,
@@ -161,16 +147,16 @@ const DashboardNav = ({ route, navigation }) => {
                     drawerInactiveBackgroundColor: Colors.PRIMARY_COLOR,
                 }}
             />
-            <Drawer.Screen 
+            <Drawer.Screen
                 name="creategroup"
                 component={CreateGroup}
-                options={{ 
+                options={{
                     title: "Crea tu propio Grupo",
                     drawerIcon: ({ focused }) => (
                         <MaterialCommunityIcons
                             name="lightbulb-group-outline"
-                            size={ focused ? 30: 20 }
-                            color={ focused ? Colors.PRIMARY_COLOR : Colors.SECUNDARY_COLOR }
+                            size={focused ? 30 : 20}
+                            color={focused ? Colors.PRIMARY_COLOR : Colors.SECUNDARY_COLOR}
                         />
                     ),
                     drawerActiveTintColor: Colors.PRIMARY_COLOR,
@@ -179,16 +165,16 @@ const DashboardNav = ({ route, navigation }) => {
                     drawerInactiveBackgroundColor: Colors.PRIMARY_COLOR,
                 }}
             />
-            <Drawer.Screen 
+            <Drawer.Screen
                 name="profile"
                 component={Profile}
-                options={{ 
+                options={{
                     title: "Perfil",
                     drawerIcon: ({ focused }) => (
                         <MaterialCommunityIcons
                             name="face"
-                            size={ focused ? 30: 20 }
-                            color={ focused ? Colors.PRIMARY_COLOR : Colors.SECUNDARY_COLOR }
+                            size={focused ? 30 : 20}
+                            color={focused ? Colors.PRIMARY_COLOR : Colors.SECUNDARY_COLOR}
                         />
                     ),
                     drawerActiveTintColor: Colors.PRIMARY_COLOR,
@@ -197,16 +183,16 @@ const DashboardNav = ({ route, navigation }) => {
                     drawerInactiveBackgroundColor: Colors.PRIMARY_COLOR,
                 }}
             />
-            <Drawer.Screen 
+            <Drawer.Screen
                 name="setting"
                 component={Setting}
-                options={{ 
+                options={{
                     title: "Ajustes",
                     drawerIcon: ({ focused }) => (
                         <MaterialCommunityIcons
                             name="cog"
-                            size={ focused ? 30: 20 }
-                            color={ focused ? Colors.PRIMARY_COLOR : Colors.SECUNDARY_COLOR }
+                            size={focused ? 30 : 20}
+                            color={focused ? Colors.PRIMARY_COLOR : Colors.SECUNDARY_COLOR}
                         />
                     ),
                     drawerActiveTintColor: Colors.PRIMARY_COLOR,
@@ -215,16 +201,16 @@ const DashboardNav = ({ route, navigation }) => {
                     drawerInactiveBackgroundColor: Colors.PRIMARY_COLOR,
                 }}
             />
-            <Drawer.Screen 
+            <Drawer.Screen
                 name="logout"
                 component={LogoutScreen}
-                options={{ 
+                options={{
                     title: "Cerrar Sesión",
                     drawerIcon: ({ focused }) => (
                         <MaterialCommunityIcons
                             name="exit-to-app"
-                            size={ focused ? 30: 20 }
-                            color={ focused ? Colors.PRIMARY_COLOR : Colors.SECUNDARY_COLOR }
+                            size={focused ? 30 : 20}
+                            color={focused ? Colors.PRIMARY_COLOR : Colors.SECUNDARY_COLOR}
                         />
                     ),
                     drawerActiveTintColor: Colors.PRIMARY_COLOR,
@@ -234,7 +220,7 @@ const DashboardNav = ({ route, navigation }) => {
                 }}
             />
         </Drawer.Navigator>
-    )
-}
+    );
+};
 
 export default DashboardNav;

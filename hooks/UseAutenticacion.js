@@ -1,20 +1,18 @@
-import firebase from '../database/firebase';
-import {useEffect, useState} from 'react';
-
+import firebase from "../database/firebase";
+import { useEffect, useState } from "react";
 
 function useAutenticacion() {
-    const [ usuarioAutenticado, guardarUsuarioAutenticado] = useState(null);
+    const [usuarioAutenticado, guardarUsuarioAutenticado] = useState(null);
 
     useEffect(() => {
-        const unsuscribe = firebase.auth.onAuthStateChanged(user => {
-            if( user ) {
+        const unsuscribe = firebase.auth.onAuthStateChanged((user) => {
+            if (user) {
                 guardarUsuarioAutenticado(user);
             } else {
                 guardarUsuarioAutenticado(null);
             }
         });
 
-        
         return () => unsuscribe();
     }, []);
 

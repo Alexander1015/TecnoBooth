@@ -23,16 +23,18 @@ const useGrupos = (idGrupo) => {
   },[integrantes,idUsuario])
 
     const CrearGrupo = async (uid, url, nombre, descripcion, informacion) => {
-        
-
         try {
-            await firebase.db.collection('Grupo').add({
-                nombre, informacion, descripcion, img: url, id_usuario: uid
-            })
-        }
-        catch (error) {
+            await firebase.db.collection("Grupo").add({
+                nombre,
+                informacion,
+                descripcion,
+                img: url,
+                id_usuario: uid,
+            });
+        } catch (error) {
             console.log(error);
         }
+    };
 
     }
 
@@ -53,25 +55,24 @@ const useGrupos = (idGrupo) => {
         const response = await fetch(uri);
         const blob = await response.blob();
         const sessionId = new Date().getTime();
-        let ref = await firebase.storage.ref('Grupo').child(`${sessionId}`);
+        let ref = await firebase.storage.ref("Grupo").child(`${sessionId}`);
         await ref.put(blob);
         const url = await ref.getDownloadURL();
         setCargando(false);
         return url.toString();
-    
-    }
-    
-    const obtenerGrupos = () =>{
-        firebase.db.collection('Grupo').onSnapshot(manejarSnapshot)
-    }
-    
-    const manejarSnapshot=(Snapshot)=>{
-        const resultadoGrupos = Snapshot.docs.map(doc=>{
+    };
+
+    const obtenerGrupos = () => {
+        firebase.db.collection("Grupo").onSnapshot(manejarSnapshot);
+    };
+
+    const manejarSnapshot = (Snapshot) => {
+        const resultadoGrupos = Snapshot.docs.map((doc) => {
             return {
-                id: doc.id, 
-                ...doc.data()
-            }
-        })
+                id: doc.id,
+                ...doc.data(),
+            };
+        });
         setGrupos(resultadoGrupos);
     }
 
@@ -204,5 +205,5 @@ const useGrupos = (idGrupo) => {
         agregarComentario,
         crearPost
     }
-}
+
 export default useGrupos;
