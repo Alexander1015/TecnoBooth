@@ -3,7 +3,7 @@ import { View, Text, ScrollView, FlatList, Image } from "react-native";
 import Styles from "../../../resources/styles/styleDashboard";
 import { styleprofile } from "../../../resources/styles/styleProfile";
 import { Picker } from "@react-native-picker/picker";
-import firebase from "../../../../../database/firebase";
+import firebase from "../../../database/firebase";
 
 const SettingScreen = (props) => {
     const { userEmail } = props;
