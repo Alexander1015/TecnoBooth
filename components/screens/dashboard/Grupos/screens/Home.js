@@ -33,27 +33,32 @@ export default function Home(props) {
       <View style={styleHome.container}>
         {grupo?(
           <View style={styleHome.containerInfo}>
-            <Image source={{uri:grupo.img}} style={styleHome.img}/>
-            <View style={styleHome.contenedorOpciones}>
-              <Text style={styleHome.nombre}>{grupo.nombre}</Text>
-              <TouchableOpacity activeOpacity={0.8} style={styleHome.btn} onPress={()=>setNuevoPost(true)}>
-                <Text style={styleHome.btnText}>Nuevo Post</Text>
-              </TouchableOpacity>
-              {!verificado?(
-              <TouchableOpacity activeOpacity={0.8} style={styleHome.btn} onPress={()=>{
-                subscribirse('MUutMUnTx8tWEGLvqrIc',idUsuario[0]);
-              }}>
-                <Text style={styleHome.btnText}>Suscribirse</Text>
-              </TouchableOpacity>
-              ):null}
-            </View>
+            
               <View style={{ flex: 1, alignSelf: "center" }}>
-                {nuevoPost?<NewPost subirImagen={subirImagen} crearPost={crearPost}  setNuevoPost={setNuevoPost}/>:null}
                 <FlatList 
                   data={posts}
                   keyExtractor={(item)=>item.id}
                   renderItem={({item})=><Post post={item} verificado={verificado} idUsuario={idUsuario}/>}
                   showsVerticalScrollIndicator={false}
+                  ListHeaderComponent={()=>(
+                    <>
+                    <Image source={{uri:grupo.img}} style={styleHome.img}/>
+                    <View style={styleHome.contenedorOpciones}>
+                      <Text style={styleHome.nombre}>{grupo.nombre}</Text>
+                      <TouchableOpacity activeOpacity={0.8} style={styleHome.btn} onPress={()=>setNuevoPost(true)}>
+                        <Text style={styleHome.btnText}>Nuevo Post</Text>
+                      </TouchableOpacity>
+                      {!verificado?(
+                      <TouchableOpacity activeOpacity={0.8} style={styleHome.btn} onPress={()=>{
+                        subscribirse('MUutMUnTx8tWEGLvqrIc',idUsuario[0]);
+                      }}>
+                        <Text style={styleHome.btnText}>Suscribirse</Text>
+                      </TouchableOpacity>
+                      ):null}
+                    </View>
+                    {nuevoPost?<NewPost subirImagen={subirImagen} crearPost={crearPost}  setNuevoPost={setNuevoPost}/>:null}
+                    </>
+                  )}
                   ListFooterComponent={() => <View style={{ marginBottom: 100 }} />}
                 />
               </View>

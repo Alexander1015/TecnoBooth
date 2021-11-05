@@ -1,5 +1,6 @@
 import React,{useEffect,useState} from 'react'
-import { View, Text,Image,StyleSheet,TouchableOpacity,FlatList,TextInput } from 'react-native'
+import { View, Text,Image,StyleSheet,TouchableOpacity,FlatList,TextInput,Platform } from 'react-native'
+import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
 import useGrupos from '../hooks/useGrupos'
 import Comentario from './Comentario'
 
@@ -38,15 +39,30 @@ const Post = ({post,verificado,idUsuario}) => {
                             <Comentario comentarioUsuario={comentario}/>
                         </View>
                     ))}
-                   {verificado&&(
+                   {verificado?(
+                       <View >
                        <TextInput style={styles.input} value={value} onChangeText={(value)=>setValue(value)} 
                        onKeyPress={({nativeEvent:{key}})=>{
-                           if(key==="Enter"){
+                        if(Platform.OS==="web"){
+                            if(key==="Enter"){
                                 agregarComentario(value,idUsuario[0],id);
                                 setValue("");
                            }
-                       }} />
-                   )} 
+                        }
+                    }} 
+                    
+                       />
+                       <MaterialCommunityIcons
+                            name="check-circle"
+                            color="green"
+                            style={{position:'absolute',top:'50%',right:0,fontSize:30}}
+                            onPress={()=>{
+                                agregarComentario(value,idUsuario[0],id);
+                                setValue("");
+                            }}
+                        />
+                       </View>
+                   ):null} 
                 </View>
             ):null}
         </View>
@@ -56,7 +72,8 @@ const Post = ({post,verificado,idUsuario}) => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#DBE5EA',
-        margin: 15, borderRadius: 10,
+        margin: 15, 
+        borderRadius: 10,
         padding: 10
     },
     imgContainer: {

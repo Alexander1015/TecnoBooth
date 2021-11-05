@@ -178,9 +178,9 @@ const IndexScreen = (route) => {
                     <View style={ Styles.grupos }>
                         {
                             grupos.length > 0 ? (
-                                grupos.map((grupo, key) => {
+                                grupos.map((grupo, index) => {
                                     return (
-                                        <CardGrupo key={key} grupo={grupo} minimo={user.cantidad} obtenerTotal={obtenerTotal} redireccionar={redireccionar} ></CardGrupo>
+                                        <CardGrupo key={index} grupo={grupo} minimo={user.cantidad} obtenerTotal={obtenerTotal} redireccionar={redireccionar} ></CardGrupo>
                                     );
                                 })
                             ) : (

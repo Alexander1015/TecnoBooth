@@ -24,7 +24,7 @@ export const styleHome = StyleSheet.create({
 
     },
     contenedorOpciones:{
-      flexDirection:'row',
+      // flexDirection:'row',
       paddingVertical:10,
       paddingHorizontal:15,
       alignItems:'center',
