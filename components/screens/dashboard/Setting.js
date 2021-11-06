@@ -1,10 +1,5 @@
-
-import React from "react";
-import { View, Text, ScrollView, FlatList, Image,} from "react-native";
-
 import React, { useState } from "react";
 import { View, Text, ScrollView, FlatList, Image } from "react-native";
-
 import Styles from "../../../resources/styles/styleDashboard";
 import { styleprofile } from "../../../resources/styles/styleProfile";
 import { Picker } from "@react-native-picker/picker";
@@ -22,17 +17,17 @@ const SettingScreen = (props) => {
             <ScrollView vertical>
                 <Text style={styleprofile.titulo}>Ajustes</Text>
                 <View style={{ padding: 10 }}>
-                    <Text style={styleprofile.subTitulo}>Mostrar grupos con:</Text>
+                    <Text style={styleprofile.subTitulo}>Mostrar grupos desde:</Text>
                 </View>
                 <View style={styleprofile.contenedorpicker}>
 
                     <Picker style={styleprofile.pickerDiseno}
                     >
-                        <Picker.Item label="-Integrantes-" value="-Integrantes-"/>
-                        <Picker.Item label="5 integrantes" value="5 integrantes"/>
-                        <Picker.Item label="100 integrantes" value="100 integrantes"/>
                         <Picker.Item label="Sin limite de integrantes" value="sin limite de integrantes"/>
-
+                        <Picker.Item label="5 integrantes" value="5"/>
+                        <Picker.Item label="10 integrantes" value="10"/>
+                        <Picker.Item label="25 integrantes" value="25"/>
+                        <Picker.Item label="50 integrantes" value="50"/>
                     </Picker>
                 </View>
                 <View style={styleprofile.container}>
@@ -73,7 +68,7 @@ const SettingScreen = (props) => {
                 </View>
                 <View style={styleprofile.container}>
                     <Text style={styleprofile.vercionApp}>
-                        Verción de aplicación: 1.0
+                        Versión de aplicación: 1.0
                     </Text>
                 </View>
             </ScrollView>
