@@ -2,9 +2,9 @@ import React from "react";
 import { Text, Image, View } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
-import IndexScreen from "../screens/dashboard/Grupos/Index";
-import MySuscriptionsScreen from "../screens/dashboard/MySubscriptions";
-import MyGroupsScreen from "../screens/dashboard/Grupos/MyGroups";
+import IndexScreen from "./stackIndex";
+import MySuscriptionsScreen from "./stackMisSuscripciones";
+import MyGroupsScreen from "./stackMisGrupos";
 import ActivityScreen from "../screens/dashboard/Activity";
 import ProfileScreen from "../screens/dashboard/Profile";
 import CreateGroupScreen from "../screens/dashboard/CreateGroup";
@@ -15,39 +15,7 @@ import Styles from "../../resources/styles/styleNavigation";
 
 const Drawer = createDrawerNavigator();
 
-const DashboardNav = ({ route, navigation }) => {
-    const { email } = route.params;
-
-    //Metodos que pasan el email del usuario para que se utilice en las diferentes pantallas
-    const Index = () => {
-        return <IndexScreen userEmail={email} />;
-    };
-
-    const MySuscriptions = () => {
-        return <MySuscriptionsScreen userEmail={email} />;
-    };
-
-    const MyGroups = () => {
-        return <MyGroupsScreen userEmail={email} />;
-    };
-
-    const Activity = () => {
-        return <ActivityScreen userEmail={email} />;
-    };
-
-    const Profile = () => {
-        return <ProfileScreen userEmail={email} />;
-    };
-
-    const CreateGroup = () => {
-        return <CreateGroupScreen userEmail={email} />;
-    };
-
-    const Setting = () => {
-        return <SettingScreen userEmail={email} />;
-    };
-
-    //Navigation
+const DashboardNav = () => {
     return (
         <Drawer.Navigator
             initialRouteName="index"
@@ -77,7 +45,7 @@ const DashboardNav = ({ route, navigation }) => {
         >
             <Drawer.Screen
                 name="index"
-                component={Index}
+                component={IndexScreen}
                 options={{
                     title: "Inicio",
                     drawerIcon: ({ focused }) => (
@@ -95,7 +63,7 @@ const DashboardNav = ({ route, navigation }) => {
             />
             <Drawer.Screen
                 name="mysuscriptions"
-                component={MySuscriptions}
+                component={MySuscriptionsScreen}
                 options={{
                     title: "Mis Suscripciones",
                     drawerIcon: ({ focused }) => (
@@ -113,7 +81,7 @@ const DashboardNav = ({ route, navigation }) => {
             />
             <Drawer.Screen
                 name="mygroups"
-                component={MyGroups}
+                component={MyGroupsScreen}
                 options={{
                     title: "Mis Grupos",
                     drawerIcon: ({ focused }) => (
@@ -131,7 +99,7 @@ const DashboardNav = ({ route, navigation }) => {
             />
             <Drawer.Screen
                 name="activity"
-                component={Activity}
+                component={ActivityScreen}
                 options={{
                     title: "Activity",
                     drawerIcon: ({ focused }) => (
@@ -149,7 +117,7 @@ const DashboardNav = ({ route, navigation }) => {
             />
             <Drawer.Screen
                 name="creategroup"
-                component={CreateGroup}
+                component={CreateGroupScreen}
                 options={{
                     title: "Crea tu propio Grupo",
                     drawerIcon: ({ focused }) => (
@@ -167,7 +135,7 @@ const DashboardNav = ({ route, navigation }) => {
             />
             <Drawer.Screen
                 name="profile"
-                component={Profile}
+                component={ProfileScreen}
                 options={{
                     title: "Perfil",
                     drawerIcon: ({ focused }) => (
@@ -185,7 +153,7 @@ const DashboardNav = ({ route, navigation }) => {
             />
             <Drawer.Screen
                 name="setting"
-                component={Setting}
+                component={SettingScreen}
                 options={{
                     title: "Ajustes",
                     drawerIcon: ({ focused }) => (

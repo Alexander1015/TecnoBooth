@@ -6,15 +6,15 @@ import {
   ScrollView,
   TextInput,
 } from "react-native";
-import { styles } from "../../../../../resources/styles/styleGroupInfo";
-import firebase from "../../../../../database/firebase";
+import { styles } from "../../../../resources/styles/styleGroupInfo";
+import firebase from "../../../../database/firebase";
 import { Picker } from "@react-native-picker/picker";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { set } from "react-native-reanimated";
 import { useGestureHandlerRef } from "@react-navigation/stack";
 
-const Info = (props) => {
-  const { idgrupo } = props;
+const Info = (route) => {
+  const { idgrupo } = route;
   
   const [idgrupohome, setIdgrupohome] = useState(idgrupo);
   

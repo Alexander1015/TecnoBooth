@@ -3,8 +3,6 @@ import { View, Text, ScrollView } from "react-native";
 import Styles from "../../../resources/styles/styleDashboard";
 
 const ActivityScreen = (props) => {
-    const { userEmail } = props;
-
     return (
         <View style={Styles.container}>
             <ScrollView vertical>

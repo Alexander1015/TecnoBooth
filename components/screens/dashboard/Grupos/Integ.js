@@ -6,13 +6,13 @@ import {
   ScrollView,
   TextInput,
 } from "react-native";
-import { styles } from "../../../../../resources/styles/styleGroupInteg";
-import firebase from "../../../../../database/firebase";
+import { styles } from "../../../../resources/styles/styleGroupInteg";
+import firebase from "../../../../database/firebase";
 import { Picker } from "@react-native-picker/picker";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { set } from "react-native-reanimated";
-export default function Info(props) {
-  const { idgrupo } = props;
+export default function Info(route) {
+  const { idgrupo } = route;
   
   const [idgrupohome, setIdgrupohome] = useState(idgrupo);
   const [grupos, setGrupos] = useState([]);

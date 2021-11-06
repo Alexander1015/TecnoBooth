@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import * as ImagePicker from 'expo-image-picker';
-import { stylesnewgroup } from "../../../resources/styles/StyleNewGroup";
+import { stylesnewgroup } from "../../../resources/styles/styleNewGroup";
 import { View, Text, ScrollView, Platform, TouchableOpacity, Image, TextInput, Alert } from "react-native";
-import Styles from "../../../resources/styles/styleIndexSuscrip";
+import Styles from "../../../resources/styles/styleGruposMain";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
@@ -24,7 +24,7 @@ const schema = yup.object({
     nombre: yup.string().required("El nombre es obligatorio"),
     descripcion: yup.string().required("La descripcion es obligatoria"),
 });
-const CreateGroupScreen = (route, { userEmail }) => {
+const CreateGroupScreen = (route) => {
     const { navigation } = route;
     const {
         control,
