@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import Styles from "../resources/styles/styleIndexSuscrip";
+import Styles from "../resources/styles/styleGruposMain";
 import firebase from "../database/firebase";
 
 export default function CardGrupo(props) {

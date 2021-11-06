@@ -15,6 +15,12 @@ const Styles = StyleSheet.create({
         width: "100%",
         height: "100%",
     },
+    titulo: {
+        textAlign: "center",
+        fontSize: 24,
+        color: Colors.SECUNDARY_COLOR,
+        marginBottom: 10,
+    },
     form: {
         paddingBottom: 10,
         width: "100%",
@@ -100,12 +106,6 @@ const Styles = StyleSheet.create({
         textAlign: "right",
         marginVertical: 10,
     },
-    noexis: {
-        color: Colors.SECUNDARY_COLOR,
-        fontSize: 22,
-        textAlign: "center",
-        marginVertical: 20,
-    }
 });
 
 export default Styles;

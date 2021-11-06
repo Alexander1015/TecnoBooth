@@ -11,11 +11,12 @@ import {
 import { FontAwesome5 } from "@expo/vector-icons";
 import firebase from "../../../database/firebase";
 import Styles from "../../../resources/styles/stylePublic";
+import Load from "../../Load";
 
 const ForgetScreen = (route) => {
     const { navigation } = route;
-
     const [email, setEmail] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const onChangeEmail = (dato) => {
         var nwdato = "";
@@ -29,20 +30,24 @@ const ForgetScreen = (route) => {
     };
 
     const leeremail = async () => {
+        setLoading(true);
         if (email.trim() === "") {
+            setLoading(false);
             alerta("Error", "Debe rellenar el campo de correo");
         } else {
             await firebase.auth
                 .sendPasswordResetEmail(email)
                 .then(() => {
+                    setLoading(false);
+                    reset();
                     alerta(
                         "Proceso exitoso",
                         "Se ha enviado un correo a su cuenta. Por favor sigue los pasos indicados"
                     );
-                    reset();
                     navigation.navigate("auth");
                 })
                 .catch((error) => {
+                    setLoading(false);
                     if (error.code === "auth/invalid-email") {
                         alerta("Error", "El correo ingresado es invalido");
                     } else {
@@ -65,6 +70,9 @@ const ForgetScreen = (route) => {
         setEmail("");
     };
 
+    if (loading) {
+        return <Load />;
+    }
     return (
         <>
             <View style={Styles.container}>

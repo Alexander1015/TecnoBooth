@@ -14,16 +14,17 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import firebase from "../../../database/firebase";
 import Styles from "../../../resources/styles/stylePublic";
 import Colors from "../../../resources/utils/Colors";
+import Load from "../../Load";
 
 //LogBox.ignoreLogs(["Setting a timer"]);
 
 const RegisterScreen = (route) => {
     const { navigation } = route;
-
     const [user, setUser] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [repeat, setRepeat] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const onChangeUser = (dato) => {
         var nwdato = "";
@@ -63,15 +64,21 @@ const RegisterScreen = (route) => {
     };
 
     const registrarse = () => {
+        setLoading(true);
         if (user.trim() === "" && user.length > 2) {
+            setLoading(false);
             alerta("Error", "Debe rellenar el campo de usuario correctamente");
         } else if (email.trim() === "" && email.length > 5) {
+            setLoading(false);
             alerta("Error", "Debe rellenar el campo de correo correctamente");
         } else if (password.trim() === "" && email.length > 8) {
+            setLoading(false);
             alerta("Error", "Debe rellenar el campo de contraseña correctamente");
         } else if (repeat.trim() === "") {
+            setLoading(false);
             alerta("Error", "Debe repetir la contraseña correctamente");
         } else if (password != repeat) {
+            setLoading(false);
             alerta("Error", "Las contraseñas escritas no coinciden");
         } else {
             firebase.auth
@@ -86,13 +93,15 @@ const RegisterScreen = (route) => {
                         password: password,
                     });
                     reset();
+                    setLoading(false);
                     alerta(
                         "Bienvenido",
                         "Ha ingresado sus datos correctamente, Bienvenido a TecnoBooth"
                     );
-                    navigation.navigate("dashboard", { email: email });
+                    navigation.navigate("dashboard");
                 })
                 .catch((error) => {
+                    setLoading(false);
                     if (error.code === "auth/invalid-email") {
                         alerta("Error", "El correo ingresado es invalido");
                     } else if (error.code === "auth/email-already-in-use") {
@@ -120,6 +129,11 @@ const RegisterScreen = (route) => {
         setRepeat("");
     };
 
+    if (loading) {
+        return (
+            <Load />
+        );
+    }
     return (
         <View style={Styles.container}>
             <View style={Styles.header}>
@@ -205,32 +219,5 @@ const RegisterScreen = (route) => {
         </View>
     );
 };
-
-const picketSelectStyles = StyleSheet.create({
-    inputIOS: {
-        fontSize: 15,
-        paddingVertical: 21,
-        paddingHorizontal: 10,
-        borderWidth: 1,
-        borderColor: Colors.PRIMARY_COLOR,
-        borderRadius: 2,
-        color: Colors.PRIMARY_COLOR,
-        paddingRight: 30,
-        backgroundColor: Colors.SECUNDARY_COLOR,
-        marginLeft: -5,
-        marginRight: -5,
-    },
-    inputAndroid: {
-        fontSize: 15,
-        paddingHorizontal: 10,
-        paddingVertical: 17,
-        borderWidth: 1,
-        borderColor: Colors.PRIMARY_COLOR,
-        borderRadius: 2,
-        color: Colors.PRIMARY_COLOR,
-        paddingRight: 30,
-        backgroundColor: Colors.SECUNDARY_COLOR,
-    },
-});
 
 export default RegisterScreen;

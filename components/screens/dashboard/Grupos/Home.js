@@ -1,15 +1,15 @@
 import React,{useEffect,useState} from 'react';
 import { View, Text, Image, StyleSheet, ScrollView,TouchableOpacity,FlatList, Dimensions } from 'react-native';
 import { Card } from 'react-native-paper';
-import {styleHome} from "../../../../../resources/styles/styleHome";
-import useGrupos from "../../../../../hooks/useGrupos";
-import Post from '../../../../Post';
-import { NewPost } from '../../../../NewPost';
-export default function Home(props) {
-  const { navigation,route } = props;
+import {styleHome} from "../../../../resources/styles/styleHome";
+import useGrupos from "../../../../hooks/useGrupos";
+import Post from '../../../Post';
+import { NewPost } from '../../../NewPost';
+export default function Home(route) {
+  const { idgrupo } = route;
   const { width } = Dimensions.get("window");
   
-  console.log(route);
+  //console.log(idgrupo);
   const { 
     grupo, 
     posts, 
@@ -20,7 +20,8 @@ export default function Home(props) {
     obtenerHome,
     subirImagen,
     crearPost
-  } = useGrupos('MUutMUnTx8tWEGLvqrIc');
+  } = useGrupos(idgrupo);
+  //} = useGrupos('MUutMUnTx8tWEGLvqrIc');
 
   const [nuevoPost,setNuevoPost]=useState(false);
   
