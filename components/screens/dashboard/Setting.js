@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, ScrollView, FlatList, Image } from "react-native";
+import { View, Text, ScrollView, FlatList, Image,} from "react-native";
 import Styles from "../../../resources/styles/styleDashboard";
 import { styleprofile } from "../../../resources/styles/styleProfile";
 import { Picker } from "@react-native-picker/picker";
@@ -16,11 +16,12 @@ const SettingScreen = (props) => {
                     <Text style={styleprofile.subTitulo}>Mostrar grupos con:</Text>
                 </View>
                 <View style={styleprofile.contenedorpicker}>
-                    <Picker style={styleprofile.pickerDiseno}>
-                        <Picker.Item label="-Integrnates-" value=""/>
-                        <Picker.Item label="5 integrantes"/>
-                        <Picker.Item label="100 integrantes"/>
-                        <Picker.Item label="Sin limite de integrantes"/>
+                    <Picker style={styleprofile.pickerDiseno}
+                    >
+                        <Picker.Item label="-Integrantes-" value="-Integrantes-"/>
+                        <Picker.Item label="5 integrantes" value="5 integrantes"/>
+                        <Picker.Item label="100 integrantes" value="100 integrantes"/>
+                        <Picker.Item label="Sin limite de integrantes" value="sin limite de integrantes"/>
                     </Picker>
                 </View>
                 <View style={styleprofile.container}>

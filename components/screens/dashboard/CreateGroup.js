@@ -1,28 +1,24 @@
 import React, { useEffect, useState } from "react";
-import * as ImagePicker from "expo-image-picker";
+import * as ImagePicker from 'expo-image-picker';
 import { stylesnewgroup } from "../../../resources/styles/StyleNewGroup";
-import {
-    View,
-    Text,
-    ScrollView,
-    Platform,
-    TouchableOpacity,
-    Image,
-    TextInput,
-    Alert,
-} from "react-native";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { View, Text, ScrollView, Platform, TouchableOpacity, Image, TextInput, Alert } from "react-native";
+import Styles from "../../../resources/styles/styleIndexSuscrip";
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
+import { Picker } from "@react-native-picker/picker";
 
-import UseAutenticacion from "../../../hooks/UseAutenticacion";
-import useGrupos from "../../../hooks/useGrupos";
+import UseAutenticacion from '../../../hooks/UseAutenticacion';
+import useGrupos from '../../../hooks/useGrupos';
+
 
 const AlertaConfirmacion = () => {
-    Alert.alert("Creacion de grupo", "Se ha creado el grupo correctamente", [
-        { text: "Ok", onPress: () => console.log("alerta cerrada") },
-    ]);
-};
+    Alert.alert('Creacion de grupo', 'Se ha creado el grupo correctamente',[
+        {text: 'Ok', onPress: () => console.log('alerta cerrada')},
+    ])
+}
+
+
 
 const schema = yup.object({
     nombre: yup.string().required("El nombre es obligatorio"),
@@ -47,6 +43,7 @@ const CreateGroupScreen = (route, { userEmail }) => {
     }, []);
 
     const [imagen, setImagen] = useState("");
+    const [categoria, setCategoria] = useState('Computadoras');
 
     if (usuario) {
         //console.log(usuario.uid);
@@ -85,10 +82,14 @@ const CreateGroupScreen = (route, { userEmail }) => {
 
     const submit = ({ nombre, descripcion, otraInfo }) => {
         if (usuario && !cargando) {
-            CrearGrupo(usuario.uid, imagen, nombre, descripcion, otraInfo);
+            CrearGrupo(usuario.uid, imagen, nombre, descripcion, otraInfo,categoria);
+            
         }
         AlertaConfirmacion();
-    };
+    }
+
+ 
+
 
     return (
         <View style={stylesnewgroup.container}>
@@ -142,6 +143,20 @@ const CreateGroupScreen = (route, { userEmail }) => {
                             </Text>
                         )}
                     </View>
+                    <View style={Styles.contenedorpicker}>
+                            <Picker
+                                style={Styles.estilopicker}
+                                onValueChange={(txt) => setCategoria(txt)}
+                                selectedValue={categoria}
+                            >
+                                <Picker.Item label="Computadoras" value="Computadoras" />
+                                <Picker.Item label="Dispositivos Móviles" value="Dispositivos Móviles" />
+                                <Picker.Item label="Electrónica" value="Electrónica" />
+                                <Picker.Item label="Robótica" value="Robótica" />
+                                <Picker.Item label="Varios" value="Varios" />
+                                <Picker.Item label="Videojuegos" value="Videojuegos" />
+                            </Picker>
+                        </View>
 
                     <View style={stylesnewgroup.viewInput}>
                         <Text style={stylesnewgroup.textInput}>Agregar descripcion</Text>

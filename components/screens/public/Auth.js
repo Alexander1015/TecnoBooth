@@ -27,9 +27,11 @@ const AuthScreen = (route) => {
             })
             .catch((error) => {
                 if (error.code === "auth/invalid-email") {
-                    alerta("Error", "El correo ingresado es invalido");
+                    alerta("Error", "El correo/contraseña ingresado es invalido");
+                } else if (error.code === "auth/wrong-password") {
+                    alerta("Error", "El correo/contraseña ingresado es invalido");
                 } else {
-                    alert("Error", error.message);
+                    alerta("Error", error.code);
                 }
             });
     };

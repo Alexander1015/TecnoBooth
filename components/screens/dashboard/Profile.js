@@ -16,6 +16,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
 import firebase from "../../../database/firebase";
+import useGrupos from '../../../hooks/useGrupos';
 
 const esquema = yup.object({
     nombre: yup.string().required("El nombre de usuario es obligatorio"),
@@ -45,6 +46,10 @@ const ProfileScreen = (props) => {
     } = useForm({
         resolver: yupResolver(esquema),
     });
+    const { subirImagen,} =
+        useGrupos();
+
+    const [imagen, setImagen] = useState("");
     const [image, setImage] = useState();
     useEffect(() => {
         (async () => {
@@ -69,6 +74,8 @@ const ProfileScreen = (props) => {
 
         if (!result.cancelled) {
             setImage(result.uri);
+
+            const url = await subirImagen(result.uri);
         }
     };
 
