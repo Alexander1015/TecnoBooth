@@ -17,6 +17,8 @@ import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
 import firebase from "../../../database/firebase";
 
+import useGrupos from '../../../hooks/useGrupos';
+
 const esquema = yup.object({
     nombre: yup.string().required("El nombre de usuario es obligatorio"),
     email: yup
@@ -32,9 +34,14 @@ const AlertaConfirmacion = () => {
 };
 
 const ProfileScreen = (props) => {
-    const { obtenerUsuario, usuario, cargando, ActualizarUsuario } = UseUsuarios();
+    const { obtenerUsuario, usuario, cargando, ActualizarUsuario } =
+        UseUsuarios();
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
+        setLoading(true);
         obtenerUsuario();
+        setLoading(false);
     }, []);
     const { } = props;
     const {
@@ -45,6 +52,10 @@ const ProfileScreen = (props) => {
     } = useForm({
         resolver: yupResolver(esquema),
     });
+    const { subirImagen,} =
+        useGrupos();
+
+    const [imagen, setImagen] = useState("");
     const [image, setImage] = useState();
     useEffect(() => {
         (async () => {
@@ -52,7 +63,9 @@ const ProfileScreen = (props) => {
                 const { status } =
                     await ImagePicker.requestMediaLibraryPermissionsAsync();
                 if (status !== "granted") {
-                    alert("Sorry, we need camera roll permissions to make this work!");
+                    alert(
+                        "Se necesitan permisos para poder utilizar la camara o galeria."
+                    );
                 }
             }
         })();
@@ -69,25 +82,32 @@ const ProfileScreen = (props) => {
 
         if (!result.cancelled) {
             setImage(result.uri);
+
+            const url = await subirImagen(result.uri);
         }
     };
 
     const submit = ({ nombre, email }) => {
-        ActualizarUsuario(nombre, email, usuario.id);
+        setLoading(true);
+        ActualizarUsuario(nombre, email, image, usuario.id);
         reset({
             nombre: "",
             email: "",
         });
+        setLoading(false);
         AlertaConfirmacion();
     };
 
     const leeremail = async () => {
+        setLoading(true);
         if (usuario.correo.trim() === "") {
+            setLoading(false);
             console.log("No se ha recibido el email del usuario");
         } else {
             await firebase.auth
-                .sendPasswordResetEmail(usuario.correo)
+                .sendPasswordResetEmail()
                 .then(() => {
+                    setLoading(false);
                     alerta(
                         "Proceso exitoso",
                         "Se ha enviado un correo a su cuenta. Por favor sigue los pasos indicados"
@@ -95,6 +115,7 @@ const ProfileScreen = (props) => {
                     navigation.navigate("index");
                 })
                 .catch((error) => {
+                    setLoading(false);
                     if (error.code === "auth/invalid-email") {
                         alerta("Error", "El correo obtenido es invalido");
                     }
@@ -106,6 +127,9 @@ const ProfileScreen = (props) => {
         Alert.alert(title, msg, [{ text: "Ok" }]);
     };
 
+    if (loading) {
+        return <Load />;
+    }
     return (
         <View style={styleprofile.container}>
             <ScrollView vertical>
@@ -114,29 +138,28 @@ const ProfileScreen = (props) => {
                         <Text style={styleprofile.titulo}>Perfil del Usuario</Text>
                         <View style={styleprofile.contenedorImagen}>
                             <View style={styleprofile.viewbtndecor}>
-                                <TouchableOpacity
-                                    style={styleprofile.btn}
-                                    onPress={pickImage}
-                                >
+                                <TouchableOpacity style={styleprofile.btn} onPress={pickImage}>
                                     <View style={styleprofile.btndecorado}>
                                         <Text style={styleprofile.txtbtn}>Cambiar Imagen</Text>
                                     </View>
                                 </TouchableOpacity>
                             </View>
-                            {
-                                image ? (
-                                    <Image
-                                        source={{ uri: image }}
-                                        style={{ width: 150, height: 150, resizeMode: "contain" }}
-                                    />
-                                )
-                                : (
-                                    <Image
-                                        source={require("../../../resources/img/user-default.png")}
-                                        style={{ width: 150, height: 150, resizeMode: "contain" }}
-                                    />
-                                )
-                            }
+                            {image ? (
+                                <Image
+                                    source={{ uri: image }}
+                                    style={{ width: 150, height: 150, resizeMode: "contain" }}
+                                />
+                            ) : usuario.img ? (
+                                <Image
+                                    source={{ uri: usuario.img }}
+                                    style={{ width: 150, height: 150, resizeMode: "contain" }}
+                                />
+                            ) : (
+                                <Image
+                                    source={require("../../../resources/img/user-default.png")}
+                                    style={{ width: 150, height: 150, resizeMode: "contain" }}
+                                />
+                            )}
                         </View>
                         <View style={styleprofile.containerForm}>
                             <View style={styleprofile.viewInput}>

@@ -13,20 +13,22 @@ const UseUsuarios = () => {
     };
     const manejarSnapshot = (snapShot) => {
         const user = snapShot.docs.map((doc) => {
-            const { usuario, correo } = doc.data();
+            const { usuario, correo, img } = doc.data();
             return {
                 id: doc.id,
                 usuario,
                 correo,
+                img,
             };
         });
         setUsuario(user[0]);
         setCargando(false);
     };
-    const ActualizarUsuario = (usuario, correo, id) => {
+    const ActualizarUsuario = (usuario, correo, img, id) => {
         firebase.db.collection("Usuarios").doc(id).update({
             usuario,
             correo,
+            img,
         });
     };
     return {

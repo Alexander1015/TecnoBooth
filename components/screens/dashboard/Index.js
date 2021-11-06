@@ -1,27 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView } from "react-native";
-import Styles from "../../../../../resources/styles/styleIndexSuscrip";
-import firebase from "../../../../../database/firebase";
+import Styles from "../../../resources/styles/styleGruposMain";
+import firebase from "../../../database/firebase";
 import { TextInput } from "react-native-gesture-handler";
 import { Picker } from "@react-native-picker/picker";
-import CardGrupo from "../../../../../hooks/CardGrupo";
+import CardGrupo from "../../CardGrupo";
+import Load from "../../LoadMin";
 
 const IndexScreen = (route) => {
     const { navigation } = route;
     const { email } = firebase.auth.currentUser;
-   
+
     const initialState = {
-        id: '',
-        correo: '',
-        cantidad: '',
-    }
+        id: "",
+        correo: "",
+        cantidad: "",
+    };
 
     const [user, setUser] = useState(initialState);
     const [tot, setTot] = useState(0);
 
     var total = 0;
 
-    async function obtenerUser () {
+    async function obtenerUser() {
         firebase.db
             .collection("Usuarios")
             .where("correo", "==", email)
@@ -39,11 +40,11 @@ const IndexScreen = (route) => {
 
     const redireccionar = (idgrupo) => {
         if (idgrupo.trim() !== "") {
-            navigation.navigate("Home", { idgrupo: idgrupo });
+            navigation.navigate("grupos", { idgrupo: idgrupo });
         }
-    }
+    };
 
-    function obtenerGrupos () {
+    function obtenerGrupos() {
         const grupo = [];
         firebase.db
             .collection("Grupo")
@@ -63,15 +64,15 @@ const IndexScreen = (route) => {
     }
 
     useEffect(() => {
-        obtenerUser();   
-        obtenerGrupos(); 
+        obtenerUser();
+        obtenerGrupos();
     }, []);
 
     useEffect(() => {
         setTot(total);
     }, [total]);
 
-    async function obtenerTotal () {
+    async function obtenerTotal() {
         total++;
     }
 
@@ -85,13 +86,12 @@ const IndexScreen = (route) => {
         const grupo = [];
         if (txt.trim() === "" && cmb.trim() === "") {
             obtenerGrupos();
-        }
-        else if (txt.trim() !== "" && cmb.trim() === "") {
+        } else if (txt.trim() !== "" && cmb.trim() === "") {
             firebase.db
                 .collection("Grupo")
                 .orderBy("nombre")
                 .startAt(txt)
-                .endAt(txt + '\uf8ff')
+                .endAt(txt + "\uf8ff")
                 .onSnapshot((queryGrupos) => {
                     queryGrupos.docs.forEach((docGrp) => {
                         const { nombre, descripcion, img } = docGrp.data();
@@ -104,8 +104,7 @@ const IndexScreen = (route) => {
                     });
                     setGrupos(grupo);
                 });
-        }
-        else if (txt.trim() === "" && cmb.trim() !== "") {
+        } else if (txt.trim() === "" && cmb.trim() !== "") {
             firebase.db
                 .collection("Grupo")
                 .where("clasificacion", "==", cmb)
@@ -122,14 +121,13 @@ const IndexScreen = (route) => {
                     });
                     setGrupos(grupo);
                 });
-        }
-        else {
+        } else {
             firebase.db
                 .collection("Grupo")
                 .where("clasificacion", "==", cmb)
                 .orderBy("nombre")
                 .startAt(txt)
-                .endAt(txt + '\uf8ff')
+                .endAt(txt + "\uf8ff")
                 .onSnapshot((queryGrupos) => {
                     queryGrupos.docs.forEach((docGrp) => {
                         const { nombre, descripcion, img } = docGrp.data();
@@ -143,12 +141,13 @@ const IndexScreen = (route) => {
                     setGrupos(grupo);
                 });
         }
-    }
-    
+    };
+
     if (user.cantidad !== null) {
         return (
             <View style={Styles.container}>
                 <ScrollView vertical style={Styles.scroll}>
+                    <Text style={ Styles.titulo }>Grupos de la Aplicación</Text>
                     <View style={[Styles.form, Styles.hr]}>
                         <View>
                             <Text style={Styles.lbl}>Buscar</Text>
@@ -167,7 +166,10 @@ const IndexScreen = (route) => {
                             >
                                 <Picker.Item label="Clasificaciones" value="" />
                                 <Picker.Item label="Computadoras" value="Computadoras" />
-                                <Picker.Item label="Dispositivos Móviles" value="Dispositivos Móviles" />
+                                <Picker.Item
+                                    label="Dispositivos Móviles"
+                                    value="Dispositivos Móviles"
+                                />
                                 <Picker.Item label="Electrónica" value="Electrónica" />
                                 <Picker.Item label="Robótica" value="Robótica" />
                                 <Picker.Item label="Varios" value="Varios" />
@@ -175,36 +177,37 @@ const IndexScreen = (route) => {
                             </Picker>
                         </View>
                     </View>
-                    <View style={ Styles.grupos }>
-                        {
-                            grupos.length > 0 ? (
-                                grupos.map((grupo, index) => {
-                                    return (
-                                        <CardGrupo key={index} grupo={grupo} minimo={user.cantidad} obtenerTotal={obtenerTotal} redireccionar={redireccionar} ></CardGrupo>
-                                    );
-                                })
-                            ) : (
-                                <Text style={ Styles.noexis }>No existen grupos que mostrar.</Text>
-                            )
-                        }
-                        {
-                            grupos.length > 0 && grupos.length === tot ? (
-                                <Text style={ Styles.noexis }>No existen grupos que mostrar.</Text>
-                            ) : (
-                                <View></View>
-                            )
-                        }
+                    <View style={Styles.grupos}>
+                        {grupos.length > 0 ? (
+                            grupos.map((grupo, index) => {
+                                return (
+                                    <CardGrupo
+                                        key={index}
+                                        grupo={grupo}
+                                        minimo={user.cantidad}
+                                        obtenerTotal={obtenerTotal}
+                                        redireccionar={redireccionar}
+                                    ></CardGrupo>
+                                );
+                            })
+                        ) : (
+                            <Load />
+                        )}
+                        {grupos.length > 0 && grupos.length === tot ? (
+                            <Load />
+                        ) : (
+                            <View></View>
+                        )}
                     </View>
                 </ScrollView>
             </View>
         );
-    }
-    else {
-        return(
+    } else {
+        return (
             <View style={Styles.container}>
                 <ScrollView vertical style={Styles.scroll}>
-                    <View style={ Styles.grupos }>
-                        <Text style={ Styles.noexis }>No existen grupos que mostrar.</Text>
+                    <View style={Styles.grupos}>
+                        <Load />
                     </View>
                 </ScrollView>
             </View>

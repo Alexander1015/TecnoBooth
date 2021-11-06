@@ -1,12 +1,12 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import IndexScreen from "./screensIndex/Grupos";
-import GroupScreen from "./MyGroups";
+import IndexScreen from "../screens/dashboard/MisSuscripciones";
+import GroupScreen from "./tabGrupos";
 
 const Stack = createStackNavigator();
 
-const MyGroupsScreen = () => {
+const MainSuscripciones = () => {
     return (
         <NavigationContainer independent={true}>
             <Stack.Navigator
@@ -17,12 +17,12 @@ const MyGroupsScreen = () => {
             >
                 <Stack.Screen
                     name="index"
-                    component={ IndexScreen }
+                    component={IndexScreen}
                     options={{ title: "TecnoBooth" }}
                 />
                 <Stack.Screen
                     name="grupos"
-                    component={ GroupScreen }
+                    component={GroupScreen}
                     options={{ title: "TecnoBooth" }}
                 />
             </Stack.Navigator>
@@ -30,4 +30,4 @@ const MyGroupsScreen = () => {
     );
 };
 
-export default MyGroupsScreen;
+export default MainSuscripciones;

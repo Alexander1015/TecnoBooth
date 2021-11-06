@@ -8,9 +8,19 @@ const Styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: Colors.PRIMARY_COLOR,
-        paddingHorizontal: 10,
         paddingBottom: 10,
+        paddingHorizontal: 10,
         paddingTop: Constants.statusBarHeight,
+    },
+    scroll: {
+        flex: 1,
+        width: "100%",
+        height: "100%",
+    },
+    load: {
+        justifyContent: "center",
+        alignItems: "center",
+        marginVertical: "100%",
     },
 });
 
