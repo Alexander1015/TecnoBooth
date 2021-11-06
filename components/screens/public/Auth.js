@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     View,
     Text,
@@ -19,6 +19,12 @@ const AuthScreen = (route) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        if (firebase.auth.currentUser) {
+            navigation.navigate("dashboard");
+        }
+    }, [route])
 
     const login = () => {
         setLoading(true);

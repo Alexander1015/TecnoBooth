@@ -147,7 +147,7 @@ const SuscripcionesScreen = (route) => {
         return (
             <View style={Styles.container}>
                 <ScrollView vertical style={Styles.scroll}>
-                    <Text style={ Styles.titulo }>Grupos de la Aplicación</Text>
+                    <Text style={ Styles.titulo }>Grupos a los que estoy Suscrito</Text>
                     <View style={[Styles.form, Styles.hr]}>
                         <View>
                             <Text style={Styles.lbl}>Buscar</Text>

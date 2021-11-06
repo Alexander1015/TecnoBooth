@@ -25,7 +25,7 @@ export default function CardGrupo(props) {
             });
     }, [grupo])
 
-    if (cantidad > minimo) {
+    if (cantidad >= minimo) {
         return(
             <TouchableOpacity 
                 key={ key }
@@ -53,7 +53,7 @@ export default function CardGrupo(props) {
                     </View>
                     <View>
                         <Text style={ Styles.card_cantidad }>
-                            Cantidad Suscrita { cantidad ? cantidad : "#" }
+                            { cantidad ? cantidad : "0" } Usuario/s Suscrito/s
                         </Text>
                     </View>
                 </View>
