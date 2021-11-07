@@ -1,7 +1,4 @@
 
-import React from "react";
-import { View, Text, ScrollView, FlatList, Image,} from "react-native";
-
 import React, { useState } from "react";
 import { View, Text, ScrollView, FlatList, Image } from "react-native";
 
@@ -10,6 +7,7 @@ import { styleprofile } from "../../../resources/styles/styleProfile";
 import { Picker } from "@react-native-picker/picker";
 import firebase from "../../../database/firebase";
 import Load from "../../Load";
+import useGrupos from '../../../hooks/useGrupos';
 
 const SettingScreen = (props) => {
     const [loading, setLoading] = useState(false);

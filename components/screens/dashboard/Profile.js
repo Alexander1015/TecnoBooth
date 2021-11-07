@@ -16,7 +16,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
 import firebase from "../../../database/firebase";
-
 import useGrupos from '../../../hooks/useGrupos';
 
 const esquema = yup.object({
@@ -127,9 +126,7 @@ const ProfileScreen = (props) => {
         Alert.alert(title, msg, [{ text: "Ok" }]);
     };
 
-    if (loading) {
-        return <Load />;
-    }
+    
     return (
         <View style={styleprofile.container}>
             <ScrollView vertical>
