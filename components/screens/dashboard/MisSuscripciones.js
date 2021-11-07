@@ -11,6 +11,12 @@ const SuscripcionesScreen = (route) => {
     const { navigation } = route;
     const { email } = firebase.auth.currentUser;
 
+    const [search, setSearch] = useState("");
+    const [clasi, setClasi] = useState("");
+
+    const [grp, setGrp] = useState([]);
+    const [grpint, setGrpInt] = useState([]);
+
     const initialState = {
         id: "",
         correo: "",
@@ -44,29 +50,75 @@ const SuscripcionesScreen = (route) => {
         }
     };
 
-    function obtenerGrupos() {
+    async function obtenerGIntegrantes() {
+        const grupo = [];
+        firebase.db
+            .collection("Integrantes")
+            .where("id_usuario", "==", user.id)
+            .onSnapshot((queryInt) => {
+                setGrpInt([]);
+                if (queryInt.docs.length > 0) {
+                    queryInt.docs.forEach((docInt) => {
+                        const { id_grupo, id_usuario } = docInt.data();
+                        grupo.push({
+                            id: docInt.id,
+                            id_grupo,
+                            id_usuario,
+                        });
+                    });
+                    setGrpInt(grupo);
+                }
+            });
+    }
+
+    async function obtenertotGrupos() {
         const grupo = [];
         firebase.db
             .collection("Grupo")
             .orderBy("nombre")
             .onSnapshot((queryGrupos) => {
-                queryGrupos.docs.forEach((docGrp) => {
-                    const { nombre, descripcion, img } = docGrp.data();
-                    grupo.push({
-                        id: docGrp.id,
-                        nombre,
-                        descripcion,
-                        img,
+                setGrp([]);
+                if (queryGrupos.docs.length > 0) {
+                    queryGrupos.docs.forEach((docGrp) => {
+                        const { nombre, descripcion, img } = docGrp.data();
+                        grpint.map((data) => {
+                            if (data.id_grupo === docGrp.id) {
+                                grupo.push({
+                                    id: docGrp.id,
+                                    nombre,
+                                    descripcion,
+                                    img,
+                                });
+                            }
+                        });
                     });
-                });
-                setGrupos(grupo);
+                    setGrp(grupo);
+                }
             });
+        setSearch("");
+        setClasi("");
     }
 
+    let isSuscribed = false;
     useEffect(() => {
-        obtenerUser();
-        obtenerGrupos();
+        isSuscribed = !isSuscribed;
+        if (isSuscribed) obtenerUser();
     }, []);
+
+    useEffect(() => {
+        isSuscribed = !isSuscribed;
+        if (isSuscribed) obtenerGIntegrantes();
+    }, [user]);
+
+    useEffect(() => {
+        isSuscribed = !isSuscribed;
+        if (isSuscribed) obtenertotGrupos();
+    }, [grpint]);
+
+    //Arregla la falla de memoria
+    useEffect(() => {
+        isSuscribed = !isSuscribed;
+    }, [isSuscribed])
 
     useEffect(() => {
         setTot(total);
@@ -76,143 +128,150 @@ const SuscripcionesScreen = (route) => {
         total++;
     }
 
-    const [grupos, setGrupos] = useState([]);
-    const [search, setSearch] = useState("");
-    const [clasi, setClasi] = useState("");
-
-    const buscargrp = (txt, cmb) => {
+    async function buscargrp(txt, cmb) {
         setSearch(txt);
         setClasi(cmb);
-        const grupo = [];
         if (txt.trim() === "" && cmb.trim() === "") {
-            obtenerGrupos();
+            obtenertotGrupos();
         } else if (txt.trim() !== "" && cmb.trim() === "") {
+            const grupo = [];
             firebase.db
                 .collection("Grupo")
                 .orderBy("nombre")
                 .startAt(txt)
                 .endAt(txt + "\uf8ff")
                 .onSnapshot((queryGrupos) => {
-                    queryGrupos.docs.forEach((docGrp) => {
-                        const { nombre, descripcion, img } = docGrp.data();
-                        grupo.push({
-                            id: docGrp.id,
-                            nombre,
-                            descripcion,
-                            img,
+                    setGrp([]);
+                    if (queryGrupos.docs.length > 0) {
+                        queryGrupos.docs.forEach((docGrp) => {
+                            const { nombre, descripcion, img } = docGrp.data();
+                            grpint.map((data) => {
+                                if (data.id_grupo === docGrp.id) {
+                                    grupo.push({
+                                        id: docGrp.id,
+                                        nombre,
+                                        descripcion,
+                                        img,
+                                    });
+                                }
+                            });
                         });
-                    });
-                    setGrupos(grupo);
+                        setGrp(grupo);
+                    }
                 });
         } else if (txt.trim() === "" && cmb.trim() !== "") {
+            const grupo = [];
             firebase.db
                 .collection("Grupo")
-                .where("clasificacion", "==", cmb)
                 .orderBy("nombre")
+                .where("clasificacion", "==", cmb)
                 .onSnapshot((queryGrupos) => {
-                    queryGrupos.docs.forEach((docGrp) => {
-                        const { nombre, descripcion, img } = docGrp.data();
-                        grupo.push({
-                            id: docGrp.id,
-                            nombre,
-                            descripcion,
-                            img,
+                    setGrp([]);
+                    if (queryGrupos.docs.length > 0) {
+                        queryGrupos.docs.forEach((docGrp) => {
+                            const { nombre, descripcion, img } = docGrp.data();
+                            grpint.map((data) => {
+                                if (data.id_grupo === docGrp.id) {
+                                    grupo.push({
+                                        id: docGrp.id,
+                                        nombre,
+                                        descripcion,
+                                        img,
+                                    });
+                                }
+                            });
                         });
-                    });
-                    setGrupos(grupo);
+                        setGrp(grupo);
+                    }
                 });
         } else {
+            const grupo = [];
             firebase.db
                 .collection("Grupo")
-                .where("clasificacion", "==", cmb)
                 .orderBy("nombre")
+                .where("clasificacion", "==", cmb)
                 .startAt(txt)
                 .endAt(txt + "\uf8ff")
                 .onSnapshot((queryGrupos) => {
-                    queryGrupos.docs.forEach((docGrp) => {
-                        const { nombre, descripcion, img } = docGrp.data();
-                        grupo.push({
-                            id: docGrp.id,
-                            nombre,
-                            descripcion,
-                            img,
+                    setGrp([]);
+                    if (queryGrupos.docs.length > 0) {
+                        queryGrupos.docs.forEach((docGrp) => {
+                            const { nombre, descripcion, img } = docGrp.data();
+                            grpint.map((data) => {
+                                if (data.id_grupo === docGrp.id) {
+                                    grupo.push({
+                                        id: docGrp.id,
+                                        nombre,
+                                        descripcion,
+                                        img,
+                                    });
+                                }
+                            });
                         });
-                    });
-                    setGrupos(grupo);
+                        setGrp(grupo);
+                    }
                 });
         }
     };
 
-    if (user.cantidad !== null) {
-        return (
-            <View style={Styles.container}>
-                <ScrollView vertical style={Styles.scroll}>
-                    <Text style={ Styles.titulo }>Grupos a los que estoy Suscrito</Text>
-                    <View style={[Styles.form, Styles.hr]}>
-                        <View>
-                            <Text style={Styles.lbl}>Buscar</Text>
-                            <TextInput
-                                style={Styles.txt}
-                                placeholder="Ingrese su busqueda..."
-                                onChangeText={(txt) => buscargrp(txt, clasi)}
-                                value={search}
+    return (
+        <View style={Styles.container}>
+            <ScrollView vertical style={Styles.scroll}>
+                <Text style={Styles.titulo}>Grupos a los que estoy Suscrito</Text>
+                <View style={[Styles.form, Styles.hr]}>
+                    <View>
+                        <Text style={Styles.lbl}>Buscar</Text>
+                        <TextInput
+                            style={Styles.txt}
+                            placeholder="Ingrese su busqueda..."
+                            onChangeText={(txt) => buscargrp(txt, clasi)}
+                            value={search}
+                        />
+                    </View>
+                    <View style={Styles.contenedorpicker}>
+                        <Picker
+                            style={Styles.estilopicker}
+                            onValueChange={(txt) => buscargrp(search, txt)}
+                            selectedValue={clasi}
+                        >
+                            <Picker.Item label="Clasificaciones" value="" />
+                            <Picker.Item label="Computadoras" value="Computadoras" />
+                            <Picker.Item
+                                label="Dispositivos Móviles"
+                                value="Dispositivos Móviles"
                             />
-                        </View>
-                        <View style={Styles.contenedorpicker}>
-                            <Picker
-                                style={Styles.estilopicker}
-                                onValueChange={(txt) => buscargrp(search, txt)}
-                                selectedValue={clasi}
-                            >
-                                <Picker.Item label="Clasificaciones" value="" />
-                                <Picker.Item label="Computadoras" value="Computadoras" />
-                                <Picker.Item
-                                    label="Dispositivos Móviles"
-                                    value="Dispositivos Móviles"
-                                />
-                                <Picker.Item label="Electrónica" value="Electrónica" />
-                                <Picker.Item label="Robótica" value="Robótica" />
-                                <Picker.Item label="Varios" value="Varios" />
-                                <Picker.Item label="Videojuegos" value="Videojuegos" />
-                            </Picker>
-                        </View>
+                            <Picker.Item label="Electrónica" value="Electrónica" />
+                            <Picker.Item label="Robótica" value="Robótica" />
+                            <Picker.Item label="Varios" value="Varios" />
+                            <Picker.Item label="Videojuegos" value="Videojuegos" />
+                        </Picker>
                     </View>
-                    <View style={Styles.grupos}>
-                        {grupos.length > 0 ? (
-                            grupos.map((grupo, index) => {
-                                return (
-                                    <CardGrupo
-                                        key={index}
-                                        grupo={grupo}
-                                        minimo={user.cantidad}
-                                        obtenerTotal={obtenerTotal}
-                                        redireccionar={redireccionar}
-                                    ></CardGrupo>
-                                );
-                            })
-                        ) : (
-                            <Load />
-                        )}
-                        {grupos.length > 0 && grupos.length === tot ? (
-                            <Load />
-                        ) : (
-                            <View></View>
-                        )}
-                    </View>
-                </ScrollView>
-            </View>
-        );
-    } else {
-        return (
-            <View style={Styles.container}>
-                <ScrollView vertical style={Styles.scroll}>
-                    <View style={Styles.grupos}>
+                </View>
+                <View style={Styles.grupos}>
+                    {grp.length > 0 ? (
+                        grp.map((grupo, index) => {
+                            return (
+                                <CardGrupo
+                                    key={index}
+                                    grupo={grupo}
+                                    minimo={user.cantidad}
+                                    obtenerTotal={obtenerTotal}
+                                    redireccionar={redireccionar}
+                                ></CardGrupo>
+                            );
+                        })
+                    ) : (
                         <Load />
-                    </View>
-                </ScrollView>
-            </View>
-        );
-    }
+                    )}
+                    {grp.length > 0 && grp.length === tot ? (
+                        <Load />
+                    ) : (
+                        <View></View>
+                    )}
+                </View>
+            </ScrollView>
+        </View>
+    );
 };
 
 export default SuscripcionesScreen;

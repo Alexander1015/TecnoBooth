@@ -101,7 +101,7 @@ const DashboardNav = () => {
                 name="activity"
                 component={ActivityScreen}
                 options={{
-                    title: "Activity",
+                    title: "Actividad",
                     drawerIcon: ({ focused }) => (
                         <MaterialCommunityIcons
                             name="bell"

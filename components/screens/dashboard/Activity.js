@@ -1,25 +1,16 @@
 import React, { useEffect, useState } from "react";
 import {
   View,
-  Text,
-  Image,
-  StyleSheet,
   ScrollView,
-  TouchableOpacity,
   FlatList,
   Dimensions,
 } from "react-native";
-import { Card } from "react-native-paper";
 import useGrupos from "../../../hooks/useActivity";
 import Post from "../../Post";
-import { NewPost } from "../../NewPost";
 import { styles } from "../../../resources/styles/styleActivity";
 import firebase from "../../../database/firebase";
 
 const ActivityScreen = (route) => {
-  const { idgrupo } = route;
-  const { width } = Dimensions.get("window");
-
   const {
     grupo,
     grupos,
@@ -34,159 +25,114 @@ const ActivityScreen = (route) => {
     //} = useGrupos(idgrupo);
   } = useGrupos("MUutMUnTx8tWEGLvqrIc");
 
-  const [allgrupos, setallgrupos] = useState([]);
-  const [misgrupos, setMisgrupos] = useState([]);
-  const [integrante, setIntegrante] = useState([]);
-  const [filtrados, setFiltrados] = useState([]);
-  const [miusuario, setMiusuario] = useState([]);
-  const [usuario2, setUsuario2] = useState('');
+  const [usuario, setUsuario] = useState("");
   const [misgruposconpost, setMisgruposconpost] = useState([]);
-  const [postgroups, setPostgroups] = useState([]);
   const [postgroupsunicos, setPostgroupsunicos] = useState([]);
-  const [cantidadposts, setCantidadPosts] = useState([]);
 
-  useEffect(() => {
+  let isSuscribe = false;
+
+  async function obtenerUser() {
     const { email } = firebase.auth.currentUser;
     firebase.db
       .collection("Usuarios")
       .where("correo", "==", email)
       .onSnapshot((querySnapshot) => {
-        const usuario = [];
+        const user = [];
         querySnapshot.docs.forEach((doc) => {
-          usuario.push({
+          user.push({
             id: doc.id,
           });
         });
-        setMiusuario(usuario);
-        usuario.map(usuario=>{
-          setUsuario2(usuario.id)
-        })
-      });
-  }, []);
-
-  useEffect(() => {
-    firebase.db.collection("Grupo").onSnapshot((querySnapshot) => {
-      const allgrupos = [];
-      querySnapshot.docs.forEach((doc) => {
-        const { nombre, informacion, descripcion, img } = doc.data();
-        allgrupos.push({
-          id: doc.id,
-          nombre,
-          informacion,
-          descripcion,
-          img,
+        user.map((user) => {
+          setUsuario(user.id);
         });
       });
-      setallgrupos(allgrupos);
-    });
-  }, []);
-  
-  useEffect(() => {
+  }
+
+  async function obtenerGruposWPost() {
     firebase.db
-    .collection("Post")
-    .where('id_usuario','==',usuario2)
-    .onSnapshot((querySnapshot) => {
-      const misgruposconpost = [];
-      querySnapshot.docs.forEach((doc) => {
-        const { id_grupo } = doc.data();
-        misgruposconpost.push({
-          id: doc.id,
-          id_grupo,
-        });
-      });
-      setMisgruposconpost(misgruposconpost);
-      misgruposconpost.map(a=>{
-        console.log(a);
-      })
-    });
-  }, [usuario2]);
-
-  useEffect(() => {
-    console.log('se')
-    const postgroups = [];
-    misgruposconpost.map(misgruposconpost=>{
-      allgrupos.map(allgrupos=>{
-        if(misgruposconpost.id_grupo == allgrupos.id){
-          postgroups.push({
-            nombre: allgrupos.nombre,
-          })
+      .collection("Post")
+      .where("id_usuario", "==", usuario)
+      .onSnapshot((querySnapshot) => {
+        if (querySnapshot.docs.length > 0) {
+          const misgruposconpost = [];
+          querySnapshot.docs.forEach((doc) => {
+            const { id_grupo } = doc.data();
+            misgruposconpost.push({
+              id: doc.id,
+              id_grupo,
+            });
+          });
+          setMisgruposconpost(misgruposconpost);
+        } else {
+          setMisgruposconpost([]);
         }
       });
-    });
-    setPostgroups(postgroups);
-    setCantidadPosts(postgroups.length);
-  }, [misgruposconpost]);
+  }
 
-  const EliminarGruposDuplicados = (arr) => {
-    const gruposMap = arr.map(grupos => {
-      return [grupos.nombre, grupos]
+  async function obtenerTotGrupos() {
+    firebase.db.collection("Grupo").onSnapshot((querySnapshot) => {
+      if (querySnapshot.docs.length > 0 && misgruposconpost.length > 0) {
+        const allgrupos = [];
+        querySnapshot.docs.forEach((doc) => {
+          const { nombre, informacion, descripcion, img } = doc.data();
+          misgruposconpost.map((i) => {
+            if (i.id_grupo === doc.id) {
+              let exist = 0;
+              if (allgrupos.length > 0) {
+                allgrupos.map((j) => {
+                  if (j.id === i.id_grupo) {
+                    exist++;
+                  }
+                });
+              }
+              if (exist === 0) {
+                allgrupos.push({
+                  id: doc.id,
+                  nombre,
+                  informacion,
+                  descripcion,
+                  img,
+                });
+              }
+            }
+          });
+        });
+        setPostgroupsunicos(allgrupos);
+      } else {
+        setPostgroupsunicos([]);
+      }
     });
-  
-    return [...new Map(gruposMap).values()];
   }
 
   useEffect(() => {
-    setPostgroupsunicos(EliminarGruposDuplicados(postgroups));
-  }, [postgroups]);
+    isSuscribe = !isSuscribe;
+    if (isSuscribe) obtenerUser();
+  }, []);
 
-  
+  useEffect(() => {
+    isSuscribe = !isSuscribe;
+    if (isSuscribe) obtenerGruposWPost();
+  }, [usuario]);
+
+  useEffect(() => {
+    isSuscribe = !isSuscribe;
+    if (isSuscribe) obtenerTotGrupos();
+  }, [misgruposconpost]);
 
   //Obtengo todos los integrantes
   useEffect(() => {
-    firebase.db.collection("Integrantes").onSnapshot((querySnapshot) => {
-      const integrante = [];
-      querySnapshot.docs.forEach((doc) => {
-        const { id_usuario, id_grupo } = doc.data();
-        integrante.push({
-          id: doc.id,
-          id_usuario,
-          id_grupo,
-        });
-      });
-      setIntegrante(integrante);
-    });
-  }, []);
+    isSuscribe = !isSuscribe;
+    if (isSuscribe) obtenerIntg();
+  }, [usuario]);
 
-  //Obtengo el id de mis grupos
   useEffect(() => {
-    const misgrupos = [];
-    miusuario.map((miusuario) => {
-      integrante.map((integrante) => {
-        if (miusuario.id == integrante.id_usuario) {
-          misgrupos.push({
-            id: integrante.id_grupo,
-          });
-        }
-      });
-    });
-    setMisgrupos(misgrupos);
-  }, [integrante]);
-
-  //Obtengo la info de mis grupos con el id de mis grupos
-  useEffect(() => {
-    const filtrados = [];
-    misgrupos.map((misgrupos) => {
-      allgrupos.map((allgrupos) => {
-        if (misgrupos.id == allgrupos.id) {
-          filtrados.push({
-            id: allgrupos.id,
-            nombre: allgrupos.nombre,
-            informacion: allgrupos.informacion,
-            descripcion: allgrupos.descripcion,
-            img: allgrupos.img,
-            verPosts: false,
-          });
-        }
-      });
-    });
-    setFiltrados(filtrados);
-  }, [misgrupos]);
+    isSuscribe = !isSuscribe;
+  }, [isSuscribe]);
 
   useEffect(() => {
     obtenerHome();
   }, []);
-
-  const [verPosts, setVerPosts] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -194,29 +140,6 @@ const ActivityScreen = (route) => {
         {grupo ? (
           <View style={styles.containcontent}>
             <View style={styles.containgroup}>
-              <View style={styles.containgrouptitle}>
-                <Text style={styles.txttitle}>Posts realizados: {cantidadposts}</Text>
-              </View>
-              <View style={styles.containgrouptitle}>
-              <Text style={styles.txttitle}>Has publicado posts en los grupos:</Text>
-              </View>
-              {postgroupsunicos.map(postgroupsunicos=>{
-                return(
-                  <View style={styles.containpostbody2}>
-                  <Text style={styles.txttitle2}>{postgroupsunicos.nombre}</Text>
-                  </View>
-                );
-              })}
-              <TouchableOpacity
-                activeOpacity={0.8}
-                style={styles.btnverposts}
-                onPress={() => setVerPosts(!verPosts)}
-              >
-                <Text style={styles.btnverpoststxt}>
-                  {verPosts ? "Ocultar Posts" : "Ver Posts"}
-                </Text>
-              </TouchableOpacity>
-              {verPosts ? (
                 <View style={styles.containpostbody}>
                   <FlatList
                     data={posts}
@@ -229,33 +152,8 @@ const ActivityScreen = (route) => {
                       />
                     )}
                     showsVerticalScrollIndicator={false}
-                    ListHeaderComponent={() => (
-                      <>
-                        {/*
-                    <Image style={styles.img} source={{ uri: posts.imgUsuario }} />
-                    <Text style={styles.txtdesctitle}>Descripción</Text>
-                    <Text style={styles.txtdesc}>
-                      Esta sería una Descripción. Así se vería si fuera una
-                      Descripción con más de una línea.
-                    </Text>
-                    <Text style={styles.txtdesctitle}>Comentarios</Text>
-                    <View style={styles.containusername}>
-                      <Text style={styles.txtusername}>Username</Text>
-                    </View>
-                    <Text style={styles.txtcomment}>Comentario1</Text>
-                    <View style={styles.containusername}>
-                      <Text style={styles.txtusername}>Username2</Text>
-                    </View>
-                    <Text style={styles.txtcomment}>Comentario2</Text>
-                        */}
-                      </>
-                    )}
-                    ListFooterComponent={() => (
-                      <View style={{ marginBottom: 10 }} />
-                    )}
                   />
                 </View>
-              ) : null}
             </View>
           </View>
         ) : null}
