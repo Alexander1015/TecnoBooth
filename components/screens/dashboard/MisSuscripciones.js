@@ -135,7 +135,7 @@ const SuscripcionesScreen = (route) => {
         if (grpint) {
             obtenerRelacion();
         }
-    }, [grpint])
+    }, [grpint]);
 
     useEffect(() => {
         setTot(total);
