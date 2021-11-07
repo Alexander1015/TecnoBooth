@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView, FlatList, Image } from "react-native";
 import Styles from "../../../resources/styles/styleDashboard";
 import { styleprofile } from "../../../resources/styles/styleProfile";
@@ -8,11 +8,53 @@ import Load from "../../Load";
 
 const SettingScreen = (props) => {
     const [loading, setLoading] = useState(false);
+    const { email } = firebase.auth.currentUser;
+    const [newCantidad, setNewCantidad] = useState("");
+
+    async function obtenerUser() {
+        setLoading(true);
+        firebase.db
+            .collection("Usuarios")
+            .where("correo", "==", email)
+            .onSnapshot((queryUser) => {
+                queryUser.docs.forEach((docUsr) => {
+                    const { correo, cantidad } = docUsr.data();
+                    setUser({
+                        id: docUsr.id,
+                        correo: correo,
+                        cantidad: cantidad,
+                    });
+                    setNewCantidad(cantidad);
+                });
+                setLoading(false);
+            });
+    }
+
+    let isSuscribed = false;
+
+    useEffect(() => {
+        isSuscribed = !isSuscribed;
+        if (isSuscribed) obtenerUser();
+    }, []);
+
+    useEffect(() => {
+        isSuscribed = !isSuscribed;
+    }, [isSuscribed])
+
 
     if (loading) {
         <Load />;
     }
-    
+
+    const updateUser = async () => {
+        setLoading(true);
+        const dbRef = firebase.db.collection("Usuarios").doc(user.id);
+        await dbRef.set({
+            cantidad: newCantidad,
+        });
+        setLoading(false);
+    }
+
     return (
         <View style={Styles.container}>
             <ScrollView vertical>
@@ -21,14 +63,15 @@ const SettingScreen = (props) => {
                     <Text style={styleprofile.subTitulo}>Mostrar grupos desde:</Text>
                 </View>
                 <View style={styleprofile.contenedorpicker}>
-
                     <Picker style={styleprofile.pickerDiseno}
+                        value={ newCantidad }
                     >
-                        <Picker.Item label="Sin limite de integrantes" value="sin limite de integrantes"/>
+                        <Picker.Item label="Sin limite de integrantes" value="0"/>
                         <Picker.Item label="5 integrantes" value="5"/>
                         <Picker.Item label="10 integrantes" value="10"/>
                         <Picker.Item label="25 integrantes" value="25"/>
                         <Picker.Item label="50 integrantes" value="50"/>
+                        <Picker.Item label="100 integrantes" value="100"/>
                     </Picker>
                 </View>
                 <View style={styleprofile.container}>
