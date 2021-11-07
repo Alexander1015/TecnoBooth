@@ -12,6 +12,7 @@ const SettingScreen = (props) => {
     if (loading) {
         <Load />;
     }
+    
     return (
         <View style={Styles.container}>
             <ScrollView vertical>
