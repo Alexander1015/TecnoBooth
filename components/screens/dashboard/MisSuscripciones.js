@@ -254,7 +254,7 @@ const SuscripcionesScreen = (route) => {
                                 <CardGrupo
                                     key={index}
                                     grupo={grupo}
-                                    minimo={user.cantidad}
+                                    minimo={0}
                                     obtenerTotal={obtenerTotal}
                                     redireccionar={redireccionar}
                                 ></CardGrupo>

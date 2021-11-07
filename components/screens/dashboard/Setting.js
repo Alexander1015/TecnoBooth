@@ -6,7 +6,17 @@ import { Picker } from "@react-native-picker/picker";
 import firebase from "../../../database/firebase";
 import Load from "../../Load";
 
-const SettingScreen = (props) => {
+const SettingScreen = () => {
+    const initialState = {
+        id: "",
+        correo: "",
+        cantidad: "",
+        img: "",
+        usuario: "",
+    };
+
+    const [user, setUser] = useState(initialState);
+
     const [loading, setLoading] = useState(false);
     const { email } = firebase.auth.currentUser;
     const [newCantidad, setNewCantidad] = useState("");
@@ -18,11 +28,13 @@ const SettingScreen = (props) => {
             .where("correo", "==", email)
             .onSnapshot((queryUser) => {
                 queryUser.docs.forEach((docUsr) => {
-                    const { correo, cantidad } = docUsr.data();
+                    const { correo, cantidad, img, usuario } = docUsr.data();
                     setUser({
                         id: docUsr.id,
                         correo: correo,
                         cantidad: cantidad,
+                        img: img,
+                        usuario: usuario,
                     });
                     setNewCantidad(cantidad);
                 });
@@ -31,6 +43,7 @@ const SettingScreen = (props) => {
     }
 
     let isSuscribed = false;
+    let cant = 0;
 
     useEffect(() => {
         isSuscribed = !isSuscribed;
@@ -39,32 +52,43 @@ const SettingScreen = (props) => {
 
     useEffect(() => {
         isSuscribed = !isSuscribed;
-    }, [isSuscribed])
+        if (isSuscribed) setNewCantidad(cant);
+    }, [cant]);
 
+    useEffect(() => {
+        isSuscribed = !isSuscribed;
+    }, [isSuscribed])
 
     if (loading) {
         <Load />;
     }
 
-    const updateUser = async () => {
+    const updateUser = async (value) => {
         setLoading(true);
-        const dbRef = firebase.db.collection("Usuarios").doc(user.id);
-        await dbRef.set({
-            cantidad: newCantidad,
-        });
+        if (value.trim() !== "") {
+            cant = value;
+            const dbRef = firebase.db.collection("Usuarios").doc(user.id);
+            await dbRef.set({
+                cantidad: value,
+                correo: user.correo,
+                img: user.img,
+                usuario: user.usuario,
+            });
+        }
         setLoading(false);
     }
 
     return (
         <View style={Styles.container}>
-            <ScrollView vertical>
+            <ScrollView vertical style={styleprofile.scroll}>
                 <Text style={styleprofile.titulo}>Ajustes</Text>
                 <View style={{ padding: 10 }}>
                     <Text style={styleprofile.subTitulo}>Mostrar grupos desde:</Text>
                 </View>
                 <View style={styleprofile.contenedorpicker}>
                     <Picker style={styleprofile.pickerDiseno}
-                        value={ newCantidad }
+                        selectedValue={ newCantidad }
+                        onValueChange={ (value) => updateUser(value) }
                     >
                         <Picker.Item label="Sin limite de integrantes" value="0"/>
                         <Picker.Item label="5 integrantes" value="5"/>
