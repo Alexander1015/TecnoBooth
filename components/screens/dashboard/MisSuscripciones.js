@@ -16,7 +16,6 @@ const SuscripcionesScreen = (route) => {
 
     const [grp, setGrp] = useState([]);
     const [grpint, setGrpInt] = useState([]);
-    const [relacion, setRelacion] = useState([]);
 
     const initialState = {
         id: "",
@@ -51,30 +50,6 @@ const SuscripcionesScreen = (route) => {
         }
     };
 
-    async function obtenertotGrupos() {
-        const grupo = [];
-        firebase.db
-            .collection("Grupo")
-            .orderBy("nombre")
-            .onSnapshot((queryGrupos) => {
-                setGrp([]);
-                if (queryGrupos.docs.length > 0) {
-                    queryGrupos.docs.forEach((docGrp) => {
-                        const { nombre, descripcion, img } = docGrp.data();
-                        grupo.push({
-                            id: docGrp.id,
-                            nombre,
-                            descripcion,
-                            img,
-                        });
-                    });
-                    setGrp(grupo);
-                }
-            });
-        setSearch("");
-        setClasi("");
-    }
-
     async function obtenerGIntegrantes() {
         const grupo = [];
         firebase.db
@@ -96,46 +71,54 @@ const SuscripcionesScreen = (route) => {
             });
     }
 
-    async function obtenerRelacion() {
+    async function obtenertotGrupos() {
         const grupo = [];
-        //console.log(grp);
-        //console.log(grpint);
-        if (grpint.length > 0 && grp.length > 0) {
-            grpint.map((i) => {
-                grp.map((j) => {
-                    if (i.id_grupo === j.id) {
-                        grupo.push(j);
-                    }
-                });
+        firebase.db
+            .collection("Grupo")
+            .orderBy("nombre")
+            .onSnapshot((queryGrupos) => {
+                setGrp([]);
+                if (queryGrupos.docs.length > 0) {
+                    queryGrupos.docs.forEach((docGrp) => {
+                        const { nombre, descripcion, img } = docGrp.data();
+                        grpint.map((data) => {
+                            if (data.id_grupo === docGrp.id) {
+                                grupo.push({
+                                    id: docGrp.id,
+                                    nombre,
+                                    descripcion,
+                                    img,
+                                });
+                            }
+                        });
+                    });
+                    setGrp(grupo);
+                }
             });
-            //console.log(grupo);
-            setRelacion(grupo);
-        } else {
-            setRelacion([]);
-        }
+        setSearch("");
+        setClasi("");
     }
 
+    let isSuscribed = false;
     useEffect(() => {
-        obtenerUser();
+        isSuscribed = !isSuscribed;
+        if (isSuscribed) obtenerUser();
     }, []);
 
     useEffect(() => {
-        if (user) {
-            obtenertotGrupos();
-        }
+        isSuscribed = !isSuscribed;
+        if (isSuscribed) obtenerGIntegrantes();
     }, [user]);
 
     useEffect(() => {
-        if (grp) {
-            obtenerGIntegrantes();
-        }
-    }, [grp]);
-
-    useEffect(() => {
-        if (grpint) {
-            obtenerRelacion();
-        }
+        isSuscribed = !isSuscribed;
+        if (isSuscribed) obtenertotGrupos();
     }, [grpint]);
+
+    //Arregla la falla de memoria
+    useEffect(() => {
+        isSuscribed = !isSuscribed;
+    }, [isSuscribed])
 
     useEffect(() => {
         setTot(total);
@@ -145,7 +128,7 @@ const SuscripcionesScreen = (route) => {
         total++;
     }
 
-    const buscargrp = (txt, cmb) => {
+    async function buscargrp(txt, cmb) {
         setSearch(txt);
         setClasi(cmb);
         if (txt.trim() === "" && cmb.trim() === "") {
@@ -162,11 +145,15 @@ const SuscripcionesScreen = (route) => {
                     if (queryGrupos.docs.length > 0) {
                         queryGrupos.docs.forEach((docGrp) => {
                             const { nombre, descripcion, img } = docGrp.data();
-                            grupo.push({
-                                id: docGrp.id,
-                                nombre,
-                                descripcion,
-                                img,
+                            grpint.map((data) => {
+                                if (data.id_grupo === docGrp.id) {
+                                    grupo.push({
+                                        id: docGrp.id,
+                                        nombre,
+                                        descripcion,
+                                        img,
+                                    });
+                                }
                             });
                         });
                         setGrp(grupo);
@@ -183,11 +170,15 @@ const SuscripcionesScreen = (route) => {
                     if (queryGrupos.docs.length > 0) {
                         queryGrupos.docs.forEach((docGrp) => {
                             const { nombre, descripcion, img } = docGrp.data();
-                            grupo.push({
-                                id: docGrp.id,
-                                nombre,
-                                descripcion,
-                                img,
+                            grpint.map((data) => {
+                                if (data.id_grupo === docGrp.id) {
+                                    grupo.push({
+                                        id: docGrp.id,
+                                        nombre,
+                                        descripcion,
+                                        img,
+                                    });
+                                }
                             });
                         });
                         setGrp(grupo);
@@ -206,11 +197,15 @@ const SuscripcionesScreen = (route) => {
                     if (queryGrupos.docs.length > 0) {
                         queryGrupos.docs.forEach((docGrp) => {
                             const { nombre, descripcion, img } = docGrp.data();
-                            grupo.push({
-                                id: docGrp.id,
-                                nombre,
-                                descripcion,
-                                img,
+                            grpint.map((data) => {
+                                if (data.id_grupo === docGrp.id) {
+                                    grupo.push({
+                                        id: docGrp.id,
+                                        nombre,
+                                        descripcion,
+                                        img,
+                                    });
+                                }
                             });
                         });
                         setGrp(grupo);
@@ -253,8 +248,8 @@ const SuscripcionesScreen = (route) => {
                     </View>
                 </View>
                 <View style={Styles.grupos}>
-                    {relacion.length > 0 ? (
-                        relacion.map((grupo, index) => {
+                    {grp.length > 0 ? (
+                        grp.map((grupo, index) => {
                             return (
                                 <CardGrupo
                                     key={index}
@@ -268,7 +263,7 @@ const SuscripcionesScreen = (route) => {
                     ) : (
                         <Load />
                     )}
-                    {relacion.length > 0 && relacion.length === tot ? (
+                    {grp.length > 0 && grp.length === tot ? (
                         <Load />
                     ) : (
                         <View></View>
