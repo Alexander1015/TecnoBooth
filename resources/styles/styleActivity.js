@@ -42,6 +42,19 @@ export const styles = StyleSheet.create({
     fontSize: 24,
     textAlign: "center",
   },
+  txttitle2: {
+    color: Colors.SECUNDARY_COLOR,
+    fontSize: 24,
+    textAlign: "center",
+    fontWeight: "bold",
+  },
+  containpostbody2: {
+    borderWidth: 2,
+    borderColor: Colors.SECUNDARY_COLOR,
+    borderRadius: 20,
+    padding: 5,
+    marginBottom: 20,
+  },
   btnverposts: {
     marginVertical: 10,
     paddingHorizontal: 39,

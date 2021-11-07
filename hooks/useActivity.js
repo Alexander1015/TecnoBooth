@@ -12,7 +12,7 @@ const useGrupos = (idGrupo) => {
     const [idUsuario, setIdUsuario] = useState(null);
     const [integrantes, setIntegrantes] = useState(null);  
     const [verificado, setVerificado] = useState(false);
-    const [miusuario, setMiusuario] = useState('');
+    const [miusuario, setMiusuario] = useState(null);
 
   useEffect(()=>{
     if(integrantes&&idUsuario){
@@ -106,7 +106,6 @@ const useGrupos = (idGrupo) => {
         })
         
         //obtenerPosts(idGrupo);
-        obtenerIdUsuario();
     }
     //Obtener post por usuario.
     const obtenerPosts=(miusuario)=>{
