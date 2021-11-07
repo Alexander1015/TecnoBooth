@@ -50,16 +50,19 @@ const IndexScreen = (route) => {
             .collection("Grupo")
             .orderBy("nombre")
             .onSnapshot((queryGrupos) => {
-                queryGrupos.docs.forEach((docGrp) => {
-                    const { nombre, descripcion, img } = docGrp.data();
-                    grupo.push({
-                        id: docGrp.id,
-                        nombre,
-                        descripcion,
-                        img,
+                setGrupos([]);
+                if (queryGrupos.docs.length > 0) {
+                    queryGrupos.docs.forEach((docGrp) => {
+                        const { nombre, descripcion, img } = docGrp.data();
+                        grupo.push({
+                            id: docGrp.id,
+                            nombre,
+                            descripcion,
+                            img,
+                        });
                     });
-                });
-                setGrupos(grupo);
+                    setGrupos(grupo);
+                }
             });
     }
 
@@ -93,52 +96,61 @@ const IndexScreen = (route) => {
                 .startAt(txt)
                 .endAt(txt + "\uf8ff")
                 .onSnapshot((queryGrupos) => {
-                    queryGrupos.docs.forEach((docGrp) => {
-                        const { nombre, descripcion, img } = docGrp.data();
-                        grupo.push({
-                            id: docGrp.id,
-                            nombre,
-                            descripcion,
-                            img,
+                    setGrupos([]);
+                    if (queryGrupos.docs.length > 0) {
+                        queryGrupos.docs.forEach((docGrp) => {
+                            const { nombre, descripcion, img } = docGrp.data();
+                            grupo.push({
+                                id: docGrp.id,
+                                nombre,
+                                descripcion,
+                                img,
+                            });
                         });
-                    });
-                    setGrupos(grupo);
+                        setGrupos(grupo);
+                    }
                 });
         } else if (txt.trim() === "" && cmb.trim() !== "") {
             firebase.db
                 .collection("Grupo")
-                .where("clasificacion", "==", cmb)
                 .orderBy("nombre")
+                .where("clasificacion", "==", cmb)
                 .onSnapshot((queryGrupos) => {
-                    queryGrupos.docs.forEach((docGrp) => {
-                        const { nombre, descripcion, img } = docGrp.data();
-                        grupo.push({
-                            id: docGrp.id,
-                            nombre,
-                            descripcion,
-                            img,
+                    setGrupos([]);
+                    if (queryGrupos.docs.length > 0) {
+                        queryGrupos.docs.forEach((docGrp) => {
+                            const { nombre, descripcion, img } = docGrp.data();
+                            grupo.push({
+                                id: docGrp.id,
+                                nombre,
+                                descripcion,
+                                img,
+                            });
                         });
-                    });
-                    setGrupos(grupo);
+                        setGrupos(grupo);
+                    }
                 });
         } else {
             firebase.db
                 .collection("Grupo")
-                .where("clasificacion", "==", cmb)
                 .orderBy("nombre")
-                .startAt(txt)
+                .where("clasificacion", "==", cmb);
+            startAt(txt)
                 .endAt(txt + "\uf8ff")
                 .onSnapshot((queryGrupos) => {
-                    queryGrupos.docs.forEach((docGrp) => {
-                        const { nombre, descripcion, img } = docGrp.data();
-                        grupo.push({
-                            id: docGrp.id,
-                            nombre,
-                            descripcion,
-                            img,
+                    setGrupos([]);
+                    if (queryGrupos.docs.length > 0) {
+                        queryGrupos.docs.forEach((docGrp) => {
+                            const { nombre, descripcion, img } = docGrp.data();
+                            grupo.push({
+                                id: docGrp.id,
+                                nombre,
+                                descripcion,
+                                img,
+                            });
                         });
-                    });
-                    setGrupos(grupo);
+                        setGrupos(grupo);
+                    }
                 });
         }
     };
@@ -147,7 +159,7 @@ const IndexScreen = (route) => {
         return (
             <View style={Styles.container}>
                 <ScrollView vertical style={Styles.scroll}>
-                    <Text style={ Styles.titulo }>Grupos de la Aplicación</Text>
+                    <Text style={Styles.titulo}>Grupos de la Aplicación</Text>
                     <View style={[Styles.form, Styles.hr]}>
                         <View>
                             <Text style={Styles.lbl}>Buscar</Text>

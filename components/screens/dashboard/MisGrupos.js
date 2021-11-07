@@ -21,23 +21,28 @@ const GruposScreen = (route) => {
         }
     };
 
-    function obtenerGrupos() {
+    async function obtenerGrupos() {
         const grupo = [];
         firebase.db
             .collection("Grupo")
-            .where("id_usuario", "==", uid)
             .orderBy("nombre")
             .onSnapshot((queryGrupos) => {
-                queryGrupos.docs.forEach((docGrp) => {
-                    const { nombre, descripcion, img } = docGrp.data();
-                    grupo.push({
-                        id: docGrp.id,
-                        nombre,
-                        descripcion,
-                        img,
+                setGrupos([]);
+                if (queryGrupos.docs.length > 0) {
+                    queryGrupos.docs.forEach((docGrp) => {
+                        const { nombre, descripcion, img, id_usuario } = docGrp.data();
+                        if (id_usuario === uid) {
+                            grupo.push({
+                                id: docGrp.id,
+                                nombre,
+                                descripcion,
+                                img,
+                                id_usuario,
+                            });
+                        }
                     });
-                });
-                setGrupos(grupo);
+                    setGrupos(grupo);
+                }
             });
     }
 
@@ -66,59 +71,74 @@ const GruposScreen = (route) => {
         } else if (txt.trim() !== "" && cmb.trim() === "") {
             firebase.db
                 .collection("Grupo")
-                .where("id_usuario", "==", uid)
                 .orderBy("nombre")
                 .startAt(txt)
                 .endAt(txt + "\uf8ff")
                 .onSnapshot((queryGrupos) => {
-                    queryGrupos.docs.forEach((docGrp) => {
-                        const { nombre, descripcion, img } = docGrp.data();
-                        grupo.push({
-                            id: docGrp.id,
-                            nombre,
-                            descripcion,
-                            img,
+                    setGrupos([]);
+                    if (queryGrupos.docs.length > 0) {
+                        queryGrupos.docs.forEach((docGrp) => {
+                            const { nombre, descripcion, img, id_usuario } = docGrp.data();
+                            if (id_usuario === uid) {
+                                grupo.push({
+                                    id: docGrp.id,
+                                    nombre,
+                                    descripcion,
+                                    img,
+                                    id_usuario,
+                                });
+                            }
                         });
-                    });
-                    setGrupos(grupo);
+                        setGrupos(grupo);
+                    }
                 });
         } else if (txt.trim() === "" && cmb.trim() !== "") {
             firebase.db
                 .collection("Grupo")
-                .where("id_usuario", "==", uid)
-                .where("clasificacion", "==", cmb)
                 .orderBy("nombre")
+                .where("clasificacion", "==", cmb)
                 .onSnapshot((queryGrupos) => {
-                    queryGrupos.docs.forEach((docGrp) => {
-                        const { nombre, descripcion, img } = docGrp.data();
-                        grupo.push({
-                            id: docGrp.id,
-                            nombre,
-                            descripcion,
-                            img,
+                    setGrupos([]);
+                    if (queryGrupos.docs.length > 0) {
+                        queryGrupos.docs.forEach((docGrp) => {
+                            const { nombre, descripcion, img, id_usuario } = docGrp.data();
+                            if (id_usuario === uid) {
+                                grupo.push({
+                                    id: docGrp.id,
+                                    nombre,
+                                    descripcion,
+                                    img,
+                                    id_usuario,
+                                });
+                            }
                         });
-                    });
-                    setGrupos(grupo);
+                        setGrupos(grupo);
+                    }
                 });
         } else {
             firebase.db
                 .collection("Grupo")
-                .where("id_usuario", "==", uid)
-                .where("clasificacion", "==", cmb)
                 .orderBy("nombre")
+                .where("clasificacion", "==", cmb)
                 .startAt(txt)
                 .endAt(txt + "\uf8ff")
                 .onSnapshot((queryGrupos) => {
-                    queryGrupos.docs.forEach((docGrp) => {
-                        const { nombre, descripcion, img } = docGrp.data();
-                        grupo.push({
-                            id: docGrp.id,
-                            nombre,
-                            descripcion,
-                            img,
+                    setGrupos([]);
+                    if (queryGrupos.docs.length > 0) {
+                        queryGrupos.docs.forEach((docGrp) => {
+                            const { nombre, descripcion, img, id_usuario } = docGrp.data();
+                            if (id_usuario === uid) {
+                                grupo.push({
+                                    id: docGrp.id,
+                                    nombre,
+                                    descripcion,
+                                    img,
+                                    id_usuario,
+                                });
+                            }
                         });
-                    });
-                    setGrupos(grupo);
+                        setGrupos(grupo);
+                    }
                 });
         }
     };
@@ -126,7 +146,7 @@ const GruposScreen = (route) => {
     return (
         <View style={Styles.container}>
             <ScrollView vertical style={Styles.scroll}>
-                <Text style={ Styles.titulo }>Grupos creados por mí</Text>
+                <Text style={Styles.titulo}>Grupos creados por mí</Text>
                 <View style={[Styles.form, Styles.hr]}>
                     <View>
                         <Text style={Styles.lbl}>Buscar</Text>
@@ -163,7 +183,7 @@ const GruposScreen = (route) => {
                                 <CardGrupo
                                     key={index}
                                     grupo={grupo}
-                                    minimo={ 0 }
+                                    minimo={0}
                                     obtenerTotal={obtenerTotal}
                                     redireccionar={redireccionar}
                                 ></CardGrupo>
