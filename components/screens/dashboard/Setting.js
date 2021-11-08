@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView, FlatList, Image } from "react-native";
+
 import Styles from "../../../resources/styles/styleDashboard";
 import { styleprofile } from "../../../resources/styles/styleProfile";
 import { Picker } from "@react-native-picker/picker";
 import firebase from "../../../database/firebase";
 import Load from "../../Load";
+import useGrupos from '../../../hooks/useGrupos';
 
 const SettingScreen = () => {
     const initialState = {

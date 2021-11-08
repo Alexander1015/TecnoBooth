@@ -24,11 +24,23 @@ const UseUsuarios = () => {
         setUsuario(user[0]);
         setCargando(false);
     };
+
+    const subirImagen = async(uri) =>{
+        const response = await fetch(uri);
+        const blob = await response.blob();
+        const sessionId = new Date().getTime();
+        let ref = await firebase.storage.ref("Usuarios").child(`${sessionId}`);
+        await ref.put(blob);
+        const url = await ref.getDownloadURL();
+        setCargando(false);
+        return url.toString();
+    };
+
     const ActualizarUsuario = (usuario, correo, img, id) => {
         firebase.db.collection("Usuarios").doc(id).update({
             usuario,
             correo,
-            img,
+            img
         });
     };
     return {
@@ -36,6 +48,7 @@ const UseUsuarios = () => {
         usuario,
         cargando,
         ActualizarUsuario,
+        subirImagen,
     };
 };
 export default UseUsuarios;

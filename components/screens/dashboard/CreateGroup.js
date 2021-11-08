@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import * as ImagePicker from 'expo-image-picker';
-import { stylesnewgroup } from "../../../resources/styles/styleNewGroup";
+import { stylesnewgroup } from "../../../resources/styles/StyleNewGroup";
 import { View, Text, ScrollView, Platform, TouchableOpacity, Image, TextInput, Alert } from "react-native";
 import Styles from "../../../resources/styles/styleGruposMain";
 import { yupResolver } from '@hookform/resolvers/yup';
