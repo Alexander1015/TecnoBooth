@@ -1,33 +1,15 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  ScrollView,
-  FlatList,
-  Dimensions,
-} from "react-native";
-import useGrupos from "../../../hooks/useActivity";
-import Post from "../../Post";
+import { View, ScrollView, Text } from "react-native";
+import Post from "../../PostActivity";
 import { styles } from "../../../resources/styles/styleActivity";
 import firebase from "../../../database/firebase";
+import Load from "../../Load";
 
-const ActivityScreen = (route) => {
-  const {
-    grupo,
-    grupos,
-    posts,
-    integrantes,
-    idUsuario,
-    verificado,
-    subscribirse,
-    obtenerHome,
-    subirImagen,
-    crearPost,
-    //} = useGrupos(idgrupo);
-  } = useGrupos("MUutMUnTx8tWEGLvqrIc");
-
-  const [usuario, setUsuario] = useState("");
+const ActivityScreen = () => {
+  const [usuario, setUsuario] = useState({ id: "" });
   const [misgruposconpost, setMisgruposconpost] = useState([]);
   const [postgroupsunicos, setPostgroupsunicos] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   let isSuscribe = false;
 
@@ -57,10 +39,13 @@ const ActivityScreen = (route) => {
         if (querySnapshot.docs.length > 0) {
           const misgruposconpost = [];
           querySnapshot.docs.forEach((doc) => {
-            const { id_grupo } = doc.data();
+            const { id_grupo, descripcion, id_usuario, img } = doc.data();
             misgruposconpost.push({
               id: doc.id,
               id_grupo,
+              descripcion,
+              id_usuario,
+              img,
             });
           });
           setMisgruposconpost(misgruposconpost);
@@ -93,6 +78,7 @@ const ActivityScreen = (route) => {
                   informacion,
                   descripcion,
                   img,
+                  verPosts: false,
                 });
               }
             }
@@ -117,46 +103,47 @@ const ActivityScreen = (route) => {
 
   useEffect(() => {
     isSuscribe = !isSuscribe;
-    if (isSuscribe) obtenerTotGrupos();
+    if (isSuscribe) {
+      obtenerTotGrupos();
+      setLoading(false);
+    }
   }, [misgruposconpost]);
-
-  //Obtengo todos los integrantes
-  useEffect(() => {
-    isSuscribe = !isSuscribe;
-    if (isSuscribe) obtenerIntg();
-  }, [usuario]);
 
   useEffect(() => {
     isSuscribe = !isSuscribe;
   }, [isSuscribe]);
 
-  useEffect(() => {
-    obtenerHome();
-  }, []);
+  if (loading) {
+    return <Load />;
+  }
 
   return (
     <View style={styles.container}>
       <ScrollView vertical style={styles.scroll}>
-        {grupo ? (
-          <View style={styles.containcontent}>
-            <View style={styles.containgroup}>
-                <View style={styles.containpostbody}>
-                  <FlatList
-                    data={posts}
-                    keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => (
-                      <Post
-                        post={item}
-                        verificado={verificado}
-                        idUsuario={idUsuario}
-                      />
-                    )}
-                    showsVerticalScrollIndicator={false}
-                  />
+        <View style={styles.containpostbody}>
+          <>
+            {postgroupsunicos.map((datamis, i) => {
+              return (
+                <View key={i}>
+                  <Text style={styles.titgrp}>Post de: {datamis.nombre}</Text>
+                  {misgruposconpost.map((datapost, j) => {
+                    if (datamis.id === datapost.id_grupo) {
+                      return (
+                        <View key={j}>
+                          <Post
+                            post={datapost}
+                            verificado={true}
+                            idUsuario={usuario}
+                          />
+                        </View>
+                      );
+                    }
+                  })}
                 </View>
-            </View>
-          </View>
-        ) : null}
+              );
+            })}
+          </>
+        </View>
       </ScrollView>
     </View>
   );

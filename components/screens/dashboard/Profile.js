@@ -19,6 +19,8 @@ import firebase from "../../../database/firebase";
 
 
 
+import useGrupos from '../../../hooks/useGrupos';
+
 const esquema = yup.object({
     nombre: yup.string().required("El nombre de usuario es obligatorio"),
     email: yup.string().email("El correo no es valido").required("El correo es obligatorio"),
@@ -129,7 +131,7 @@ const ProfileScreen = (props) => {
     
     return (
         <View style={styleprofile.container}>
-            <ScrollView vertical>
+            <ScrollView vertical style={styleprofile.scroll}>
                 {!cargando && (
                     <>
                         <Text style={styleprofile.titulo}>Perfil del Usuario</Text>

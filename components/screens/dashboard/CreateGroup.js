@@ -79,13 +79,21 @@ const CreateGroupScreen = (route) => {
             setImagen(url);
         }
     };
+    const Alertaimagen = () => {
+        Alert.alert('Error', 'Debe de colocar una imagen de grupo.',[
+            {text: 'Ok', onPress: () => console.log('alerta cerrada')},
+        ])
+    }
 
     const submit = ({ nombre, descripcion, otraInfo }) => {
-        if (usuario && !cargando) {
-            CrearGrupo(usuario.uid, imagen, nombre, descripcion, otraInfo,categoria);
-            
+        if(image){
+            if (usuario && !cargando) {
+                CrearGrupo(usuario.uid, imagen, nombre, descripcion, otraInfo,categoria);
+                AlertaConfirmacion();
+            }
+        }else{
+            Alertaimagen();
         }
-        AlertaConfirmacion();
     }
 
  

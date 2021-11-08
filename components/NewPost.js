@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react'
-import { View, Text,Image,StyleSheet,TouchableOpacity,FlatList,TextInput,Platform } from 'react-native'
+import { View, Text,Image,StyleSheet,TouchableOpacity,FlatList,TextInput,Platform, Alert } from 'react-native'
 import * as ImagePicker from 'expo-image-picker';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
@@ -7,7 +7,7 @@ import { useForm, Controller } from "react-hook-form";
 import useGrupos from '../hooks/useGrupos';
 
 const schema = yup.object({
-    descripcion: yup.string().required("La descripcion es obligatoria")
+    descripcion: yup.string().required("¡La descripcion es obligatoria!")
 })
 
 export const NewPost=({subirImagen,crearPost,setNuevoPost})=>{
@@ -20,7 +20,7 @@ export const NewPost=({subirImagen,crearPost,setNuevoPost})=>{
             if (Platform.OS !== 'web') {
                 const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
                 if (status !== 'granted') {
-                    alert('Sorry, we need camera roll permissions to make this work!');
+                    alert('Lo sentimos, necesitamos acceso a tus imagenes para que esta característica funcione.');
                 }
             }
         })();
@@ -42,15 +42,27 @@ export const NewPost=({subirImagen,crearPost,setNuevoPost})=>{
             setImage(result.uri);
             
             const url = await subirImagen(result.uri)
-            setValue("foto",url);
+            setValue("foto", url);
         }
     };
-
+    const Alertaimagen = () => {
+        Alert.alert('Error', 'Debe de colocar una imagen en el post.',[
+            {text: 'Ok', onPress: () => console.log('alerta cerrada')},
+        ])
+    }
     
 
     const submit=({descripcion,foto})=>{
-        crearPost(descripcion,foto);
-        setNuevoPost(false);
+        if(image){
+            crearPost(descripcion,foto);
+            setNuevoPost(false); 
+        }
+        else{
+            Alertaimagen();
+        }
+            
+        
+        
     }
  
     return(
@@ -59,7 +71,7 @@ export const NewPost=({subirImagen,crearPost,setNuevoPost})=>{
                 <TouchableOpacity style={styles.botonImagen} onPress={pickImage}>
                     <Text style={styles.textoImagen}>Agregar imagen</Text>
                 </TouchableOpacity>
-                {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+                {image && <Image source={{ uri: image }} style={styles.img} />}
             </View>
             <View style={styles.info}>
             <Controller
@@ -80,6 +92,9 @@ export const NewPost=({subirImagen,crearPost,setNuevoPost})=>{
             <TouchableOpacity style={styles.botonImagen} onPress={handleSubmit(submit)}>
                 <Text style={styles.textoImagen}>Agregar Post</Text>
             </TouchableOpacity>
+            <TouchableOpacity style={styles.botoncancel} onPress={()=>{setNuevoPost(false)}}>
+                <Text style={styles.textoImagen}>Cancelar</Text>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -91,17 +106,25 @@ const styles = StyleSheet.create({
         padding: 10
     },
     contenedorImagen:{
-        flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginVertical: 25,
+        marginVertical: 20,
     },
     botonImagen:{
         marginHorizontal: 25,
         backgroundColor: '#041F2E',
-        paddingHorizontal: 5,
+        paddingHorizontal: 10,
         paddingVertical: 7,
         borderRadius: 20,
+        marginBottom:10,
+    },
+    botoncancel:{
+        marginHorizontal: 25,
+        backgroundColor: '#ed4256',
+        paddingHorizontal: 10,
+        paddingVertical: 7,
+        borderRadius: 20,
+        marginBottom:10,
     },
     textoImagen:{
         color: 'white',
@@ -110,7 +133,8 @@ const styles = StyleSheet.create({
     },
     img: {
         width: 200,
-        height: 200
+        height: 200,
+        borderRadius:10,
     },
     texto: {
         fontSize: 18,
@@ -139,16 +163,14 @@ const styles = StyleSheet.create({
         paddingHorizontal:5,
         paddingVertical:10,
         fontSize:16,
-        margin:5,
         backgroundColor:'white',
         borderRadius:20
     },
     textoError: {
-        color: 'red',
+        color: '#ed4256',
         fontSize: 16,
-        borderLeftWidth: 4,
-        borderLeftColor: 'red',
         paddingLeft: 5,
-        marginTop: -8,
+        margin:5,
+        alignSelf:'center',
     }
 })

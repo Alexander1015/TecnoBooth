@@ -5,6 +5,7 @@ import {styleHome} from "../../../../resources/styles/styleHome";
 import useGrupos from "../../../../hooks/useGrupos";
 import Post from '../../../Post';
 import { NewPost } from '../../../NewPost';
+import { FontAwesome5 } from "@expo/vector-icons";
 export default function Home(route) {
   const { idgrupo } = route;
   const { width } = Dimensions.get("window");
@@ -31,41 +32,76 @@ export default function Home(route) {
   }, []);
 
   return (
-      <View style={styleHome.container}>
-        {grupo?(
-          <View style={styleHome.containerInfo}>
-            
-              <View style={{ flex: 1, alignSelf: "center" }}>
-                <FlatList 
-                  data={posts}
-                  keyExtractor={(item)=>item.id}
-                  renderItem={({item})=><Post post={item} verificado={verificado} idUsuario={idUsuario}/>}
-                  showsVerticalScrollIndicator={false}
-                  ListHeaderComponent={()=>(
-                    <>
-                    <Image source={{uri:grupo.img}} style={styleHome.img}/>
-                    <View style={styleHome.contenedorOpciones}>
-                      <Text style={styleHome.nombre}>{grupo.nombre}</Text>
-                      <TouchableOpacity activeOpacity={0.8} style={styleHome.btn} onPress={()=>setNuevoPost(true)}>
-                        <Text style={styleHome.btnText}>Nuevo Post</Text>
-                      </TouchableOpacity>
-                      {!verificado?(
-                      <TouchableOpacity activeOpacity={0.8} style={styleHome.btn} onPress={()=>{
-                        //subscribirse('MUutMUnTx8tWEGLvqrIc',idUsuario[0]);idgrupo
-                        subscribirse(idgrupo,idUsuario[0]);
-                      }}>
-                        <Text style={styleHome.btnText}>Suscribirse</Text>
-                      </TouchableOpacity>
-                      ):null}
-                    </View>
-                    {nuevoPost?<NewPost subirImagen={subirImagen} crearPost={crearPost}  setNuevoPost={setNuevoPost}/>:null}
-                    </>
-                  )}
-                  ListFooterComponent={() => <View style={{ marginBottom: 100 }} />}
+    <View style={styleHome.container}>
+      {grupo ? (
+        <View style={styleHome.containerInfo}>
+          <View style={{ flex: 1, alignSelf: "center" }}>
+            <FlatList
+              data={posts}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => (
+                <Post
+                  post={item}
+                  verificado={verificado}
+                  idUsuario={idUsuario}
                 />
-              </View>
+              )}
+              showsVerticalScrollIndicator={false}
+              ListHeaderComponent={() => (
+                <>
+                  <View style={styleHome.card_template}>
+                    <Image
+                      style={styleHome.card_image}
+                      source={{ uri: grupo.img }}
+                    />
+                  </View>
+                  <View style={styleHome.contenedorOpciones}>
+                  <Text style={styleHome.texto}>
+                      <FontAwesome5 name="angle-double-left" size={18} />
+                      {grupo.nombre}
+                      <FontAwesome5 name="angle-double-right" size={18} />
+                    </Text>
+                  {!verificado ? (
+                      <View style={[styleHome.viewbtndecor]}>
+                        <TouchableOpacity
+                          activeOpacity={0.8}
+                          style={styleHome.btn2}
+                          onPress={() => {
+                            //subscribirse('MUutMUnTx8tWEGLvqrIc',idUsuario[0]);idgrupo
+                            subscribirse(idgrupo, idUsuario[0]);
+                          }}
+                        >
+                          <View style={styleHome.btndecorado}>
+                            <Text style={styleHome.txtbtn}>Suscribirse</Text>
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                    ) : null}
+                    <View style={[styleHome.viewbtndecor]}></View>
+                    <TouchableOpacity
+                      activeOpacity={0.8}
+                      style={styleHome.btn2}
+                      onPress={() => setNuevoPost(true)}
+                    >
+                      <View style={styleHome.btndecorado}>
+                        <Text style={styleHome.txtbtn}>Nuevo Post</Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                  {nuevoPost ? (
+                    <NewPost
+                      subirImagen={subirImagen}
+                      crearPost={crearPost}
+                      setNuevoPost={setNuevoPost}
+                    />
+                  ) : null}
+                </>
+              )}
+              ListFooterComponent={() => <View style={{ marginBottom: 100 }} />}
+            />
           </View>
-        ):null}
-      </View>
+        </View>
+      ) : null}
+    </View>
   );
 }

@@ -3,7 +3,7 @@ import Constants from "expo-constants";
 import Colors from "../utils/Colors";
 import { color } from "react-native-reanimated";
 
-const {width}=Dimensions.get('window'); 
+const { width } = Dimensions.get("window");
 
 export const styles = StyleSheet.create({
   container: {
@@ -64,15 +64,15 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 10,
     marginHorizontal: 10,
-    marginBottom:20
+    marginBottom: 20,
   },
   btnverpoststxt: {
-    fontSize:20,
+    fontSize: 20,
     color: Colors.PRIMARY_COLOR,
-    fontWeight:"bold",
+    fontWeight: "bold",
   },
   containpostbody: {
-    flex:1,
+    flex: 1,
     borderWidth: 2,
     borderColor: Colors.SECUNDARY_COLOR,
     borderRadius: 20,
@@ -102,7 +102,7 @@ export const styles = StyleSheet.create({
     alignSelf: "center",
   },
   containusername: {
-    flex:1,
+    flex: 1,
     backgroundColor: Colors.SECUNDARY_COLOR,
     borderRadius: 20,
     padding: 3,
@@ -122,5 +122,11 @@ export const styles = StyleSheet.create({
     textAlign: "justify",
     marginBottom: 10,
     alignSelf: "center",
+  },
+  titgrp: {
+    color: Colors.SECUNDARY_COLOR,
+    fontSize: 20,
+    textAlign: "center",
+    marginVertical: 10,
   },
 });

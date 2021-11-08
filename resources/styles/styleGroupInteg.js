@@ -60,7 +60,7 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.SECUNDARY_COLOR,
     width: 230,
     alignSelf: "center",
-    marginTop: 30,
+    marginTop: 20,
     padding: 5,
   },
   cantidadintegrantes: {
