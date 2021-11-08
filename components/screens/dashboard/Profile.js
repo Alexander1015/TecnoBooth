@@ -16,14 +16,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
 import firebase from "../../../database/firebase";
-import useGrupos from '../../../hooks/useGrupos';
+
+
 
 const esquema = yup.object({
     nombre: yup.string().required("El nombre de usuario es obligatorio"),
-    email: yup
-        .string()
-        .email("El correo no es valido")
-        .required("El correo es obligatorio"),
+    email: yup.string().email("El correo no es valido").required("El correo es obligatorio"),
+    foto: yup.string().required("La foto del usuario es obligatoria"),
 });
 
 const AlertaConfirmacion = () => {
@@ -33,8 +32,8 @@ const AlertaConfirmacion = () => {
 };
 
 const ProfileScreen = (props) => {
-    const { obtenerUsuario, usuario, cargando, ActualizarUsuario } =
-        UseUsuarios();
+
+    const { obtenerUsuario, usuario, cargando, ActualizarUsuario, subirImage, } = UseUsuarios();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -48,14 +47,15 @@ const ProfileScreen = (props) => {
         handleSubmit,
         formState: { errors },
         reset,
+        setValue
     } = useForm({
         resolver: yupResolver(esquema),
     });
-    const { subirImagen,} =
-        useGrupos();
 
-    const [imagen, setImagen] = useState("");
-    const [image, setImage] = useState();
+    const { subirImagen,} =
+        UseUsuarios();
+
+    const [image, setImage] = useState(null);
     useEffect(() => {
         (async () => {
             if (Platform.OS !== "web") {
@@ -69,6 +69,7 @@ const ProfileScreen = (props) => {
             }
         })();
     }, []);
+    
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -76,19 +77,18 @@ const ProfileScreen = (props) => {
             aspect: [4, 3],
             quality: 1,
         });
-
-        //console.log(result);
-
+        
         if (!result.cancelled) {
-            setImage(result.uri);
-
+            
             const url = await subirImagen(result.uri);
+            setImage(url);
+            setValue('foto',url);
         }
     };
 
-    const submit = ({ nombre, email }) => {
+    const submit = ({ nombre, email,foto }) => {
         setLoading(true);
-        ActualizarUsuario(nombre, email, image, usuario.id);
+        ActualizarUsuario(nombre, email, foto, usuario.id);
         reset({
             nombre: "",
             email: "",
@@ -140,6 +140,11 @@ const ProfileScreen = (props) => {
                                         <Text style={styleprofile.txtbtn}>Cambiar Imagen</Text>
                                     </View>
                                 </TouchableOpacity>
+                                {errors.foto && (
+                                    <Text style={styleprofile.textoError}>
+                                        {errors.foto.message}
+                                    </Text>
+                                )}
                             </View>
                             {image ? (
                                 <Image
@@ -212,6 +217,8 @@ const ProfileScreen = (props) => {
                                             <Text style={styleprofile.txtbtn}>Guardar Cambios</Text>
                                         </View>
                                     </TouchableOpacity>
+                                </View>
+                                <View style={styleprofile.viewbtndecortot}>
                                     <TouchableOpacity
                                         onPress={() => leeremail()}
                                         style={styleprofile.btn}

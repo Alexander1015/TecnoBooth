@@ -51,7 +51,8 @@ export default function Home(route) {
                       </TouchableOpacity>
                       {!verificado?(
                       <TouchableOpacity activeOpacity={0.8} style={styleHome.btn} onPress={()=>{
-                        subscribirse('MUutMUnTx8tWEGLvqrIc',idUsuario[0]);
+                        //subscribirse('MUutMUnTx8tWEGLvqrIc',idUsuario[0]);idgrupo
+                        subscribirse(idgrupo,idUsuario[0]);
                       }}>
                         <Text style={styleHome.btnText}>Suscribirse</Text>
                       </TouchableOpacity>
