@@ -71,7 +71,9 @@ export const NewPost=({subirImagen,crearPost,setNuevoPost})=>{
                 <TouchableOpacity style={styles.botonImagen} onPress={pickImage}>
                     <Text style={styles.textoImagen}>Agregar imagen</Text>
                 </TouchableOpacity>
-                {image && <Image source={{ uri: image }} style={styles.img} />}
+                {
+                image ? ( 
+                <Image source={{ uri: image }} style={styles.img}/>):null}
             </View>
             <View style={styles.info}>
             <Controller
