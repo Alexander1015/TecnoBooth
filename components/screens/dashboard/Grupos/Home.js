@@ -77,7 +77,8 @@ export default function Home(route) {
                         </TouchableOpacity>
                       </View>
                     ) : null}
-                    <View style={[styleHome.viewbtndecor]}></View>
+                    {verificado ? (
+                    <View style={[styleHome.viewbtndecor]}>
                     <TouchableOpacity
                       activeOpacity={0.8}
                       style={styleHome.btn2}
@@ -87,6 +88,8 @@ export default function Home(route) {
                         <Text style={styleHome.txtbtn}>Nuevo Post</Text>
                       </View>
                     </TouchableOpacity>
+                    </View>
+                    ) : null}
                   </View>
                   {nuevoPost ? (
                     <NewPost
