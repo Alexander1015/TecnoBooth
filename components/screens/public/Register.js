@@ -89,8 +89,6 @@ const RegisterScreen = (route) => {
                         correo: email,
                         cantidad: 0,
                         img: "",
-                        visible: true,
-                        password: password,
                     });
                     reset();
                     setLoading(false);

@@ -16,6 +16,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
 import firebase from "../../../database/firebase";
+import Load from "../../Load";
 
 import useGrupos from '../../../hooks/useGrupos';
 
@@ -132,7 +133,7 @@ const ProfileScreen = (props) => {
     }
     return (
         <View style={styleprofile.container}>
-            <ScrollView vertical>
+            <ScrollView vertical style={styleprofile.scroll}>
                 {!cargando && (
                     <>
                         <Text style={styleprofile.titulo}>Perfil del Usuario</Text>

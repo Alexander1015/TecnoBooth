@@ -12,6 +12,11 @@ export const styleprofile = StyleSheet.create({
         marginHorizontal: 10,
         fontWeight: "bold",
     },
+    scroll: {
+        flex: 1,
+        width: "100%",
+        height: "100%",
+    },
     container: {
         flex: 1,
         backgroundColor: Colors.PRIMARY_COLOR,
@@ -91,7 +96,8 @@ export const styleprofile = StyleSheet.create({
         color: "white",
         fontSize: 18,
         marginTop: 10,
-        padding: 10
+        padding: 10,
+        textAlign: "center",
     },
     subTitulo: {
         fontSize: 20,
